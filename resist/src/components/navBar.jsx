@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { IconBase } from "react-icons";
+import { Link } from "react-router-dom"
+import { IoHome } from "react-icons/io5";
 import resistLogo from '../assets/resist-dark.svg'
 import resistLogoText from '../assets/resist-txt-dark.svg'
 const NavBar = () => {
@@ -9,12 +9,11 @@ const NavBar = () => {
                 <img src={resistLogoText} className="size-12" />
                 <div>
                     <div className="justify-center align-middle">
-                    <Link to='/'>?</Link>
+                    <Link to='/'><IoHome /></Link>
                     </div>
                     <Link to='estatisticas'><p>Estatisticas</p></Link>
                     <p>Bloqueios</p>
                     <p>Celulares</p>
-                    <IconBase name='home'></IconBase>
                 </div>
                 <p>Computadores</p>
                 <div className='self-end bg-orange'>
