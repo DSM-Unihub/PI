@@ -9,12 +9,7 @@ export default {
       'bluePrimary': '#3866F2',
       'blueSecondary': '#2556EA',
       'grayPrimary': '#F6F6F6',
-      'orange': '#ff7849',
-      'green': '#13ce66',
-      'yellow': '#ffc82c',
-      'gray-dark': '#273444',
-      'gray': '#8492a6',
-      'gray-light': '#d3dce6',
+      
     },
     extend: {},
   },

@@ -2,8 +2,10 @@ import React from "react"
 
 const Home = () => {
     return (
-        <div>
-            <p className='text-xl'>Ola</p>
+        <div className=" bg-grayPrimary">
+            <p className='text-xl'>Ola testetetetetette</p>
+   
+
         </div>
     )
 }
