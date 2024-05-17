@@ -1,11 +1,52 @@
 <%- include('./partials/header.ejs') %>
-<section class="grid grid-cols-2 max-h-screen "> 
-    <!-- Imagem Lateral -->
-    <div>
-        <img class=" w-full filter h-full" src="./imgs/ondas.png">
-    </div>
-    <div class="bg-cinza-claro relative ">
-        <h1 class=" text-xl font-extrabold ">Ola </h1>
-    </div>
-</section>
-<%- include('./partials/footer.ejs') %>
+    <section class="grid grid-cols-2 relative">
+        <!-- Imagem Lateral -->
+        <div class="flex relative ">
+            <img class=" w-full max-h-screen z-0" src="./imgs/ondas.png">
+        </div>
+        <div class="grid grid-flow-row bg-cinza-claro">
+            <!-- Logo -->
+            <div class="grid grid-flow-row h-fit justify-end p-4">
+                <img class="size-10 " src="./icons/lg-resist-b.svg">
+            </div>
+            <!-- Div Principal-->
+            <div class="grid mx-auto p-10 gap-3 self-start justify-self-center justify-center justify-items-start">
+                <h1 class="Urbanist font-bold text-3xl text-azul-title">Bem-Vindo de Volta!</h1>
+                <!-- div Formulario -->
+                <div
+                    class="bg-white border rounded-xl grid grid-flow-row p-10 gap-5 justify-self-center justify-center">
+                    <p class="text-azul-text text-xl">Insira seus dados para acessar a sua conta.</p>
+                    <!-- Formulario -->
+                    <form method="post" action="#">
+                        <label class="text-azul-text text-xl">E-mail</label>
+                        <br>
+                        <input type="email" name="email" placeholder="Insira seu email" required
+                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                        <br>
+                        <br>
+                        <label class="text-azul-text text-xl">Senha</label>
+                        <br>
+                        <input type="password" name="password" placeholder="Insira sua senha" required minlength="8"
+                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                        <br>
+                        <br>
+                        <input type="checkbox" checked name="lembrar" class="decoration-gray-800"> <label
+                            class="text-azul-text text-xl opacity-50">Lembrar deste dispositivo </label>
+                        <br>
+                        <br>
+                        <button type="submit"
+                            class="bg-azul-principal text-white text-xl text-center w-full rounded-xl p-2"> Entrar
+                        </button>
+                    </form>
+                    <p class="text-center">Esqueceu sua senha? <a href="#">Clique <span
+                                class="font-bold">aqui</span></a></p>
+                    <div class="grid grid-flow-col text-center justify-center items-center">
+                        <hr class="w-32 ">&nbsp;&nbsp;<p>OU</p>&nbsp;&nbsp;
+                        <hr class="w-32">
+                    </div>
+                    <a href="/cadastro" class="text-center text-azul-text font-bold text-lg">Cadastre-se</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include('./partials/footer.ejs') %>

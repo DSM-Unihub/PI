@@ -1,0 +1,90 @@
+<%- include('./partials/header.ejs') %>
+    <section class="grid grid-cols-2 relative">
+        <!-- Imagem Lateral -->
+        <div class="flex relative ">
+            <img class=" w-full max-h-screen z-0" src="./imgs/ondas.png">
+        </div>
+        <div class="grid grid-flow-row bg-cinza-claro ">
+            <!-- Logo -->
+            <div class="grid grid-flow-row h-fit justify-end p-4">
+                <img class="size-10 " src="./icons/lg-resist-b.svg">
+            </div>
+            <div class="flex flex-col mx-auto p-5 gap-5">
+                <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
+                <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
+                    <!-- Formulario -->
+                    <form class="flex flex-col justify-arounds gap-5" method="post" action="#">
+                        <!-- Dados da Instituição -->
+                        <div class="flex flex-row justify-between">
+                            <!-- Label -->
+                            <div>
+                                <label class="text-azul-text text-xl">Dados da instituição</label>
+                            </div>
+                            <!-- Input -->
+                            <div>
+                                <input type="radio" name="instituicao" value="Pública">
+                                <label for="Pública">Pública</label>
+                                &nbsp;
+                                &nbsp;
+                                <input type="radio" name="instituicao" value="Privada">
+                                <label for="Privada">Privada</label>
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Nome Fantasia -->
+                        <div class="flex flex-row">
+                            <label class="text-azul-text text-xl text-nowrap">Nome Fantasia</label>
+                            &nbsp;
+                            &nbsp;
+                            <input type="text" required
+                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit">
+                        </div>
+                        <br>
+                        <!-- CNPJ -->
+                        <div class="flex flex-row gap-10 justify-between">
+                            <div>
+                                <label class="text-azul-text text-xl text-nowrap">CNPJ</label>
+                                &nbsp;
+                                <input type="number" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            </div>
+                            <div>
+                                <label class="text-azul-text text-xl text-nowrap">Inscrição Estadual</label>
+                                &nbsp;
+                                <input type="number" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            </div>
+                        </div>
+                        <br>
+                        <!-- Endereco -->
+                        <div class="flex flex-col justify-between">
+                            <div class="flex flex-row gap-10 justify-between">
+                                <div class="flex flex-row flex-nowrap w-full h-fit">
+                                    <label class="text-azul-text text-xl text-nowrap">Logadouro</label>
+                                    &nbsp;
+                                    <input type="text" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                                </div>
+                                <div class="flex flex-row flex-nowrap">
+                                    <label class="text-azul-text text-xl text-nowrap">Nº</label>
+                                    &nbsp;
+                                    <input type="number" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-20">
+                                </div>
+                            </div>
+                            <label class="text-azul-text text-xl text-nowrap">Bairro</label>
+                            <input type="text" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            <label class="text-azul-text text-xl text-nowrap">Cidade</label>
+                            <input type="text" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            <label class="text-azul-text text-xl text-nowrap">Estado</label>
+                            <input type="text" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            
+
+                        </div>
+                    
+                </div>
+    </section>
+    <%- include('./partials/footer.ejs') %>

@@ -1,5 +1,6 @@
 import express from 'express'
 import connection from './config/sequelize-config.js'
+import CadastroControllers from './controllers/CadastroControllers.js'
 
 const app = express()
 
@@ -18,6 +19,8 @@ const app = express()
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:false}))
+
+app.use("/", CadastroControllers)
 
 app.get("/",function(req,res){
     res.render("index")
