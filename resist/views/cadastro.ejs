@@ -13,7 +13,7 @@
                 <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
-                    <form class="flex flex-col justify-arounds gap-5" method="post" action="#">
+                    <form class="flex flex-col justify-arounds" method="post" action="#">
                         <!-- Dados da Instituição -->
                         <div class="flex flex-row justify-between">
                             <!-- Label -->
@@ -37,57 +37,103 @@
                             &nbsp;
                             &nbsp;
                             <input type="text" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit">
+                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit px-2">
                         </div>
-                        <br>
                         <!-- CNPJ -->
-                        <div class="flex flex-row gap-10 justify-between">
+                        <div class="flex flex-row justify-between gap-5">
                             <div>
                                 <label class="text-azul-text text-xl text-nowrap">CNPJ</label>
                                 &nbsp;
                                 <input type="number" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                             <div>
                                 <label class="text-azul-text text-xl text-nowrap">Inscrição Estadual</label>
                                 &nbsp;
                                 <input type="number" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md">
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                         </div>
                         <br>
                         <!-- Endereco -->
                         <div class="flex flex-col justify-between">
-                            <div class="flex flex-row gap-10 justify-between">
+                            <div class="flex flex-row  justify-between gap-5">
                                 <div class="flex flex-row flex-nowrap w-full h-fit">
                                     <label class="text-azul-text text-xl text-nowrap">Logadouro</label>
                                     &nbsp;
                                     <input type="text" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
                                 </div>
                                 <div class="flex flex-row flex-nowrap ">
                                     <label class="text-azul-text text-xl text-nowrap">Nº</label>
                                     &nbsp;
                                     <input type="number" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-20">
+                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-20 px-2">
                                 </div>
                             </div>
-                            <div class="flex flex-col">
-                                <label class="text-azul-text text-xl text-nowrap">Bairro</label>
-                                <input type="text" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md">
-                                <label class="text-azul-text text-xl text-nowrap">Cidade</label>
-                                <input type="text" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md">
-                                <br>
-                                <label class="text-azul-text text-xl text-nowrap">Estado</label>
-                                <input type="text" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md">
+                            <br>
+                            <div class="flex flex-row flex-nowrap w-full h-fit justify-between gap-5">
+                                <div class="flex flex-row flex-nowrap w-full">
+                                    <label class="text-azul-text text-xl text-nowrap">Bairro</label>
+                                    &nbsp;
+                                    <input type="text" required
+                                        class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
+                                </div>
+                                <div class="flex flex-row flex-nowrap w-full h-fit ">
+                                    <label class="text-azul-text text-xl text-nowrap">Cidade</label>
+                                    &nbsp;
+                                    <input type="text" required
+                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                </div>
                             </div>
-                            
-
+                            <br>
+                            <div class="flex flex-row flex-nowrap w-full h-fit">
+                                <label class="text-azul-text text-xl text-nowrap">Estado</label>
+                                &nbsp;
+                                <input type="text" required
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2">
+                            </div>
                         </div>
-                    
+                        <br>
+                        <!-- Telefone -->
+                        <div class="flex flex-row flex-nowrap gap-5">
+                            <div class="flex flex-row flex-nowrap ">
+                                <label class="text-azul-text text-xl text-nowrap">Tel.</label>
+                                &nbsp;
+                                <input id="tel-ddd" type="tel" name="telddd"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center h-fit"
+                                    maxlength="2">
+                                <label class="text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
+                                </label>
+                                <input id="tel-number" maxlength="9" name="telnumber"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
+                                    type="tel">
+                            </div>
+                            <div class="flex flex-row flex-nowrap ">
+                                <label class="text-azul-text text-xl text-nowrap">Cel.</label>
+                                &nbsp;
+                                <input id="cel-ddd" type="tel" name="celddd"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center h-fit"
+                                    maxlength="2">
+                                <label class="text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
+                                </label>
+                                <input id="cel-number" maxlength="9" name="celnumber"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
+                                    type="tel">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="flex flex-row justify-between w-full h-fit flex-nowrap">
+                            <label class="text-azul-text text-xl text-nowrap">Email</label>
+                            &nbsp;
+                            <input type="email" name="email"
+                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
+                        </div>
+                    </form>
+                </div>
+                <div class="flex flex-row justify-between">
+                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" type="submit">Voltar</button>
+                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit">Proximo</button>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>

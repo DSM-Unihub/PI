@@ -1,4 +1,19 @@
 
     
 </body>
+<script>
+    function setupInputFocusTransfer(firstInputId, secondInputId) {
+        const firstInput = document.getElementById(firstInputId);
+        const secondInput = document.getElementById(secondInputId);
+        firstInput.addEventListener('input', function() {
+            if (this.value.length === this.maxLength) {
+                secondInput.focus();
+            }
+        });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        setupInputFocusTransfer('tel-ddd', 'tel-number');
+        setupInputFocusTransfer('cel-ddd', 'cel-number');
+    });
+</script>
 </html>
