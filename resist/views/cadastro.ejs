@@ -14,12 +14,14 @@
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
                     <form class="flex flex-col justify-arounds" method="post" action="#">
-                        <!-- Dados da Instituição -->
-                        <div class="flex flex-row justify-between">
-                            <!-- Label -->
-                            <div>
-                                <label class="text-azul-text text-xl">Dados da instituição</label>
-                            </div>
+                        <!-- Pagina 1 -->
+                        <section class="form-page hidden" id="page1">
+                            <!-- Dados da Instituição -->
+                            <div class="flex flex-row justify-between">
+                                <!-- Label -->
+                                <div>
+                                    <label class="text-azul-text text-xl">Dados da instituição</label>
+                                </div>
                             <!-- Input -->
                             <div>
                                 <input type="radio" name="instituicao" value="Pública">
@@ -45,13 +47,13 @@
                                 <label class="text-azul-text text-xl text-nowrap">CNPJ</label>
                                 &nbsp;
                                 <input type="number" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                             <div>
                                 <label class="text-azul-text text-xl text-nowrap">Inscrição Estadual</label>
                                 &nbsp;
                                 <input type="number" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                         </div>
                         <br>
@@ -63,7 +65,7 @@
                                     &nbsp;
                                     <input type="text" required
                                         class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
-                                </div>
+                                    </div>
                                 <div class="flex flex-row flex-nowrap ">
                                     <label class="text-azul-text text-xl text-nowrap">Nº</label>
                                     &nbsp;
@@ -77,13 +79,13 @@
                                     <label class="text-azul-text text-xl text-nowrap">Bairro</label>
                                     &nbsp;
                                     <input type="text" required
-                                        class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
+                                    class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
                                 </div>
                                 <div class="flex flex-row flex-nowrap w-full h-fit ">
                                     <label class="text-azul-text text-xl text-nowrap">Cidade</label>
                                     &nbsp;
                                     <input type="text" required
-                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
                                 </div>
                             </div>
                             <br>
@@ -108,9 +110,9 @@
                                 <input id="tel-number" maxlength="9" name="telnumber"
                                     class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
                                     type="tel">
-                            </div>
-                            <div class="flex flex-row flex-nowrap ">
-                                <label class="text-azul-text text-xl text-nowrap">Cel.</label>
+                                </div>
+                                <div class="flex flex-row flex-nowrap ">
+                                    <label class="text-azul-text text-xl text-nowrap">Cel.</label>
                                 &nbsp;
                                 <input id="cel-ddd" type="tel" name="celddd"
                                     class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center h-fit"
@@ -120,15 +122,64 @@
                                 <input id="cel-number" maxlength="9" name="celnumber"
                                     class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
                                     type="tel">
+                                </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="flex flex-row justify-between w-full h-fit flex-nowrap">
+                            <br>
+                            <div class="flex flex-row justify-between w-full h-fit flex-nowrap">
                             <label class="text-azul-text text-xl text-nowrap">Email</label>
                             &nbsp;
                             <input type="email" name="email"
-                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
+                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
                         </div>
+                    </section>
+                    <!-- Pagina 2 -->
+                    <section class="form-page" id="page2">
+                        <div class="flex flex-row justify-start">
+                            <p class="text-azul-text text-xl">Criação de usuário administrador</p>
+                        </div>
+                        <br>
+                        <div class="flex flex-col gap-5 justify-center h-fit w-full">
+                            <div class="flex flex-row gap-2">
+                                <label class="text-azul-text text-lg text-nowrap">Nome</label>
+                                <input type="text" name="userName" required
+                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2">
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label class="text-azul-text text-lg text-nowrap">Senha</label>
+                                <input type="password" name="userPassword" required
+                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label class="text-azul-text text-lg text-nowrap">Conf. Senha</label>
+                                <input type="password" name="userPassword" required
+                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                            </div>
+                            <div class="flex flex-row gap-2">
+                                <label class="text-azul-text text-lg text-nowrap">Email</label>
+                                <input type="email" name="userMail" required
+                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                            </div>
+                            <div class="flex flex-row gap-2 ">
+                                <label class="text-azul-text text-lg">Cel.</label>
+                                <input id="user-cel-ddd" type="tel" name="userCelddd"
+                                class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center"
+                                maxlength="2">
+                                <input id="user-cel-number" maxlength="9" name="userCelNumber"
+                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2 w-1/2"
+                                type="tel">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="flex flex-row">
+                            <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2">
+                                <div class="flex bg-cinza-border rounded-full">
+                                    <input type="file" id="ImageInput" accept=".jpg, .png, .jpeg">
+                                    <label for="ImageInput">+</label>
+                                </div>    
+                            </div>
+                            <p></p>
+                        </div>
+                    </section>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
