@@ -9,10 +9,14 @@ export default {
         "azul-text": "#2B438D",
         "cinza-border": "#CAD3ED",
         "azul-filtro":"#3063FF",
-        "azul-principal":"#2D62FF"
+        "azul-principal":"#2D62FF",
+        "azul-cinza-claro":"#94A2CB"
       },
       borderWidth:{
         "5": "5em"
+      },
+      width:{
+        '720':'720px'
       },
     },
   },

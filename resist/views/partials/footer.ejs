@@ -2,6 +2,7 @@
     
 </body>
 <script>
+
     function setupInputFocusTransfer(firstInputId, secondInputId) {
         const firstInput = document.getElementById(firstInputId);
         const secondInput = document.getElementById(secondInputId);
@@ -11,10 +12,38 @@
             }
         });
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        setupInputFocusTransfer('tel-ddd', 'tel-number');
-        setupInputFocusTransfer('cel-ddd', 'cel-number');
+
+    document.addEventListener('DOMContentLoaded', function(){
+        setupInputFocusTransfer('tel-ddd', 'tel-number')
+        setupInputFocusTransfer('cel-ddd', 'cel-number')
         setupInputFocusTransfer('user-cel-ddd', 'user-cel-number');
-    });
+        const form = document.getElementById('multiPageForm')
+        const pages = document.querySelectorAll('.form-page')
+        let currentPage = 0
+
+        function showPage(pageIndex){
+            pages.forEach((page, index)=>{
+                page.style.display = index === pageIndex ? 'block' : 'none'
+            })
+        }
+        window.nextPage = function(){
+            if(currentPage  < pages.length -1){
+                currentPage++
+                showPage(currentPage)
+            }
+        }
+
+        window.previousPage = function(){
+            if (currentPage > 0){
+                currentPage --
+                showPage(currentPage)
+            }
+        }
+
+        form.addEventListener('submit', function(event){
+            event.preventDefault()
+        })
+        showPage(currentPage)
+    })
 </script>
 </html>

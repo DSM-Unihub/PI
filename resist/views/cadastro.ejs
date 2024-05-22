@@ -13,9 +13,9 @@
                 <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
-                    <form class="flex flex-col justify-arounds" method="post" action="#">
+                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="#">
                         <!-- Pagina 1 -->
-                        <section class="form-page hidden" id="page1">
+                        <section class="form-page" id="page1" style="display: block;">
                             <!-- Dados da Instituição -->
                             <div class="flex flex-row justify-between">
                                 <!-- Label -->
@@ -133,7 +133,7 @@
                         </div>
                     </section>
                     <!-- Pagina 2 -->
-                    <section class="form-page" id="page2">
+                    <section id="page2" class=" form-page flex flex-col w-720" style="display: none;">
                         <div class="flex flex-row justify-start">
                             <p class="text-azul-text text-xl">Criação de usuário administrador</p>
                         </div>
@@ -165,26 +165,28 @@
                                 class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center"
                                 maxlength="2">
                                 <input id="user-cel-number" maxlength="9" name="userCelNumber"
-                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2 w-1/2"
+                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2 w-1/5"
                                 type="tel">
                             </div>
                         </div>
                         <br>
-                        <div class="flex flex-row">
-                            <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2">
-                                <div class="flex bg-cinza-border rounded-full">
-                                    <input type="file" id="ImageInput" accept=".jpg, .png, .jpeg">
-                                    <label for="ImageInput">+</label>
+                        <br>
+                        <div class="flex flex-row gap-10">
+                            <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2 hover:scale-105 duration-300 hover:rotate-180">
+                                <div class="flex flex-row items-center self-center
+                                snap-center
+                                content-center bg-cinza-border rounded-full p-5">
+                                    <img src="/icons/cross.png">
                                 </div>    
                             </div>
-                            <p></p>
+                            <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
                     </section>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" type="submit">Voltar</button>
-                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit">Proximo</button>
+                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" type="submit" onclick="previousPage()">Voltar</button>
+                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit" onclick="nextPage()">Proximo</button>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>
