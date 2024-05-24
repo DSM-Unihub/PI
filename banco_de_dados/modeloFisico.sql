@@ -31,7 +31,7 @@ CREATE TABLE termos(
 
 SELECT * FROM termos;
 
-CREATE TABLE indexXtermo(
+CREATE TABLE indexXtermos(
 	id_indexXtermo INT AUTO_INCREMENT,
     id_index INT,
     id_termo INT,
@@ -45,20 +45,20 @@ SELECT * FROM indexXtermo;
 #---------------------------------------------------------------------
 #Parte do Usuário
 
-CREATE TABLE perfil(
-	idTipo INT AUTO_INCREMENT,
+CREATE TABLE perfis(
+    	idTipo INT AUTO_INCREMENT,
     nomeTipo VARCHAR(60),
-     PRIMARY KEY (idTipo)
+    PRIMARY KEY (idTipo)
 );
 
 CREATE TABLE permissoes(
-	idPermissoes INT AUTO_INCREMENT,
+    	idPermissao INT AUTO_INCREMENT,
     nomePermissao VARCHAR(50),
-	PRIMARY KEY (idPermissoes)
+    PRIMARY KEY (idPermissao)
 );
 
 CREATE TABLE perfisXpermissoes(
-	idPerfilPermissao INT AUTO_INCREMENT,
+    	idPerfilPermissao INT AUTO_INCREMENT,
     idTipo INT,
     idPermissao INT,
     PRIMARY KEY (idPerfilPermissao),
@@ -102,7 +102,7 @@ CREATE TABLE funcionariosXemails(
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios(idFuncionario)
 );
 
-CREATE TABLE cadastro(
+CREATE TABLE cadastros(
 	idCadastro INT AUTO_INCREMENT,
     email VARCHAR(40),
     senha VARCHAR(20),
