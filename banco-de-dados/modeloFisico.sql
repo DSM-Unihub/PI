@@ -13,7 +13,7 @@ CREATE TABLE acessos(
 	id_acesso INT AUTO_INCREMENT,
     data_hora DATETIME,
     ip_maquina VARCHAR(50),
-    url LONGTEXT,
+    urlWeb LONGTEXT,
     id_index INT,
     PRIMARY KEY (id_acesso),
     FOREIGN KEY(id_index) REFERENCES indexacoes(id_index)
