@@ -4,7 +4,7 @@ USE resistBD;
 CREATE TABLE indexacoes(
 	id_index INT AUTO_INCREMENT,
     nomeSite LONGTEXT,
-    flag BOOLEAN DEFAULT FALSE,
+    flag BOOLEAN DEFAULT TRUE,
     urlHtml LONGTEXT,
     PRIMARY KEY(id_index)
 );
