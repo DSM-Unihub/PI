@@ -3,9 +3,9 @@ USE resistBD;
 
 CREATE TABLE indexacoes(
 	id_index INT AUTO_INCREMENT,
-    nomeSite LONGTEXT,
+    pathLocal LONGTEXT,
     flag BOOLEAN DEFAULT TRUE,
-    urlHtml LONGTEXT,
+    urlWeb LONGTEXT,
     PRIMARY KEY(id_index)
 );
 
