@@ -13,7 +13,7 @@
                 <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
-                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="#">
+                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="/createNew">
                         <!-- Pagina 1 -->
                         <section class="form-page" id="page1" style="display: block;">
                             <!-- Dados da Instituição -->
@@ -38,22 +38,19 @@
                             <label class="text-azul-text text-xl text-nowrap">Nome Fantasia</label>
                             &nbsp;
                             &nbsp;
-                            <input type="text" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit px-2">
+                            <input type="text" name="nomeFantasia" required class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit px-2">
                         </div>
                         <!-- CNPJ -->
                         <div class="flex flex-row justify-between gap-5">
                             <div>
-                                <label class="text-azul-text text-xl text-nowrap">CNPJ</label>
+                                <label name class="text-azul-text text-xl text-nowrap">CNPJ</label>
                                 &nbsp;
-                                <input type="number" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                <input type="number" required name="CNPJ" class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                             <div>
                                 <label class="text-azul-text text-xl text-nowrap">Inscrição Estadual</label>
                                 &nbsp;
-                                <input type="number" required
-                                class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                <input type="number" required name="InscricaoEstadual" class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
                             </div>
                         </div>
                         <br>
@@ -63,14 +60,12 @@
                                 <div class="flex flex-row flex-nowrap w-full h-fit">
                                     <label class="text-azul-text text-xl text-nowrap">Logadouro</label>
                                     &nbsp;
-                                    <input type="text" required
-                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" required name="logadouro" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
                                     </div>
                                 <div class="flex flex-row flex-nowrap ">
                                     <label class="text-azul-text text-xl text-nowrap">Nº</label>
                                     &nbsp;
-                                    <input type="number" required
-                                        class="border text-azul-text text-xl border-cinza-border rounded-md w-20 px-2">
+                                    <input type="number" required name="numero" class="border text-azul-text text-xl border-cinza-border rounded-md w-20 px-2">
                                 </div>
                             </div>
                             <br>
@@ -78,22 +73,19 @@
                                 <div class="flex flex-row flex-nowrap w-full">
                                     <label class="text-azul-text text-xl text-nowrap">Bairro</label>
                                     &nbsp;
-                                    <input type="text" required
-                                    class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" required name="bairro" class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
                                 </div>
-                                <div class="flex flex-row flex-nowrap w-full h-fit ">
+                                <div class="flex flex-row flex-nowrap w-full h-fit "> 
                                     <label class="text-azul-text text-xl text-nowrap">Cidade</label>
                                     &nbsp;
-                                    <input type="text" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" required name="cidade" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
                                 </div>
                             </div>
                             <br>
                             <div class="flex flex-row flex-nowrap w-full h-fit">
                                 <label class="text-azul-text text-xl text-nowrap">Estado</label>
                                 &nbsp;
-                                <input type="text" required
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2">
+                                <input type="text" required name="estado" class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2">
                             </div>
                         </div>
                         <br>
@@ -128,8 +120,7 @@
                             <div class="flex flex-row justify-between w-full h-fit flex-nowrap">
                             <label class="text-azul-text text-xl text-nowrap">Email</label>
                             &nbsp;
-                            <input type="email" name="email"
-                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
+                            <input type="email" name="email" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
                         </div>
                     </section>
                     <!-- Pagina 2 -->
@@ -182,11 +173,12 @@
                             <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
                     </section>
+                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit">Cadastrar</button>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" type="submit" onclick="previousPage()">Voltar</button>
-                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit" onclick="nextPage()">Proximo</button>
+                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</button>
+                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</button>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>
