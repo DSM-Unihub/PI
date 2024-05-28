@@ -30,9 +30,9 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use("/", userControllers)
 
-app.get("/", Auth, (req, res) => {
+app.get("/", Auth, async (req, res) => {
     res.render("index", {
-
+        
     })
 })
 

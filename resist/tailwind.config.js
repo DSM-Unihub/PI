@@ -10,7 +10,8 @@ export default {
         "cinza-border": "#CAD3ED",
         "azul-filtro":"#3063FF",
         "azul-principal":"#2D62FF",
-        "azul-cinza-claro":"#94A2CB"
+        "azul-cinza-claro":"#94A2CB",
+        "cinza-principal": "#CCD5F0"
       },
       borderWidth:{
         "5": "5em"

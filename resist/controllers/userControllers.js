@@ -1,6 +1,7 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import connection from '../config/sequelize-config.js'
+import { Sequelize } from 'sequelize'
 const router = express.Router()
 
 router.get("/login", (req, res) => {
@@ -12,21 +13,23 @@ router.get("/login", (req, res) => {
 router.post("/authenticate", async (req, res) => {
     const { email, password } = req.body
     try {
-        const [rows] = await connection.query(`SELECT * FROM usuario where email = '${email}'`)
+        const [rows] = await connection.query(`SELECT * FROM funcionariosXemails where email = '${email}'`)
         if (rows.length > 0) {
             const user = rows[0]
-            const correct = bcrypt.compareSync(password, user.senha)
+            const correct = password == user.senha
             if (correct) {
                 req.session.user = {
-                    id: user.id,
-                    email: user.email
+                    id: user.idFuncionario,
+                    email: user.email,
                 }
                 res.redirect("/")
             } else {
-                res.redirect("/login")
+                res.send("Senha incorreta")
+                //res.redirect("/login")
             }
         } else {
-            res.redirect("/login")
+            res.send("Usuario não encontrado")
+            //res.redirect("/login")
         }
     } catch (error) {
         console.error('Erro ao conectar ao banco', error)

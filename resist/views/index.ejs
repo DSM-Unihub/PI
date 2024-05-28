@@ -1,10 +1,25 @@
 <%- include('./partials/header.ejs') %>
-    <section class="grid grid-flow-col justify-start h-screen">
+    <section class="grid grid-flow-col justify-start h-screen bg-cinza-principal">
         <%- include('./partials/navBar.ejs') %>
-            <section class="flex flex-row h-fit p-6 justify-between  w-full">
+            <section class="flex flex-row h-fit p-6 justify-between bg-black items-center  gap-5 w-full">
                 <%- include('./partials/headerBar.ejs')%>
+                    <div class="flex flex-row w-full h-fit">
+                        <input type="text" name="pesquisa" placeholder="Pesquisar" class="w-full">
+                    </div>
+                    <div class="flex flex-row gap-5">
+                        <div class="flex bg-white border rounded-full w-max h-max p-2">
+                            <img class="size-10" src="/icons/blog.svg">
+                        </div>
+                        <div class="flex bg-white border rounded-full w-max h-max p-2">
+                            <img class="size-10" src="/icons/notificacao.svg">
+                        </div>
+                    </div>
+                    <div class="left-auto">
+                         <% user.nome %>
+                    </div>
             </section>
             <section>
+
             </section>
     </section>
 
