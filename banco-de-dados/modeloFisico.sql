@@ -81,7 +81,7 @@ CREATE TABLE funcionariosXtelefones(
 CREATE TABLE funcionariosXemails(
 	idFuncXemail INT AUTO_INCREMENT,
     email VARCHAR (150),
-    senha VARCHAR (15),
+    senha VARCHAR (250),
     idFuncionario INT,
     PRIMARY KEY(idFuncXemail),
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario)
