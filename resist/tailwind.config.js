@@ -11,7 +11,10 @@ export default {
         "azul-filtro":"#3063FF",
         "azul-principal":"#2D62FF",
         "azul-cinza-claro":"#94A2CB",
-        "cinza-principal": "#CCD5F0"
+        "cinza-principal": "#CCD5F0",
+        "cinza-secundario": "#F1EFFC",
+        "laranja-s": "#FD6A4B",
+        "laranka-e": "#F34822"
       },
       borderWidth:{
         "5": "5em"

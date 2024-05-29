@@ -1,7 +1,6 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
 import connection from '../config/sequelize-config.js'
-import { Sequelize } from 'sequelize'
 const router = express.Router()
 
 router.get("/login", (req, res) => {

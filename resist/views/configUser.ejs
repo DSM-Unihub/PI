@@ -1,0 +1,59 @@
+<%- include('./partials/header.ejs') %>
+<section class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full">
+        <%- include('./partials/navBar.ejs') %>
+            <section class="flex flex-col w-full">
+                <%- include('./partials/headerBar.ejs')%>
+                    <section class=" flex flex-row justify-center content-center">
+                        <form action="" method="post">
+                            <div class="flex flex-col gap-5 justify-center h-fit w-full">
+                                <div class="flex flex-row gap-2">
+                                    <label class="text-azul-text text-lg text-nowrap">Nome</label>
+                                    <input type="text" name="userName" required
+                                    class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2">
+                                </div>
+                                <div class="flex flex-row gap-2">
+                                    <label class="text-azul-text text-lg text-nowrap">Senha</label>
+                                    <input type="password" name="userPassword" required
+                                    class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                </div>
+                                <div class="flex flex-row gap-2">
+                                    <label class="text-azul-text text-lg text-nowrap">Conf. Senha</label>
+                                    <input type="password" name="userPassword" required
+                                    class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                </div>
+                                <div class="flex flex-row gap-2">
+                                    <label class="text-azul-text text-lg text-nowrap">Email</label>
+                                    <input type="email" name="userMail" required
+                                    class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                </div>
+                                <div class="flex flex-row gap-2 ">
+                                    <label class="text-azul-text text-lg">Cel.</label>
+                                    <input id="user-cel-ddd" type="tel" name="userCelddd"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center"
+                                    maxlength="2">
+                                    <input id="user-cel-number" maxlength="9" name="userCelNumber"
+                                    class="border text-azul-text text-xl border-cinza-border rounded-md px-2 w-1/5"
+                                    type="tel">
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="flex flex-row gap-10">
+                                <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2 hover:scale-105 duration-300 hover:rotate-180">
+                                    <div class="flex flex-row items-center self-center
+                                    snap-center
+                                    content-center bg-cinza-border rounded-full p-5">
+                                        <img src="/icons/cross.png">
+                                    </div>    
+                                </div>
+                                <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
+                            </div>
+                            <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit">Cadastrar</button>
+                        </section>
+
+                        </form>
+                    </section>
+            </section>
+    </section>
+
+    <%- include('./partials/footer.ejs') %>
