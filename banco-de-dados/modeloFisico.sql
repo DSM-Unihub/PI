@@ -62,6 +62,8 @@ CREATE TABLE funcionarios(
 	idFuncionario INT AUTO_INCREMENT,
     nome VARCHAR(200),
     cpf VARCHAR(20),
+    email VARCHAR (150),
+    senha VARCHAR (250),
     rua VARCHAR(120),
     bairro VARCHAR(85),
     cidade VARCHAR(50),
@@ -75,15 +77,6 @@ CREATE TABLE funcionariosXtelefones(
     telefone VARCHAR (25),
     idFuncionario INT,
     PRIMARY KEY(idFuncXtelefone),
-    FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario)
-);
-
-CREATE TABLE funcionariosXemails(
-	idFuncXemail INT AUTO_INCREMENT,
-    email VARCHAR (150),
-    senha VARCHAR (250),
-    idFuncionario INT,
-    PRIMARY KEY(idFuncXemail),
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario)
 );
 
