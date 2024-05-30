@@ -9,3 +9,9 @@
 .form-page.active {
     display: block;
 }
+
+.Background{
+    background-image: url('../icons/bgbar.png');
+    background-position: center;
+    background-size: cover;
+}

@@ -41,7 +41,7 @@ router.get("/cadastro", function (req, res) {
     })
 })
 
-router.get("/createNew", async (req, res) => {
+router.post("/cadastro/new", async (req, res) => {
     const {
         instituicao,
         nomeFantasia,
@@ -58,11 +58,28 @@ router.get("/createNew", async (req, res) => {
         celnumber,
         email,
     } = req.body
-try{
 
-    const [rows] = await connection.query(`SELECT * FROM instituicao where cnpj = '${CNPJ}'`)
+try{
+    const [rows] = await connection.query(`SELECT * FROM instituicoes where cnpj = '${CNPJ}'`)
     if (rows.length === 0) {
-        await connection.query(`INSERT INTO instituicao (instituicao, nomeFantasia, CNPJ, InscricaoEstadual, logadouro, numero, bairro, cidade, estado, telefone, celular, email) values ('${instituicao}', '${nomeFantasia}', '${CNPJ}', '${InscricaoEstadual}', '${logadouro}', '${numero}', '${bairro}', '${cidade}', '${estado}', '${telddd} ${telnumber}', '${celddd} ${celnumber}', '${email}');`)
+        
+        await connection.query(`INSERT INTO instituicoes (razaoSocial, CNPJ, InscricaoEstadual, logradouro, numero, bairro, cidade, estado) values ('${nomeFantasia}', '${CNPJ}', '${InscricaoEstadual}', '${logadouro}', '${numero}', '${bairro}', '${cidade}', '${estado}');`)
+        
+        const [rows] = await connection.query(`SELECT idInstituicao FROM instituicoes where cnpj = '${CNPJ}'`)
+        
+        const inst = rows[0]
+        
+        const idInstituicao = inst.idInstituicao
+        
+        await connection.query(`INSERT INTO instXtelefones(telefone, idInstituicao) VALUES ('(${telddd}) ${telnumber}, ${idInstituicao}'), ('(${celddd}) ${celnumber}, ${idInstituicao}')`)
+        
+        await connection.query(`INSERT INTO instXemails(email, idInstituicao) VALUES ('${email}, ${idInstituicao}'),`)
+        
+        // await connection.query(`INSERT INTO funcionarios(nome, cpf, rua, bairro,  ) VALUES ('${}, ${}'),`)
+
+
+
+        res.send("OLa")
         res.redirect("/login")
     }
 }catch(erro){

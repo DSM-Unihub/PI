@@ -14,7 +14,7 @@
                 <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
-                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="/createNew">
+                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="/cadastro/new">
                         <!-- Pagina 1 -->
                         <section class="form-page" id="page1" style="display: block;">
                             <!-- Dados da Instituição -->
@@ -86,7 +86,36 @@
                             <div class="flex flex-row flex-nowrap w-full h-fit">
                                 <label class="text-azul-text text-xl text-nowrap">Estado</label>
                                 &nbsp;
-                                <input type="text" required name="estado" class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2">
+                                <select required name="estadoUser" class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2" maxlength="2">
+                                    <option value=""></option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
                             </div>
                         </div>
                         <br>
@@ -137,6 +166,11 @@
                                 class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2">
                             </div>
                             <div class="flex flex-row gap-2">
+                                <label class="text-azul-text text-lg text-nowrap">Email</label>
+                                <input type="email" name="userMail" required
+                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                            </div>
+                            <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">Senha</label>
                                 <input type="password" name="userPassword" required
                                 class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
@@ -146,10 +180,63 @@
                                 <input type="password" name="userPassword" required
                                 class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
                             </div>
-                            <div class="flex flex-row gap-2">
-                                <label class="text-azul-text text-lg text-nowrap">Email</label>
-                                <input type="email" name="userMail" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                            <div class="flex flex-col justify-between">
+                                <div class="flex flex-row  justify-between gap-5">
+                                    <div class="flex flex-row flex-nowrap w-full h-fit">
+                                        <label class="text-azul-text text-xl text-nowrap">Logadouro</label>
+                                        &nbsp;
+                                        <input type="text" required name="logadouroUser" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                        </div>
+                                
+                                </div>
+                                <br>
+                                <div class="flex flex-row flex-nowrap w-full h-fit justify-between gap-5">
+                                    <div class="flex flex-row flex-nowrap w-full">
+                                        <label class="text-azul-text text-xl text-nowrap">Bairro</label>
+                                        &nbsp;
+                                        <input type="text" required name="bairroUser" class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
+                                    </div>
+                                    <div class="flex flex-row flex-nowrap w-full h-fit "> 
+                                        <label class="text-azul-text text-xl text-nowrap">Cidade</label>
+                                        &nbsp;
+                                        <input type="text" required name="cidadeUser" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="flex flex-row flex-nowrap w-full h-fit">
+                                    <label class="text-azul-text text-xl text-nowrap">Estado</label>
+                                    &nbsp;
+                                    <select required name="estadoUser" class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2" maxlength="2">
+                                        <option value=""></option>
+                                        <option value="AC">Acre</option>
+                                        <option value="AL">Alagoas</option>
+                                        <option value="AP">Amapá</option>
+                                        <option value="AM">Amazonas</option>
+                                        <option value="BA">Bahia</option>
+                                        <option value="CE">Ceará</option>
+                                        <option value="DF">Distrito Federal</option>
+                                        <option value="ES">Espírito Santo</option>
+                                        <option value="GO">Goiás</option>
+                                        <option value="MA">Maranhão</option>
+                                        <option value="MT">Mato Grosso</option>
+                                        <option value="MS">Mato Grosso do Sul</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="PA">Pará</option>
+                                        <option value="PB">Paraíba</option>
+                                        <option value="PR">Paraná</option>
+                                        <option value="PE">Pernambuco</option>
+                                        <option value="PI">Piauí</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="RN">Rio Grande do Norte</option>
+                                        <option value="RS">Rio Grande do Sul</option>
+                                        <option value="RO">Rondônia</option>
+                                        <option value="RR">Roraima</option>
+                                        <option value="SC">Santa Catarina</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="SE">Sergipe</option>
+                                        <option value="TO">Tocantins</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="flex flex-row gap-2 ">
                                 <label class="text-azul-text text-lg">Cel.</label>
@@ -173,13 +260,18 @@
                             </div>
                             <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
+                        <button type="submit" onclick="teste()"> Cadastrar</button>
+                        <script>
+                            function teste(){
+                                console.log('ola')
+                            }
+                        </script>
                     </section>
-                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" type="submit">Cadastrar</button>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <button class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</button>
-                    <button class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</button>
+                    <span class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</span>
+                    <span class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</span>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>
