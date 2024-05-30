@@ -37,10 +37,10 @@ CREATE TABLE indexXtermos(
 #---------------------------------------------------------------------
 #Parte do Usuário
 
-CREATE TABLE perfis(
-	idTipo INT AUTO_INCREMENT,
-    nomeTipo VARCHAR(60),
-	PRIMARY KEY (idTipo)
+CREATE TABLE grupoPermissoes(
+	idGrupo INT AUTO_INCREMENT,
+    nomeGrupo VARCHAR(80),
+	PRIMARY KEY (idGrupo)
 );
 
 CREATE TABLE permissoes(
@@ -49,17 +49,18 @@ CREATE TABLE permissoes(
 	PRIMARY KEY (idPermissao)
 );
 
-CREATE TABLE perfisXpermissoes(
-	idPerfilPermissao INT AUTO_INCREMENT,
-    idTipo INT,
+CREATE TABLE grupoPerXpermissoes(
+	idGrupoPerXpermissao INT AUTO_INCREMENT,
+    idGrupo INT,
     idPermissao INT,
     PRIMARY KEY (idPerfilPermissao),
-    FOREIGN KEY (idTipo) REFERENCES perfis (idTipo),
+    FOREIGN KEY (idGrupo) REFERENCES perfis (idGrupo),
     FOREIGN KEY (idPermissao) REFERENCES permissoes (idPermissao)    
 );
 
 CREATE TABLE funcionarios(
 	idFuncionario INT AUTO_INCREMENT,
+	foto LONGTEXT,
     nome VARCHAR(200),
     cpf VARCHAR(20),
     email VARCHAR (150),
