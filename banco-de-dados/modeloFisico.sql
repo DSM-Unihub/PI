@@ -53,8 +53,8 @@ CREATE TABLE grupoPerXpermissoes(
 	idGrupoPerXpermissao INT AUTO_INCREMENT,
     idGrupo INT,
     idPermissao INT,
-    PRIMARY KEY (idPerfilPermissao),
-    FOREIGN KEY (idGrupo) REFERENCES perfis (idGrupo),
+    PRIMARY KEY (idGrupoPerXpermissao),
+    FOREIGN KEY (idGrupo) REFERENCES grupoPermissoes (idGrupo),
     FOREIGN KEY (idPermissao) REFERENCES permissoes (idPermissao)    
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE funcionarios(
     estado VARCHAR(2),
     idGrupo INT,
     PRIMARY KEY (idFuncionario),
-    FOREIGN KEY (idGrupo) REFERENCES perfis (idGrupo)
+    FOREIGN KEY (idGrupo) REFERENCES grupoPermissoes (idGrupo)
 );
 
 
