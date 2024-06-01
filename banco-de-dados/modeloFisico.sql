@@ -69,7 +69,9 @@ CREATE TABLE funcionarios(
     bairro VARCHAR(85),
     cidade VARCHAR(50),
     estado VARCHAR(2),
-    PRIMARY KEY (idFuncionario)
+    idGrupo INT,
+    PRIMARY KEY (idFuncionario),
+    FOREIGN KEY (idGrupo) REFERENCES perfis (idGrupo)
 );
 
 
