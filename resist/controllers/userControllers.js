@@ -1,6 +1,12 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
-import connection from '../config/sequelize-config.js'
+import Funcionarios from '../models/Funcionarios.js'
+import Instituicoes from '../models/Instituicoes.js'
+import instXemails from '../models/instXemails.js'
+import instXtelefones from '../models/instXtelefones.js'
+import funcXinstituicoes from '../models/funcXinstituicoes.js'
+import funcionariosXtelefones from '../models/funcionariosXtelefones.js'
+
 const router = express.Router()
 
 router.get("/login", (req, res) => {
@@ -9,31 +15,34 @@ router.get("/login", (req, res) => {
     })
 })
 
-router.post("/authenticate", async (req, res) => {
+router.post("/authenticate", (req, res) => {
     const { email, password } = req.body
-    try {
-        const [rows] = await connection.query(`SELECT * FROM funcionariosXemails where email = '${email}'`)
-        if (rows.length > 0) {
-            const user = rows[0]
-            const correct = password == user.senha
+    Funcionarios.findOne({
+        where: { email: email }
+    }).then(user => {
+        if (user != undefined) {
+            const correct = bcrypt.compareSync(password, user.senha)
             if (correct) {
                 req.session.user = {
                     id: user.idFuncionario,
+                    foto: user.foto,
+                    nome: user.nome,
                     email: user.email,
+                    grupo: user.idgrupo
                 }
+                //req.flash("success", "Login efetuado com sucesso!")
                 res.redirect("/")
             } else {
-                res.send("Senha incorreta")
-                //res.redirect("/login")
+                //req.flash('danger','Senha Incorreta!')
+                res.redirect("/login")
             }
         } else {
-            res.send("Usuario não encontrado")
-            //res.redirect("/login")
+            //req.flash('danger','Usuario não encontrado!')
+            res.redirect("/login")
         }
-    } catch (error) {
-        console.error('Erro ao conectar ao banco', error)
-    }
+    })
 })
+
 
 router.get("/cadastro", function (req, res) {
     res.render("cadastro", {
@@ -47,7 +56,7 @@ router.post("/cadastro/new", async (req, res) => {
         nomeFantasia,
         CNPJ,
         InscricaoEstadual,
-        logadouro,
+        logradouro,
         numero,
         bairro,
         cidade,
@@ -57,39 +66,78 @@ router.post("/cadastro/new", async (req, res) => {
         celddd,
         celnumber,
         email,
+        userName,
+        userCpf,
+        userMail,
+        userPassword,
+        logradouroUser,
+        bairroUser,
+        cidadeUser,
+        estadoUser,
+        userCelddd,
+        userCelNumber
     } = req.body
 
-try{
-    const [rows] = await connection.query(`SELECT * FROM instituicoes where cnpj = '${CNPJ}'`)
-    if (rows.length === 0) {
-        
-        await connection.query(`INSERT INTO instituicoes (razaoSocial, CNPJ, InscricaoEstadual, logradouro, numero, bairro, cidade, estado) values ('${nomeFantasia}', '${CNPJ}', '${InscricaoEstadual}', '${logadouro}', '${numero}', '${bairro}', '${cidade}', '${estado}');`)
-        
-        const [rows] = await connection.query(`SELECT idInstituicao FROM instituicoes where cnpj = '${CNPJ}'`)
-        
-        const inst = rows[0]
-        
-        const idInstituicao = inst.idInstituicao
-        
-        await connection.query(`INSERT INTO instXtelefones(telefone, idInstituicao) VALUES ('(${telddd}) ${telnumber}, ${idInstituicao}'), ('(${celddd}) ${celnumber}, ${idInstituicao}')`)
-        
-        await connection.query(`INSERT INTO instXemails(email, idInstituicao) VALUES ('${email}, ${idInstituicao}'),`)
-        
-        // await connection.query(`INSERT INTO funcionarios(nome, cpf, rua, bairro,  ) VALUES ('${}, ${}'),`)
+   try {
+        let inst = await Instituicoes.findOne({ where: { cnpj: CNPJ } });
+        if (!inst) {
+            inst = await Instituicoes.create({
+                razaoSocial: nomeFantasia,
+                cnpj: CNPJ,
+                inscricaoEstadual: InscricaoEstadual,
+                logradouro: logradouro,
+                numero: numero,
+                bairro: bairro,
+                cidade: cidade,
+                estado: estado
+            });
+            await instXemails.create({ 
+                email: email, 
+                idInstituicao: inst.idInstituicao 
+            });
+            await instXtelefones.create({ 
+                telefone: `(${telddd}) ${telnumber}`, 
+                idInstituicao: inst.idInstituicao 
+            });
+            await instXtelefones.create({ 
+                telefone: `(${celddd}) ${celnumber}`, 
+                idInstituicao: inst.idInstituicao 
+            });
+        }
 
-
-
-        res.send("OLa")
-        res.redirect("/login")
+        let usu = await Funcionarios.findOne({ where: { email: userMail } });
+        if (!usu) {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(userPassword,salt);
+            usu = await Funcionarios.create({
+                foto: '/imgs/defaultUser.png',
+                nome: userName,
+                cpf: userCpf,
+                email: userMail,
+                senha: hash,
+                rua: logradouroUser,
+                bairro: bairroUser,
+                cidade: cidadeUser,
+                estado: estadoUser
+            });
+            await funcionariosXtelefones.create({ 
+                telefone: `(${userCelddd}) ${userCelNumber}`, 
+                idFuncionario: usu.idFuncionario 
+            });
+            await funcXinstituicoes.create({ 
+                idInstituicao: inst.idInstituicao, 
+                idFuncionario: usu.idFuncionario 
+            });
+        }
+        res.redirect("/login");
+    } catch (error) {
+        console.error(error);
+        res.redirect("/cadastro");
     }
-}catch(erro){
-    console.log(erro)
-}
-})
+});
+    router.get("/logout", (req, res) => {
+        req.session.user = undefined
+        res.redirect("/")
+    })
 
-router.get("/logout", (req, res) => {
-    req.session.user = undefined
-    res.redirect("/")
-})
-
-export default router
+    export default router

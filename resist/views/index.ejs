@@ -1,49 +1,268 @@
 <%- include('./partials/header.ejs') %>
-    <section
-        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full">
+    <section class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
         <%- include('./partials/navBar.ejs') %>
             <section class="flex flex-col w-full">
                 <%- include('./partials/headerBar.ejs') %>
                     <section class="grid grid-cols-2">
+                        <!-- Dashboard Principal -->
+                        <section class="grid grid-flow-row px-10 gap-3">
 
-                        <section class="grid grid-flow-row p-10 gap-10">
-                            <div class="bg-gradient-to-r from-laranja-s h-fit to-laranka-e p-10 rounded-xl">
-                                <p class="text-4xl text-white">Olá, Daniel</p>
+                            <!-- Bem-vindo -->
+                            <div class="bg-gradient-to-r from-laranja-s h-fit to-laranka-e p-5 rounded-xl">
+                                <p class="text-4xl text-white">Olá,<%= usuario.nome%>
+                                </p>
                                 <p class="text-2xl text-white">Bem-vindo de volta ao seu dashboard.</p>
                             </div>
-                            <div class="bg-azul-principal rounded-xl">
-                                <p class="text-white text-base p-3 text-center">Atividade recente</p>
-                                <div class="bg-white h-full rounded-b-xl">
-                                    grafico
-                                </div>
 
+                            <!-- Atividade Recente -->
+                            <div class="bg-azul-principal rounded-xl">
+                                <div class="flex flex-row justify-between p-3">
+                                    <p class="text-white text-base p-3 text-center">Atividade recente</p>
+                                    <!-- Select Filtro -->
+                                    <select class="bg-azul-principal text-white text-base border-white border">
+                                        <option value="Mes">Este Mês</option>
+                                        <option value="Mes">Hoje</option>
+                                        <option value="Mes">Esta Semana</option>
+                                    </select>
+                                </div>
+                                <!-- Atividades -->
+                                <div class="bg-white h-full rounded-b-xl gap-5">
+                                    <div class="flex flex-row justify-between p-3 items-center">
+                                        <div class="flex flex-row justify-start items-center gap-5">
+                                            <div class="border-2 border-azul-principal rounded-full p-2 ">
+                                                <img src="/icons/bloqueio-blue.svg" class="size-5" alt="">
+                                            </div>
+                                            <p class="text-sm text-azul-text">Novo bloqueio realizado automaticamente pelo sistema</p>
+                                        </div>
+                                        <p class="text-sm text-azul-text">22/03/24</p>
+                                    </div>
+                                    <hr>
+                                    <div class="flex flex-row justify-between p-3 items-center">
+                                        <div class="flex flex-row justify-start items-center gap-5">
+                                            <div class="border-2 border-azul-principal rounded-full p-2 ">
+                                                <img src="/icons/PC-blue.svg" class="size-5" alt="">
+                                            </div>
+                                            <p class="text-sm text-azul-text">Novo dispositivo desktop cadastrado</p>
+                                        </div>
+                                        <p class="text-sm text-azul-text">22/03/24</p>
+                                    </div>
+                                    <hr>
+                                    <div class="flex flex-row justify-between p-3 items-center">
+                                        <div class="flex flex-row justify-start items-center gap-5">
+                                            <div class="border-2 border-azul-principal rounded-full p-2 ">
+                                                <img src="/icons/plus-blue.svg" class="size-5" alt="">
+                                            </div>
+                                            <p class="text-sm text-azul-text">Nova exceção adicionada manualmente</p>
+                                        </div>
+                                        <p class="text-sm text-azul-text">21/03/24</p>
+                                    </div>
+                                    <hr>
+                                    <div class="flex flex-row justify-between p-3 items-center">
+                                        <div class="flex flex-row justify-start items-center gap-5">
+                                            <div class="border-2 border-azul-principal rounded-full p-2 ">
+                                                <img src="/icons/Celular-blue.svg" class="size-5" alt="">
+                                            </div>
+                                            <p class="text-sm text-azul-text">Novo dispositivo móvel cadastrado</p>
+                                        </div>
+                                        <p class="text-sm text-azul-text">20/03/24</p>
+                                    </div>
+                                    <hr>
+                                    <div class="flex flex-row justify-between p-3 items-center">
+                                        <div class="flex flex-row justify-start items-center gap-5">
+                                            <div class="border-2 border-azul-principal rounded-full p-2 ">
+                                                <img src="/icons/user-blue.svg" class="size-5" alt="">
+                                            </div>
+                                            <p class="text-sm text-azul-text">Novo usuário criado pelo administrador</p>
+                                        </div>
+                                        <p class="text-sm text-azul-text">17/03/24</p>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <!-- Bloqueios Gerais -->
+                            <div class="bg-azul-principal rounded-xl">
+                                <div class="flex flex-row justify-between p-3">
+                                    <p class="text-white text-base p-3 text-center">Visão Geral de Bloqueios</p>
+                                </div>
+                                <div class="bg-white h-full rounded-b-xl gap-5 flex flex-row p-5">
+                                    <div class="h-full rounded-lg bg-red-500 w-4">
+                                    </div>
+                                    <div class="flex flex-col gap-3 items-center self-center">
+                                        <div class="flex flex-row gap-2">
+                                            <p class="text-4xl text-azul-text ">462 </p>
+                                            <p class="text-azul-text text-base">Bloq. <br> totais</p>
+                                        </div>
+                                        <div class="flex flex-row gap-2">
+                                            <p class="text-red-500">+23%</p>
+                                            <p class="text-azul-text text-base">Neste Mês</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="h-full rounded-lg bg-red-500 w-4">
+                                    </div>
+                                    <div class="flex flex-col gap-3 items-center self-center">
+                                        <div class="flex flex-row gap-2 items-center">
+                                            <img class=" size-5" src="/icons/arrowup.svg">
+                                            <p class="text-4xl text-azul-text ">26% </p>
+                                        </div>
+                                        <div class="flex flex-row gap-2">
+                                            <p class="text-azul-text text-base">Desde o último mês</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </section>
                         <section class="grid grid-flow-col columns-2 p-10">
-                            <div class="grid grid-flow-row gap-5">
+                            <div class="grid grid-flow-row gap-5 flex-nowrap">
                                 <p class="text-lg text-azul-text">Nível de incidência por sala/laboratório</p>
                                 <div class="grid grid-cols-4 gap-10">
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 01</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-1" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx = document.getElementById('grafico-1');
+
+                                                new Chart(ctx, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-02',
+                                                            data: [100 - 42, 42], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 02</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-2" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx2 = document.getElementById('grafico-2');
+
+                                                new Chart(ctx2, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-02',
+                                                            data: [100 - 20, 20], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
+
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 03</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-3" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx3 = document.getElementById('grafico-3');
+
+                                                new Chart(ctx3, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-03',
+                                                            data: [100 - 18, 18], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 04</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-4" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx4 = document.getElementById('grafico-4');
+
+                                                new Chart(ctx4, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-04',
+                                                            data: [100 - 24, 24], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -51,26 +270,150 @@
                                 <div class="grid grid-cols-4 gap-10">
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 05</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-5" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx5 = document.getElementById('grafico-5');
+
+                                                new Chart(ctx5, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-05',
+                                                            data: [100 - 68, 68], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório 06</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-6" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx6 = document.getElementById('grafico-6');
+
+                                                new Chart(ctx6, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-06',
+                                                            data: [100 - 22, 22], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Sala dos Professores</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-7" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx7 = document.getElementById('grafico-7');
+
+                                                new Chart(ctx7, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-Professores',
+                                                            data: [100 - 8, 8], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div class="bg-azul-principal rounded-xl">
                                         <p class="text-white text-base p-3 text-center">Laboratório Móvel</p>
-                                        <div class="bg-white h-full rounded-b-xl">
-                                            grafico
+                                        <div
+                                            class="bg-white h-full rounded-b-xl flex flex-row justify-center items-center p-2">
+                                            <canvas id="grafico-8" class="w-max h-max"></canvas>
+                                            <script>
+                                                const ctx8 = document.getElementById('grafico-8');
+
+                                                new Chart(ctx8, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        datasets: [{
+                                                            label: 'Lab-movel',
+                                                            data: [100 - 30, 30], // Invertemos a ordem dos valores
+                                                            borderWidth: 1,
+                                                            backgroundColor: [
+                                                                '#DEE4F7',
+                                                                '#F23A13',
+                                                            ]
+                                                        }]
+                                                    },
+                                                    options: {
+                                                        plugins: {
+                                                            legend: {
+                                                                display: false // Oculta a legenda
+                                                            },
+                                                            tooltip: {
+                                                                enabled: false // Desabilita as dicas de ferramentas
+                                                            },
+                                                        },
+                                                        cutout: '65%' // Define a porcentagem de corte
+
+                                                    }
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                 </div>

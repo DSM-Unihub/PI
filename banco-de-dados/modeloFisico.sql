@@ -121,10 +121,30 @@ CREATE TABLE instXemails(
     FOREIGN KEY (idInstituicao) REFERENCES instituicoes (idInstituicao)
 );
 
-
-
-
-
+INSERT INTO funcionarios(
+	foto,
+    nome,
+    cpf,
+    email,
+    senha,
+    rua,
+    bairro,
+    cidade,
+    estado
+    ) 
+values 
+	('/home/mandirad/Downloads/employee-icon.png',
+    'Daniel',
+    '123.456.789-01',
+    'email@email.com',
+    'teste123',
+    'rua 1',
+    'vila 2',
+    'cidade 3',
+    'SP');
+        
+        
+select * from funcionarios;
 
 
 
