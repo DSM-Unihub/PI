@@ -14,7 +14,9 @@ export default {
         "cinza-principal": "#CCD5F0",
         "cinza-secundario": "#F1EFFC",
         "laranja-s": "#FD6A4B",
-        "laranka-e": "#F34822"
+        "laranja-e": "#F34822",
+        "azul-gradiente-final":"#4571F9" ,
+        "azul-gradiente-inicio":'#2D60FC',
       },
       borderWidth:{
         "5": "5em"
