@@ -1,49 +1,7 @@
 
     
 </body>
-<script>
-
-    function setupInputFocusTransfer(firstInputId, secondInputId) {
-        const firstInput = document.getElementById(firstInputId);
-        const secondInput = document.getElementById(secondInputId);
-        firstInput.addEventListener('input', function() {
-            if (this.value.length === this.maxLength) {
-                secondInput.focus();
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function(){
-        setupInputFocusTransfer('tel-ddd', 'tel-number')
-        setupInputFocusTransfer('cel-ddd', 'cel-number')
-        setupInputFocusTransfer('user-cel-ddd', 'user-cel-number');
-        const form = document.getElementById('multiPageForm')
-        const pages = document.querySelectorAll('.form-page')
-        let currentPage = 0
-
-        function showPage(pageIndex){
-            pages.forEach((page, index)=>{
-                page.style.display = index === pageIndex ? 'block' : 'none'
-            })
-        }
-        window.nextPage = function(){
-            if(currentPage  < pages.length -1){
-                currentPage++
-                showPage(currentPage)
-            }
-        }
-
-        window.previousPage = function(){
-            if (currentPage > 0){
-                currentPage --
-                showPage(currentPage)
-            }
-        }
-
-       
-        showPage(currentPage)
-    })
-</script>
+<script src="js/script.js"></script>
 <script src="https://code.highcharts.com/dashboards/dashboards.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>

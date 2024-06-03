@@ -1,0 +1,275 @@
+<%- include('./partials/header.ejs') %>
+    <section class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        <%- include('./partials/navBar.ejs') %>
+            <section class="flex flex-col w-full">
+                <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
+                    <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
+                        <%- include('./partials/headerBar.ejs') %>
+                    </div>
+                </section>
+                <section class="flex flex-col gap-10">
+                    <!-- Dashboard Principal -->
+                    <section class="grid grid-cols-2 px-10 gap-1">
+                        <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                            <p class="text-4xl text-white">Estatísticas</p>
+                            <p class="text-2xl text-white">Acesso aos dados de bloqueio.</p>
+                        </div>
+                    </section>
+                    <section class="flex flex-row px-10 gap-5 ">
+                        <div class="flex flex-col">
+                            <p>Visão Geral</p>
+                            <div class="flex flex-row">
+                                <canvas id="grafico-barra" class="w-full h-full bg-white"></canvas>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const ctx = document.getElementById('grafico-barra').getContext('2d');
+
+                                        const labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+
+                                        new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [
+                                                    {
+                                                        label: 'Desktop',
+                                                        data: [65, 59, 80, 81, 56, 55, 40, 49, 60, 71, 46, 45],
+                                                        backgroundColor: '#AFC3FF',
+                                                        borderWidth: 1
+                                                    },
+                                                    {
+                                                        label: 'Disp. Móveis',
+                                                        data: [35, 49, 60, 71, 46, 45, 30, 65, 59, 80, 81, 56],
+                                                        backgroundColor: '#2D62FF',
+                                                        borderWidth: 1
+                                                    }
+                                                ]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true,
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Valor'
+                                                        }
+                                                    },
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Mes'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'top'
+                                                    },
+                                                    tooltip: {
+                                                        enabled: true
+                                                    }
+                                                },
+                                                animation: {
+                                                    duration: 1000,
+                                                    easing: 'easeInOutQuad'
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <div class="flex flex-col bg-yellow-50">
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="grid grid-cols-4">
+                                        <div>
+                                            mes
+                                        </div>
+                                        <div>
+                                            valor1
+                                        </div>
+                                        <div>
+                                            valor2
+                                        </div>
+                                        <div>
+                                            status
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            Hello
+                        </div>
+                    </section>
+                </section>
+            </section>
+
+    </section>
+    </section>
+    <%- include('./partials/footer.ejs') %>

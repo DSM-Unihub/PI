@@ -10,7 +10,7 @@
             <div class="grid grid-flow-row h-fit justify-end p-4">
                 <img class="size-10 " src="./icons/lg-resist-b.svg">
             </div>
-            <div class="flex flex-col mx-auto p-5 gap-5">
+            <div class="flex flex-col mx-auto px-5 gap-3">
                 <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
                 <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
@@ -265,13 +265,12 @@
                             </div>
                             <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
-                        <button type="submit" onclick="teste()"> Cadastrar</button>
                     </section>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <span class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</span>
-                    <span class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</span>
+                    <span id="btn-back" class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</span>
+                    <span id="btn-next" class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</span>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>

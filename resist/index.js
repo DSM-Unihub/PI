@@ -20,7 +20,7 @@ connection.query('CREATE DATABASE IF NOT EXISTS resistBD;').then(()=>{
 
 import userControllers from './controllers/userControllers.js';
 import configControllers from './controllers/configControllers.js';
-
+import estatisticasControllers from './controllers/estatisticasControllers.js'
 
 import session, { Session } from 'express-session'
 app.use(session({
@@ -36,6 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/", userControllers);
 app.use("/", configControllers);
+app.use("/", estatisticasControllers)
 
 
 app.get("/", Auth, async (req, res) => {
