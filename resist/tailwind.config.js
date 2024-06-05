@@ -17,6 +17,8 @@ export default {
         "laranja-e": "#F34822",
         "azul-gradiente-final":"#4571F9" ,
         "azul-gradiente-inicio":'#2D60FC',
+        "azul-login-inicio":"#0174FE",
+        "azul-login-fim":"#0040ED"
       },
       borderWidth:{
         "5": "5em"

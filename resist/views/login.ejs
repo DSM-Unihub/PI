@@ -1,50 +1,51 @@
 <%- include('./partials/header.ejs') %>
-    <section class="grid grid-cols-2 relative">
+    <section class="flex flex-col lg:grid lg:grid-cols-2 relative">
         <!-- Imagem Lateral -->
-        <div class="flex relative ">
+        <div class="hidden lg:flex relative ">
             <img class=" w-full max-h-screen z-0" src="./imgs/ondas.png">
         </div>
-        <div class="grid grid-flow-row bg-cinza-claro">
+        <div class="grid grid-flow-row bg-white md:bg-cinza-claro">
             <!-- Logo -->
-            <div class="grid grid-flow-row h-fit justify-end p-4">
+            <div class="hidden md:grid grid-flow-row h-fit justify-end p-4">
                 <img class="size-10 " src="./icons/lg-resist-b.svg">
             </div>
             <!-- Div Principal-->
-            <div class="grid mx-auto p-10 gap-3 self-start justify-self-center justify-center justify-items-start">
-                <h1 class="Urbanist font-bold text-3xl text-azul-title">Bem-Vindo de Volta!</h1>
+            <div class="flex flex-col md:grid md:mx-auto md:p-10 gap-3 self-start md:justify-self-center justify-center justify-items-start">
+                <h1 class="Urbanist md:flex hidden font-bold text-3xl text-azul-title">Bem-Vindo de Volta!</h1>
+                <h1 class="Urbanist py-10 px-5 md:hidden flex font-bold text-3xl text-azul-principal">Bem-Vindo <br> ao Resist! </h1>
                 <!-- div Formulario -->
                 <div
-                    class="bg-white border rounded-xl grid grid-flow-row p-10 gap-5 justify-self-center justify-center">
-                    <p class="text-azul-text text-xl">Insira seus dados para acessar a sua conta.</p>
+                    class="md:to-white md:from-white bg-gradient-to-t to-azul-login-inicio from-azul-login-fim rounded-ss-3xl md:rounded-xl grid grid-flow-row p-5 md:p-10 gap-5 md:justify-self-center md:justify-center">
+                    <p class="text-white md:text-azul-text text-base font-bold md:font-normal md:text-xl">Insira seus dados para acessar a sua conta.</p>
                     <!-- Formulario -->
                     <form method="post" action="/authenticate">
-                        <label class="text-azul-text text-xl">E-mail</label>
+                        <label class="text-azul-text md:flex hidden text-xl">E-mail</label>
                         <br>
                         <input type="email" name="email" placeholder="Insira seu email" required
-                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                            class="border text-azul-text text-xl border-cinza-border rounded-3xl md:rounded-md h-12 w-full">
                         <br>
                         <br>
-                        <label class="text-azul-text text-xl">Senha</label>
+                        <label class="text-azul-text md:flex hidden text-xl">Senha</label>
                         <br>
                         <input type="password" name="password" placeholder="Insira sua senha" required minlength="8"
-                            class="border text-azul-text text-xl border-cinza-border rounded-md w-full">
+                            class="border text-azul-text text-xl border-cinza-border rounded-3xl md:rounded-md h-12 w-full">
                         <br>
                         <br>
-                        <input type="checkbox" checked name="lembrar" class="decoration-gray-800"> <label
-                            class="text-azul-text text-xl opacity-50">Lembrar deste dispositivo </label>
+                        <input type="checkbox" checked name="lembrar" class="checked:bg-white "> <label
+                            class="md:text-azul-text text-white text-xl opacity-95 md:opacity-50">Lembrar deste dispositivo </label>
                         <br>
                         <br>
                         <button type="submit"
-                            class="bg-azul-principal text-white text-xl text-center w-full rounded-xl p-2"> Entrar
+                            class="md:bg-azul-principal bg-white md:text-white text-azul-login-fim text-xl text-center w-full rounded-xl p-2"> Entrar
                         </button>
                     </form>
-                    <p class="text-center">Esqueceu sua senha? <a href="#">Clique <span
+                    <p class="text-center text-white md:text-azul-text">Esqueceu sua senha? <a href="#">Clique <span
                                 class="font-bold">aqui</span></a></p>
                     <div class="grid grid-flow-col text-center justify-center items-center">
                         <hr class="w-32 ">&nbsp;&nbsp;<p>OU</p>&nbsp;&nbsp;
                         <hr class="w-32">
                     </div>
-                    <a href="/cadastro" class="text-center text-azul-text font-bold text-lg">Cadastre-se</a>
+                    <a href="/cadastro" class="text-center text-white md:text-azul-text font-bold text-lg">Cadastre-se</a>
                 </div>
             </div>
         </div>
