@@ -15,8 +15,10 @@ CREATE TABLE acessos(
     ip_maquina VARCHAR(50),
     urlWeb LONGTEXT,
     id_index INT,
+    idInstituicao INT,
     PRIMARY KEY (id_acesso),
-    FOREIGN KEY(id_index) REFERENCES indexacoes(id_index)
+    FOREIGN KEY(id_index) REFERENCES indexacoes(id_index),
+    FOREIGN KEY (idInstituicao) REFERENCES instituicoes(idInstituicao)
 );
 
 CREATE TABLE termos(
