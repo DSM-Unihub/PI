@@ -1,30 +1,31 @@
 <%- include('./partials/header.ejs') %>
 <section class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full">
-    <section class="grid grid-cols-2 relative">
+    <section class="flex flex-col lg:grid lg:grid-cols-2 md:w-full relative">
         <!-- Imagem Lateral -->
-        <div class="flex relative ">
+        <div class="hidden lg:flex relative ">
             <img class=" w-full max-h-screen z-0" src="./imgs/ondas.png">
         </div>
-        <div class="grid grid-flow-row bg-cinza-claro ">
+        <div class="grid grid-flow-row bg-gradient-to-b from-azul-login-inicio to-azul-login-fim md:from-cinza-claro md:to-cinza-claro ">
             <!-- Logo -->
-            <div class="grid grid-flow-row h-fit justify-end p-4">
+            <div class="hidden md:grid grid-flow-row h-fit justify-end p-4">
                 <img class="size-10 " src="./icons/lg-resist-b.svg">
             </div>
             <div class="flex flex-col mx-auto p-5 gap-5">
-                <h1 class="Urbanist font-bold text-3xl text-azul-title">Cadastrar-se</h1>
-                <div class="bg-white border rounded-xl p-10 gap-5 flex flex-col">
+                <h1 class="Urbanist font-bold text-3xl hidden md:flex text-azul-title">Cadastrar-se</h1>
+                <h1 class="Urbanist font-bold text-3xl flex md:hidden text-white">Cadastro</h1>
+                <div class="md:bg-white rounded-xl md:p-10 gap-5 flex flex-col">
                     <!-- Formulario -->
-                    <form class="flex flex-col justify-arounds" id="multiPageForm" method="post" action="/cadastro/new">
+                    <form class="flex flex-col justify-around" id="multiPageForm" method="post" action="/cadastro/new" enctype="multipart/form-data">
                         <!-- Pagina 1 -->
                         <section class="form-page" id="page1" style="display: block;">
                             <!-- Dados da Instituição -->
-                            <div class="flex flex-row justify-between">
+                            <div class="flex md:flex-row flex-col gap-10 md:gap-0 justify-between">
                                 <!-- Label -->
                                 <div>
-                                    <label class="text-azul-text text-xl">Dados da instituição</label>
+                                    <label class="md:text-azul-text text-white font-bold text-xl">Dados da instituição:</label>
                                 </div>
                             <!-- Input -->
-                            <div>
+                            <div class="text-white font-bold md:text-azul-text">
                                 <input type="radio" name="instituicao" value="Pública">
                                 <label for="Pública">Pública</label>
                                 &nbsp;
@@ -34,24 +35,28 @@
                             </div>
                         </div>
                         <br>
-                        <!-- Nome Fantasia -->
+                        <!-- Razão Social-->
                         <div class="flex flex-row">
-                            <label class="text-azul-text text-xl text-nowrap">Nome Fantasia</label>
-                            &nbsp;
-                            &nbsp;
-                            <input type="text" name="nomeFantasia" required class="border text-azul-text text-xl border-cinza-border rounded-md w-full h-fit px-2">
+                            <label class="text-azul-text md:flex hidden text-xl text-nowrap">Razão Social</label>
+                            <span class="hidden md:flex">
+                                &nbsp;
+                                &nbsp;
+                            </span>
+                            <input type="text" name="nomeFantasia" placeholder="Razão Social" required class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                         </div>
                         <!-- CNPJ -->
-                        <div class="flex flex-row justify-between gap-5">
+                        <div class="flex md:flex-row flex-col justify-between gap-5">
                             <div>
-                                <label name class="text-azul-text text-xl text-nowrap">CNPJ</label>
-                                &nbsp;
-                                <input type="number" required name="CNPJ" class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                <label name class="text-azul-text md:flex hidden text-xl text-nowrap">CNPJ</label>
+                                    &nbsp;
+                                <input type="number" placeholder="CNPJ" required name="CNPJ" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                             </div>
                             <div>
-                                <label class="text-azul-text text-xl text-nowrap">Inscrição Estadual</label>
-                                &nbsp;
-                                <input type="number" required name="InscricaoEstadual" class="border text-azul-text text-xl border-cinza-border rounded-md px-2">
+                                <label class="text-azul-text text-xl md:flex hidden text-nowrap">Inscrição Estadual</label>
+                                <span class="hidden md:flex">
+                                    &nbsp;
+                                </span>
+                                <input type="number" placeholder="Inscrição Estadual" name="InscricaoEstadual" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                             </div>
                         </div>
                         <br>
@@ -59,35 +64,35 @@
                         <div class="flex flex-col justify-between">
                             <div class="flex flex-row  justify-between gap-5">
                                 <div class="flex flex-row flex-nowrap w-full h-fit">
-                                    <label class="text-azul-text text-xl text-nowrap">Logradouro</label>
+                                    <label class="text-azul-text text-xl hidden md:flex text-nowrap">Logradouro</label>
                                     &nbsp;
-                                    <input type="text" required name="logradouro" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" placeholder="Logradouro" required name="logradouro" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                                     </div>
                                 <div class="flex flex-row flex-nowrap ">
-                                    <label class="text-azul-text text-xl text-nowrap">Nº</label>
+                                    <label class="text-azul-text text-xl md:flex hidden text-nowrap">Nº</label>
                                     &nbsp;
-                                    <input type="number" required name="numero" class="border text-azul-text text-xl border-cinza-border rounded-md w-20 px-2">
+                                    <input type="number" placeholder="Nº" name="numero" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl h-12 w-20 px-2">
                                 </div>
                             </div>
                             <br>
                             <div class="flex flex-row flex-nowrap w-full h-fit justify-between gap-5">
                                 <div class="flex flex-row flex-nowrap w-full">
-                                    <label class="text-azul-text text-xl text-nowrap">Bairro</label>
+                                    <label class="text-azul-text text-xl md:flex hidden  text-nowrap">Bairro</label>
                                     &nbsp;
-                                    <input type="text" required name="bairro" class="border text-azul-text text-xl h-fit border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" placeholder="Bairro" required name="bairro" class="border text-azul-text text-xl  border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                                 </div>
                                 <div class="flex flex-row flex-nowrap w-full h-fit "> 
-                                    <label class="text-azul-text text-xl text-nowrap">Cidade</label>
+                                    <label class="text-azul-text text-xl md:flex hidden  text-nowrap">Cidade</label>
                                     &nbsp;
-                                    <input type="text" required name="cidade" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2">
+                                    <input type="text" placeholder="Cidade" required name="cidade" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2">
                                 </div>
                             </div>
                             <br>
                             <div class="flex flex-row flex-nowrap w-full h-fit">
-                                <label class="text-azul-text text-xl text-nowrap">Estado</label>
+                                <label class="text-azul-text text-xl md:flex hidden  text-nowrap">Estado</label>
                                 &nbsp;
-                                <select required name="estado" class="border text-azul-text text-xl border-cinza-border rounded-md w-1/2 px-2" maxlength="2">
-                                    <option value=""></option>
+                                <select required  name="estado" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:w-1/2 px-2" maxlength="2">
+                                    <option value="">Estado</option>
                                     <option value="AC">Acre</option>
                                     <option value="AL">Alagoas</option>
                                     <option value="AP">Amapá</option>
@@ -122,35 +127,37 @@
                         <!-- Telefone -->
                         <div class="flex flex-row flex-nowrap gap-5">
                             <div class="flex flex-row flex-nowrap ">
-                                <label class="text-azul-text text-xl text-nowrap">Tel.</label>
+                                <label class="text-azul-text text-xl md:flex hidden  text-nowrap">Tel.</label>
                                 &nbsp;
-                                <input id="tel-ddd" type="tel" name="telddd"
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center h-fit"
+                                <input id="tel-ddd" placeholder="DDD" type="tel" name="telddd"
+                                    class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-2xl h-12 w-12 text-center"
                                     maxlength="2">
-                                <label class="text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
-                                </label>
-                                <input id="tel-number" maxlength="9" name="telnumber"
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
+                                    <label class="md:flex hidden text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
+                                    </label>
+                                    <label class="md:hidden flex text-white text-xl text-nowrap">&nbsp;</label>
+                                <input id="tel-number" maxlength="9" placeholder="Telefone" name="telnumber"
+                                    class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-2xl w-full h-12 px-2 "
                                     type="tel">
                                 </div>
                                 <div class="flex flex-row flex-nowrap ">
-                                    <label class="text-azul-text text-xl text-nowrap">Cel.</label>
+                                    <label class="text-azul-text text-xl md:flex hidden  text-nowrap">Cel.</label>
                                 &nbsp;
-                                <input id="cel-ddd" type="tel" name="celddd"
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-10 text-center h-fit"
+                                <input id="cel-ddd" placeholder="DDD" type="tel" name="celddd"
+                                    class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-2xl h-12 w-12 text-center"
                                     maxlength="2">
-                                <label class="text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
+                                <label class="md:flex hidden text-azul-text text-xl text-nowrap">&nbsp; - &nbsp;
                                 </label>
-                                <input id="cel-number" maxlength="9" name="celnumber"
-                                    class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit"
+                                <label class="md:hidden flex text-white text-xl text-nowrap">&nbsp;</label>
+                                <input id="cel-number" maxlength="9" placeholder="Celular" name="celnumber"
+                                    class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-2xl w-full h-12 px-2 "
                                     type="tel">
                                 </div>
                             </div>
                             <br>
                             <div class="flex flex-row justify-between w-full h-fit flex-nowrap">
-                            <label class="text-azul-text text-xl text-nowrap">Email</label>
+                            <label class="text-azul-text md:flex hidden  text-xl text-nowrap">Email</label>
                             &nbsp;
-                            <input type="email" name="email" class="border text-azul-text text-xl border-cinza-border rounded-md w-full px-2 h-fit">
+                            <input type="email" placeholder="Email" name="email" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 px-2 ">
                         </div>
                     </section>
                     <!-- Pagina 2 -->
@@ -163,27 +170,27 @@
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">Nome</label>
                                 <input type="text" name="userName" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2">
+                                class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12  px-2">
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">CPF</label>
                                 <input type="text" name="userCpf" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2">
+                                class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12  px-2">
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">Email</label>
                                 <input type="email" name="userMail" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12  px-2" minlength="8">
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">Senha</label>
                                 <input type="password" name="userPassword" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12  px-2" minlength="8">
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">Conf. Senha</label>
                                 <input type="password" name="conf.userPassword" required
-                                class="border text-azul-text text-lg border-cinza-border rounded-md w-full h-fit px-2" minlength="8">
+                                class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12  px-2" minlength="8">
                             </div>
                             <div class="flex flex-col justify-between">
                                 <div class="flex flex-row  justify-between gap-5">
@@ -260,18 +267,23 @@
                                 <div class="flex flex-row items-center self-center
                                 snap-center
                                 content-center bg-cinza-border rounded-full p-5">
-                                    <img src="/icons/cross.png">
+                                    <img src="/icons/cross.png" onclick="document.getElementById('fileInput').click()">
                                 </div>    
                             </div>
+                            <input type="file" id="fileInput" name="fotoPerfil" style="display: none;" accept=".png, .jpg. .JPEG" onchange="document.getElementById('multiPageForm').submit()">
                             <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
-                        <button type="submit" onclick="teste()"> Cadastrar</button>
+                        <script>
+                            document.querySelector(".flex.flex-row.items-center img").addEventListener('click', function(){
+                                document.getElementById('fileInput').click();
+                            })
+                        </script>
                     </section>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <span class="bg-white text-cinza-border hover:text-black hover:scale-105 duration-300 px-10 py-3 rounded-full" onclick="previousPage()">Voltar</span>
-                    <span class="bg-azul-principal text-white px-10 py-3 hover:scale-105 hover:brightness-75 duration-300  rounded-full" onclick="nextPage()">Proximo</span>
+                    <span class="md:bg-white border-2 border-white md:border-0 bg-azul-login-fim text-cinza-border hover:text-black hover:scale-105 duration-300  px-5 md:px-10 py-3 font-bold rounded-full gap-3 flex items-center flex-nowrap" onclick="previousPage()"><img src="/icons/btnVlt.svg"> Voltar</span>
+                    <span class="md:bg-azul-principal bg-white md:text-white text-azul-login-fim px-5 md:px-10 py-3 hover:scale-105 font-bold hover:brightness-75 gap-3 flex items-center flex-nowrap duration-300  rounded-full" onclick="nextPage()">Proximo<img src="/icons/btnNxt.svg"></span>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>
