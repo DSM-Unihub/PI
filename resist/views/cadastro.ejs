@@ -46,7 +46,7 @@
                         </div>
                         <!-- CNPJ -->
                         <div class="flex md:flex-row flex-col justify-between gap-5 flex-nowrap">
-                            <div class="flex flex-row flex-nowrap">
+                            <div class="flex md:flex-row flex-col flex-nowrap">
                                 <label name class="text-azul-text md:flex hidden text-xl text-nowrap">CNPJ</label>
                                     &nbsp;
                                 <input type="number" placeholder="CNPJ" required name="CNPJ" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit px-2">
@@ -163,18 +163,18 @@
                     <!-- Pagina 2 -->
                     <section id="page2" class=" form-page flex flex-col w-720" style="display: none;">
                         <div class="flex flex-row justify-start">
-                            <p class="text-azul-text text-xl">Criação de usuário administrador</p>
+                            <p class="md:text-azul-text text-xl text-white font-bold">Criação de usuário administrador</p>
                         </div>
                         <br>
                         <div class="flex flex-col gap-5 justify-center h-fit w-full">
                             <div class="flex flex-row gap-2">
-                                <label class="text-azul-text text-lg text-nowrap">Nome</label>
-                                <input type="text" name="userName" required
+                                <label class="text-azul-text md:flex hidden text-lg text-nowrap">Nome</label>
+                                <input type="text" name="userName" placeholder="Nome" required
                                 class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit  px-2">
                             </div>
                             <div class="flex flex-row gap-2">
                                 <label class="text-azul-text text-lg text-nowrap">CPF</label>
-                                <input type="text" name="userCpf" required
+                                <input type="text" name="userCpf" placeholder="CPF" required
                                 class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit  px-2">
                             </div>
                             <div class="flex flex-row gap-2">

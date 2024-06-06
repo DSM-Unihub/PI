@@ -6,7 +6,8 @@ import instXemails from '../models/instXemails.js'
 import instXtelefones from '../models/instXtelefones.js'
 import funcXinstituicoes from '../models/funcXinstituicoes.js'
 import funcionariosXtelefones from '../models/funcionariosXtelefones.js'
-
+import multer from 'multer';
+const upload = multer({dest: "public/imgs"})
 const router = express.Router()
 
 router.get("/login", (req, res) => {
@@ -50,7 +51,7 @@ router.get("/cadastro", function (req, res) {
     })
 })
 
-router.post("/cadastro/new", async (req, res) => {
+router.post("/cadastro/new", upload.single("fotoPerfil"), async (req, res) => {
     const {
         instituicao,
         nomeFantasia,
