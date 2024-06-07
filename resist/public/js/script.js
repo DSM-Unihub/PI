@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function(){
         pages.forEach((page, index)=>{
             page.style.display = index === pageIndex ? 'block' : 'none'
         })
+
      // Adjust button behavior based on current page
     const backButton = document.getElementById('btn-back');
     const nextButton = document.getElementById('btn-next');

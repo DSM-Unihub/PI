@@ -119,7 +119,8 @@ router.post("/cadastro/new", upload.single("fotoPerfil"), async (req, res) => {
                 rua: logradouroUser,
                 bairro: bairroUser,
                 cidade: cidadeUser,
-                estado: estadoUser
+                estado: estadoUser,
+                idGrupo: 1
             });
             await funcionariosXtelefones.create({ 
                 telefone: `(${userCelddd}) ${userCelNumber}`, 

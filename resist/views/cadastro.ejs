@@ -44,9 +44,10 @@
                             </span>
                             <input type="text" name="nomeFantasia" placeholder="Razão Social" required class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit px-2">
                         </div>
+                        <br class="flex md:hidden">
                         <!-- CNPJ -->
                         <div class="flex md:flex-row flex-col justify-between gap-5 flex-nowrap">
-                            <div class="flex md:flex-row flex-col flex-nowrap">
+                            <div class="flex flex-row flex-nowrap">
                                 <label name class="text-azul-text md:flex hidden text-xl text-nowrap">CNPJ</label>
                                     &nbsp;
                                 <input type="number" placeholder="CNPJ" required name="CNPJ" class="border text-azul-text text-xl border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit px-2">
@@ -163,18 +164,18 @@
                     <!-- Pagina 2 -->
                     <section id="page2" class=" form-page flex flex-col w-720" style="display: none;">
                         <div class="flex flex-row justify-start">
-                            <p class="md:text-azul-text text-xl text-white font-bold">Criação de usuário administrador</p>
+                            <p class="md:text-azul-text text-white font-bold text-xl">Criação de usuário administrador</p>
                         </div>
                         <br>
-                        <div class="flex flex-col gap-5 justify-center h-fit w-full">
+                        <div class="flex flex-col gap-3 justify-center h-fit w-full">
                             <div class="flex flex-row gap-2">
-                                <label class="text-azul-text md:flex hidden text-lg text-nowrap">Nome</label>
-                                <input type="text" name="userName" placeholder="Nome" required
+                                <label class="text-azul-text text-lg hidden md:flex text-nowrap">Nome</label>
+                                <input type="text" name="userName" required
                                 class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit  px-2">
                             </div>
                             <div class="flex flex-row gap-2">
-                                <label class="text-azul-text text-lg text-nowrap">CPF</label>
-                                <input type="text" name="userCpf" placeholder="CPF" required
+                                <label class="text-azul-text text-lg hidden md:flex text-nowrap">CPF</label>
+                                <input type="text" name="userCpf" required
                                 class="border text-azul-text text-lg border-cinza-border md:rounded-md rounded-3xl w-full h-12 md:h-fit  px-2">
                             </div>
                             <div class="flex flex-row gap-2">
@@ -263,27 +264,22 @@
                         <br>
                         <br>
                         <div class="flex flex-row gap-10">
-                            <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2 hover:scale-105 duration-300 hover:rotate-180">
+                            <div class="flex border-cinza-border border-4 border-dashed rounded-full p-2 hover:scale-105 duration-300 hover:rotate-180" onclick="document.getElementById('fileInput').click()">
                                 <div class="flex flex-row items-center self-center
                                 snap-center
                                 content-center bg-cinza-border rounded-full p-5">
-                                    <img src="/icons/cross.png" onclick="document.getElementById('fileInput').click()">
+                                    <img id="imgInput" src="/icons/cross.png" >
                                 </div>    
                             </div>
-                            <input type="file" id="fileInput" name="fotoPerfil" style="display: none;" accept=".png, .jpg. .JPEG" onchange="document.getElementById('multiPageForm').submit()">
+                            <input type="file" id="fileInput" name="fotoPerfil" style="display: none;" accept=".png, .jpg. .JPEG">
                             <p class="text-lg text-azul-cinza-claro"><span class="text-xl font-bold">Faça upload da sua foto de perfil.</span><br>Formatos aceitos: PNG, JPG, JPEG. <br> Máximo de 10Mb.</p>
                         </div>
-                        <script>
-                            document.querySelector(".flex.flex-row.items-center img").addEventListener('click', function(){
-                                document.getElementById('fileInput').click();
-                            })
-                        </script>
                     </section>
                     </form>
                 </div>
                 <div class="flex flex-row justify-between">
-                    <span class="md:bg-white border-2 border-white md:border-0 bg-azul-login-fim text-cinza-border hover:text-black hover:scale-105 duration-300  px-5 md:px-10 py-3 font-bold rounded-full gap-3 flex items-center flex-nowrap" onclick="previousPage()"><img src="/icons/btnVlt.svg"> Voltar</span>
-                    <span class="md:bg-azul-principal bg-white md:text-white text-azul-login-fim px-5 md:px-10 py-3 hover:scale-105 font-bold hover:brightness-75 gap-3 flex items-center flex-nowrap duration-300  rounded-full" onclick="nextPage()">Proximo<img src="/icons/btnNxt.svg"></span>
+                    <button id="btn-back"  class="md:bg-white border-2 border-white md:border-0 bg-azul-login-fim text-cinza-border cursor-pointer hover:text-black hover:scale-105 duration-300  px-5 md:px-10 py-3 font-bold rounded-full gap-3 flex items-center flex-nowrap" onclick="previousPage()"><img src="/icons/btnVlt.svg"> Voltar</button>
+                    <button id="btn-next" class="md:bg-azul-principal bg-white md:text-white text-azul-login-fim cursor-pointer px-5 md:px-10 py-3 hover:scale-105 font-bold hover:brightness-75 gap-3 flex items-center flex-nowrap duration-300  rounded-full" onclick="nextPage()">Proximo<img src="/icons/btnNxt.svg"></button>
                 </div>
     </section>
     <%- include('./partials/footer.ejs') %>

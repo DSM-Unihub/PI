@@ -1,7 +1,7 @@
-CREATE DATABASE resistBD;
+CREATE DATABASE if not exists resistBD;
 USE resistBD;
 
-CREATE TABLE indexacoes(
+CREATE TABLE if not exists indexacoes(
 	id_index INT AUTO_INCREMENT,
     pathLocal LONGTEXT,
     flag BOOLEAN DEFAULT TRUE,
@@ -9,25 +9,13 @@ CREATE TABLE indexacoes(
     PRIMARY KEY(id_index)
 );
 
-CREATE TABLE acessos(
-	id_acesso INT AUTO_INCREMENT,
-    data_hora DATETIME,
-    ip_maquina VARCHAR(50),
-    urlWeb LONGTEXT,
-    id_index INT,
-    idInstituicao INT,
-    PRIMARY KEY (id_acesso),
-    FOREIGN KEY(id_index) REFERENCES indexacoes(id_index),
-    FOREIGN KEY (idInstituicao) REFERENCES instituicoes(idInstituicao)
-);
-
-CREATE TABLE termos(
+CREATE TABLE if not exists termos(
 	id_termo INT AUTO_INCREMENT,
     termo VARCHAR(50),
     PRIMARY KEY (id_termo)
 );
 
-CREATE TABLE indexXtermos(
+CREATE TABLE if not exists indexXtermos(
 	id_indexXtermo INT AUTO_INCREMENT,
     id_index INT,
     id_termo INT,
@@ -39,19 +27,19 @@ CREATE TABLE indexXtermos(
 #---------------------------------------------------------------------
 #Parte do Usuário
 
-CREATE TABLE grupoPermissoes(
+CREATE TABLE if not exists grupoPermissoes(
 	idGrupo INT AUTO_INCREMENT,
     nomeGrupo VARCHAR(80),
 	PRIMARY KEY (idGrupo)
 );
 
-CREATE TABLE permissoes(
+CREATE TABLE if not exists permissoes(
 	idPermissao INT AUTO_INCREMENT,
     nomePermissao VARCHAR(50),
 	PRIMARY KEY (idPermissao)
 );
 
-CREATE TABLE grupoPerXpermissoes(
+CREATE TABLE if not exists  grupoPerXpermissoes(
 	idGrupoPerXpermissao INT AUTO_INCREMENT,
     idGrupo INT,
     idPermissao INT,
@@ -60,7 +48,7 @@ CREATE TABLE grupoPerXpermissoes(
     FOREIGN KEY (idPermissao) REFERENCES permissoes (idPermissao)    
 );
 
-CREATE TABLE funcionarios(
+CREATE TABLE if not exists funcionarios(
 	idFuncionario INT AUTO_INCREMENT,
 	foto LONGTEXT,
     nome VARCHAR(200),
@@ -77,7 +65,7 @@ CREATE TABLE funcionarios(
 );
 
 
-CREATE TABLE funcionariosXtelefones(
+CREATE TABLE if not exists funcionariosXtelefones(
 	idFuncXtelefone INT AUTO_INCREMENT,
     telefone VARCHAR (25),
     idFuncionario INT,
@@ -85,7 +73,7 @@ CREATE TABLE funcionariosXtelefones(
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios (idFuncionario)
 );
 
-CREATE TABLE instituicoes(
+CREATE TABLE if not exists instituicoes(
 	idInstituicao INT AUTO_INCREMENT,
     razaoSocial VARCHAR(200),
     cnpj VARCHAR(55),
@@ -98,7 +86,19 @@ CREATE TABLE instituicoes(
     PRIMARY KEY (idInstituicao)
 );
 
-CREATE TABLE funcXinstituicoes(
+CREATE TABLE if not exists acessos(
+	id_acesso INT AUTO_INCREMENT,
+    data_hora DATETIME,
+    ip_maquina VARCHAR(50),
+    urlWeb LONGTEXT,
+    id_index INT,
+    idInstituicao INT,
+    PRIMARY KEY (id_acesso),
+    FOREIGN KEY(id_index) REFERENCES indexacoes(id_index),
+    FOREIGN KEY (idInstituicao) REFERENCES instituicoes(idInstituicao)
+);
+
+CREATE TABLE if not exists funcXinstituicoes(
 	idFuncXinstituicao INT AUTO_INCREMENT,
     idInstituicao INT,
     idFuncionario INT,
@@ -107,7 +107,7 @@ CREATE TABLE funcXinstituicoes(
     FOREIGN KEY (idFuncionario) REFERENCES funcionarios(idFuncionario)
 );
 
-CREATE TABLE instXtelefones(
+CREATE TABLE if not exists instXtelefones(
 	idInstXtelefone INT AUTO_INCREMENT,
     telefone VARCHAR (25),
     idInstituicao INT,
@@ -115,7 +115,7 @@ CREATE TABLE instXtelefones(
     FOREIGN KEY (idInstituicao) REFERENCES instituicoes (idInstituicao)
 );
 
-CREATE TABLE instXemails(
+CREATE TABLE if not exists instXemails(
 	idInstXemail INT AUTO_INCREMENT,
     email VARCHAR (150), 
     idInstituicao INT,
@@ -123,30 +123,58 @@ CREATE TABLE instXemails(
     FOREIGN KEY (idInstituicao) REFERENCES instituicoes (idInstituicao)
 );
 
-INSERT INTO funcionarios(
-	foto,
-    nome,
-    cpf,
-    email,
-    senha,
-    rua,
-    bairro,
-    cidade,
-    estado
-    ) 
-values 
-	('/home/mandirad/Downloads/employee-icon.png',
-    'Daniel',
-    '123.456.789-01',
-    'email@email.com',
-    'teste123',
-    'rua 1',
-    'vila 2',
-    'cidade 3',
-    'SP');
-        
-        
-select * from funcionarios;
+INSERT INTO 
+    permissoes (nomePermissao) 
+VALUES
+    ('Leitura'),
+    ('Atualização'),
+    ('Gerar Relatórios'),
+    ('Exclusão de Usuários'),
+    ('Inserção de Usuários'),
+    ('Exclusão de Dados'),
+    ('Configurar Permissões'),
+    ('Gerar Exceções'),
+    ('Visualização de Logs'),
+    ('Exportação de Dados'),
+    ('Importação de Dados');
 
+INSERT INTO 
+    grupoPermissoes(nomeGrupo) 
+VALUES 
+    ('Super Administrador'),
+    ('Analista de Dados Limitado'),
+    ('Gerente de Dados'),
+    ('Consultor de Dados');
 
+-- Super Administrador
+INSERT INTO grupoPerXpermissoes (idGrupo, idPermissao) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10),
+(1, 11);
 
+-- Analista de Dados Limitado
+INSERT INTO grupoPerXpermissoes (idGrupo, idPermissao) VALUES
+(2, 1),
+(2, 3),
+(2, 8);
+
+-- Gerente de Dados
+INSERT INTO grupoPerXpermissoes (idGrupo, idPermissao) VALUES
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 9),
+(3, 10),
+(3, 11);
+
+-- Consultor de Dados
+INSERT INTO grupoPerXpermissoes (idGrupo, idPermissao) VALUES
+(4, 1);
