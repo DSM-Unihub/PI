@@ -1,19 +1,22 @@
 <%- include('./partials/header.ejs') %>
     <section
-        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full">
         <%- include('./partials/navBar.ejs') %>
+        
             <section class="flex flex-col w-full">
-                <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
-                    <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
+                <section class="flex flex-row items-center justify-between h-fit p-6 md:gap-2 lg:gap-32">
+                    <div class="flex flex-row items-center gap-2 lg:gap-5 w-full max-w-7xl">
                         <%- include('./partials/headerBar.ejs') %>
+                        
+        
                     </div>
                 </section>
-                <section class="grid grid-cols-2">
+                <section class="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-0">
                     <!-- Dashboard Principal -->
-                    <section class="grid grid-flow-row px-10 gap-1">
+                    <section class="grid grid-flow-row px-2 lg:px-10 gap-10 lg:gap-1">
 
                         <!-- Bem-vindo -->
-                        <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                        <div class="flex flex-col text-wrap bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
                             <p class="text-4xl text-white">Olá,<%= usuario.nome%>
                             </p>
                             <p class="text-2xl text-white">Bem-vindo de volta ao seu dashboard.</p>
@@ -32,7 +35,7 @@
                                 </select>
                             </div>
                             <!-- Atividades -->
-                            <div class="bg-white h-max rounded-b-xl gap-5">
+                            <div class=" bg-white h-max rounded-b-xl lg:gap-5">
                                 <div class="flex flex-row justify-between p-3 items-center">
                                     <div class="flex flex-row justify-start items-center gap-5">
                                         <div class="border-2 border-azul-principal rounded-full p-2 ">
@@ -138,10 +141,10 @@
                         <div class="grid grid-flow-row gap-5 flex-nowrap">
                             <p class="text-lg text-azul-text">Nível de incidência por sala/laboratório</p>
                             <!-- Graficos -->
-                            <div class="grid grid-cols-4 gap-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                                 <!-- Lab-01 -->
                                 <div class="bg-azul-principal rounded-xl">
-                                    <p class="text-white text-base p-3 text-center">Laboratório 01</p>
+                                    <p class="text-white text-base p-3 text-center"><%= Laboratorio.labName%></p>
                                     <!-- canvas -->
                                     <div
                                         class="bg-white h-max rounded-b-xl flex flex-row justify-center items-center p-2">
@@ -303,7 +306,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-4 gap-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                                 <!-- Lab-05 -->
                                 <div class="bg-azul-principal rounded-xl">
                                     <p class="text-white text-base p-3 text-center">Laboratório 05</p>
@@ -471,7 +474,7 @@
                             </div>
                         </div>
                         <!-- Tabelas -->
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                             <div class="flex flex-col">
                                 <p class="text-azul-text text-base">Ativos Agora</p>
                                 <div

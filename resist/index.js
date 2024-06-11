@@ -23,6 +23,7 @@ import configControllers from './controllers/configControllers.js';
 import estatisticasControllers from './controllers/estatisticasControllers.js'
 
 import session, { Session } from 'express-session'
+import { lab } from 'd3';
 app.use(session({
     secret: "unihubResist",
     cookie: { maxAge: 28800000 },
@@ -41,8 +42,17 @@ app.use("/", estatisticasControllers)
 
 
 app.get("/", Auth, async (req, res) => {
+    const labs = await connection.query("SELECT * FROM labs")
+    console.log(labs)
+    req.session.lab={
+        labName: labs.laboratorio,
+        acessosTotais: labs.total_acessos,
+        percentAccess: labs.porcentagem_acessos
+
+    }
     res.render("index",{
-        usuario: req.session.user
+        usuario: req.session.user,
+        Laboratorio: req.session.lab
         //messages: req.flash()
     })
 })
