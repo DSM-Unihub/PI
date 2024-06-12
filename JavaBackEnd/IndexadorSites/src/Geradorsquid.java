@@ -1,5 +1,18 @@
 
-     import java.io.*;
+     
+
+
+
+
+
+
+
+
+
+
+
+
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -14,8 +27,8 @@ public class Geradorsquid {
         TratamentoDados dado = new TratamentoDados();
         indexacoes idx = new indexacoes();
         Acessos acc = new Acessos();
-        String squidLogFilePath = "C:" + File.separator + "Users" + File.separator + "fatec-dsm2" + File.separator + "Desktop" + File.separator + "DSM2" + File.separator + "br" + File.separator + "acc.txt"; // Caminho para o arquivo de log do Squid
-        String positionFilePath = "C:" + File.separator + "Users" + File.separator + "fatec-dsm2" + File.separator + "Desktop" + File.separator + "DSM2" + File.separator + "br" + File.separator + "arm.txt"; // Caminho para o arquivo que armazena a última posição
+        String squidLogFilePath = "C:\\Users\\bruno\\Desktop\\test\\acc.txt"; // Caminho para o arquivo de log do Squid
+        String positionFilePath = "C:\\Users\\bruno\\Desktop\\test\\arm.txt"; // Caminho para o arquivo que armazena a última posição
         // Criar um conjunto para armazenar os sites já adicionados
         
         
@@ -47,8 +60,8 @@ while (true) {
             }
            
         
-             
-Set<String> sitesAdicionados = dado.loadSitesFromFile(positionFilePath);
+             Set<String> sitesAdicionados = dado.loadSitesFromFile(positionFilePath);
+
                if (dado.getUrl() != null && !sitesAdicionados.contains(line)) {
                    
                    
@@ -60,7 +73,8 @@ Set<String> sitesAdicionados = dado.loadSitesFromFile(positionFilePath);
                     idx.setPathLocal(dado.getUrl());
                     idx.setFlag(true);
                     idx.setUrlWeb(dado.getUrl());
-                    idx.setPathLocal(dado.getUrl()+".txt");
+                    idx.setPathLocal(dado.showHost(dado.getUrl())+".txt");
+                       System.out.println(idx.getPathLocal());
                     idx.IndexarSite();
                    }
                     
@@ -99,7 +113,7 @@ Set<String> sitesAdicionados = dado.loadSitesFromFile(positionFilePath);
                     String htmlComAspasDuplas = html.replace("'", "\"");
                     //banco.setSite(htmlComAspasDuplas);
                     //criando o arquivo e salvando a localização no banco
-                    String local = "C:\\Users\\fatec-dsm2\\Desktop\\DSM2\\br\\sites\\"+dado.showHost(dado.getUrl())+".txt";
+                    String local = "C:\\Users\\bruno\\Desktop\\test\\sites\\"+dado.showHost(dado.getUrl())+".txt";
                         FileWriter fl = new FileWriter(local);
                     fl.write(htmlComAspasDuplas);
                     

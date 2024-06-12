@@ -189,10 +189,6 @@ public static String extractDateTimeFromLogLine(String logLine) {
         }
         return outputDate;
     }
- 
-
-
-
 
 public static String extractIPFromLogLine(String logLine) {
     
@@ -227,6 +223,7 @@ public static String extractIPFromLogLine(String logLine) {
     Document doc = Jsoup.connect(url).get();
     return doc.outerHtml(); // Retorna o HTML completo da página
 }
+  
     
     
 }
