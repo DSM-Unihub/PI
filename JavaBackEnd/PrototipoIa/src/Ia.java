@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Ia {
 
@@ -23,8 +25,12 @@ public class Ia {
                 ResultSet rs = conexao.RetornarResultset("SELECT * FROM indexacoes WHERE id_index > " + lastId + " ORDER BY id_index ASC");
                 
                 while (rs.next()) {
-                    String pathLocal = rs.getString("pathLocal");
-                    writeToFile(pathLocal);
+                    String pathLocal = "C:\\Users\\bruno\\Desktop\\test\\sites\\" + rs.getString("pathLocal");
+                    String urlWeb = rs.getString("urlWeb");
+
+                    if (containsCake(pathLocal)) {
+                        writeToFile(urlWeb);
+                    }
                     
                     lastId = rs.getInt("id_index");
                     saveLastProcessedId(lastId);
@@ -37,9 +43,19 @@ public class Ia {
         }
     }
 
-    private static void writeToFile(String pathLocal) throws IOException {
+    private static boolean containsCake(String filePath) {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            return content.contains("cake");
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o arquivo HTML: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private static void writeToFile(String urlWeb) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(pathLocal);
+            writer.write(urlWeb);
             writer.newLine();
         }
     }
