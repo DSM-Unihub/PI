@@ -1,5 +1,6 @@
 <%- include('./partials/header.ejs') %>
-    <section class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+    <section
+        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
         <%- include('./partials/navBar.ejs') %>
             <section class="flex flex-col w-full">
                 <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
@@ -79,192 +80,42 @@
                                         });
                                     });
                                 </script>
-                                <div class="flex flex-col bg-yellow-50">
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
+                                <div class="flex flex-col bg-cinza">
+                                    <% Mes.forEach(Mes=> { %>
+                                        <div
+                                            class="grid grid-cols-4 gap-3 text-azul-text content-center justify-between self-stretch  h-full px-5">
+                                            <div class="text-start">
+                                                <%= Mes.mes %>
+                                            </div>
+                                            <div class="text-end grid grid-cols-2 justify-end">
+                                                <div class="flex flex-row justify-end">
+                                                    <img class="size-4" src="/icons/desktopmarker.svg">
+                                                </div>
+                                                <div class="flex flex-row justify-end">
+                                                    <%= Mes.desktop %>
+                                                </div>
+                                            </div>
+                                            <div class="text-end grid grid-cols-2 justify-end">
+                                                <div class="flex flex-row justify-end">
+                                                    <img class="size-4" src="/icons/mobilemarker.svg">
+                                                </div>
+                                                <div class="flex flex-row justify-end">
+                                                    <%= Mes.mobile %>
+                                                </div>
+                                            </div>
+                                            <div class="text-center justify-center grid grid-cols-2  text-white <% if (Mes.percent > 0) { %>bg-red-status <% } else if (Mes.percent < 0) { %>bg-green-500<% } %> ">
+                                                <div>
+                                                    <%= Mes.percent %>
+                                                </div>
+                                                <div class="flex flex-row justify-center items-center">
+                                                    <img src="/icons/arrowWhite.svg " class="size-4 <% if (Mes.percent < 0) {%> rotate-180 <%}%> ">
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="grid grid-cols-4">
-                                        <div>
-                                            mes
-                                        </div>
-                                        <div>
-                                            valor1
-                                        </div>
-                                        <div>
-                                            valor2
-                                        </div>
-                                        <div>
-                                            status
-                                        </div>
-                                    </div>
-                                    <hr>
+                                        <hr>
+                                        <% }); %>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex flex-col">
-                            Hello
                         </div>
                     </section>
                 </section>

@@ -42,17 +42,17 @@ app.use("/", estatisticasControllers)
 
 
 app.get("/", Auth, async (req, res) => {
-    const labs = await connection.query("SELECT * FROM labs")
+    const [labs] = await connection.query("SELECT * FROM labs")
     console.log(labs)
-    req.session.lab={
-        labName: labs.laboratorio,
-        acessosTotais: labs.total_acessos,
-        percentAccess: labs.porcentagem_acessos
+        req.session.lab = labs.map(lab => ({
+            labName: lab.laboratorio,
+            acessosTotais: lab.total_acessos,
+            percentAccess: lab.porcentagem_acessos
+    })) 
 
-    }
     res.render("index",{
         usuario: req.session.user,
-        Laboratorio: req.session.lab
+        Laboratorio: labs
         //messages: req.flash()
     })
 })

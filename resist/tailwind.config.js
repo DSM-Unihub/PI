@@ -18,7 +18,9 @@ export default {
         "azul-gradiente-final":"#4571F9" ,
         "azul-gradiente-inicio":'#2D60FC',
         "azul-login-inicio":"#0174FE",
-        "azul-login-fim":"#0040ED"
+        "azul-login-fim":"#0040ED",
+        "cinza":"#F9F9F9",
+        "red-status":"#F86B6B"
       },
       borderWidth:{
         "5": "5em"
