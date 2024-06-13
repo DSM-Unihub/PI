@@ -20,7 +20,8 @@ export default {
         "azul-login-inicio":"#0174FE",
         "azul-login-fim":"#0040ED",
         "cinza":"#F9F9F9",
-        "red-status":"#F86B6B"
+        "red-status":"#F86B6B",
+        "cinza-bg-bloq":"#1A1A1A"
       },
       borderWidth:{
         "5": "5em"

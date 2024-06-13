@@ -1,0 +1,63 @@
+<%- include('./partials/header.ejs') %>
+    <section
+        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        <%- include('./partials/navBar.ejs') %>
+            <section class="flex flex-col w-full">
+                <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
+                    <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
+                        <%- include('./partials/headerBar.ejs') %>
+                    </div>
+                </section>
+                <section class="flex flex-col gap-5">
+                    <!-- Dashboard Principal -->
+                    <section class="grid grid-cols-2 px-5 gap-1">
+                        <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                            <p class="text-4xl text-white">Bloqueios</p>
+                            <p class="text-2xl text-white">Acesso aos dados de bloqueio manuais e automáticos.</p>
+                        </div>
+                    </section>
+                    <section class=" grid grid-cols-2 px-5">
+                        <div class="Flex flex-col">
+                            <div class="flex flex-row justify-between">
+                                <h3 class="text-azul-text text-base">Editar bloqueios de URL</h3>
+                                <button class="rounded bg-gradient-to-r text-white w-max p-3 from-azul-login-inicio to-azul-login-fim">Ordenar URL's</button>
+                            </div>
+                            <div class="bg-white rounded-xl w-max p-5 gap-5">
+                                <table class="table-auto w-full border-separate border-spacing-2">
+                                    <thead>
+                                        <tr class="text-azul-text">
+                                            <th>Tipo Disp.</th>
+                                            <th>URL Bloqueado</th>
+                                            <th>Data</th>
+                                            <th>Tipo Bloq.</th>
+                                            <th>Selec./Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-azul-text">
+                                        <tr class="border-b justify-self-center  ">
+                                            <td class=" flex flex-col items-center justify-center"><img src="/icons/iconDesktop.svg"></td>
+                                            <td>https://www.sitebloqueado.com/bloqueio?deeplink=%2Fowa%2F</td>
+                                            <td>16/05/2024 - 20:24</td>
+                                            <td>Automático</td>
+                                            <td class="grid grid-cols-2">
+                                                <input class="cursor-pointer" type="checkbox" name="select">
+                                                arrow
+                                                
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            Bloqueio Manual
+                            <div>
+                                aaaaaaaaaaaaaaaaaaaaaaaaaa
+                            </div>
+                        </div>
+                    </section>
+
+                </section>
+            </section>
+    </section>
+    <%- include('./partials/footer.ejs') %>
