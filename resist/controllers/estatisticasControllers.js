@@ -1,9 +1,19 @@
 import express from 'express'
+import connection from '../config/sequelize-config.js'
 import Auth from '../middleware/Auth.js'
 
 const router = express.Router()
 
-router.get("/estatisticas", Auth, (req, res)=>{
+router.get("/estatisticas", Auth, async (req, res)=>{
+    const [acessoxmes] = await connection.query("SELECT * FROM acessoxmes")
+    console.log(acessoxmes)
+        req.session.statisticas = acessoxmes.map(estatisticas => ({
+            Dispositivo: estatisticas.tiipo_dispositivo,
+            Laboratório: estatisticas.laboratorio,
+            mes: estatisticas.mes_acesso,
+            moveis: estatisticas.contagem_disp_movel,
+            desktop
+    })) 
     const estatisticasPorMes = [
         { 
             mes: 'Janeiro', 

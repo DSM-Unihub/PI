@@ -1,8 +1,6 @@
 CREATE DATABASE if not exists resistBD;
 USE resistBD;
 
-
-
 CREATE TABLE if not exists indexacoes(
 	id_index INT AUTO_INCREMENT,
     pathLocal LONGTEXT,
@@ -212,6 +210,22 @@ CREATE VIEW labs AS
         `resistbd`.`acessos`) subquery
     GROUP BY subquery.laboratorio;
     
+    INSERT INTO indexacoes (pathLocal, flag, urlWeb) VALUES
+('/local/path/example1', FALSE, 'http://example.com/blocked1'),
+('/local/path/example2', TRUE, 'http://example.com/allowed1'),
+('/local/path/example3', FALSE, 'http://example.com/blocked2'),
+('/local/path/example4', TRUE, 'http://example.com/allowed2'),
+('/local/path/example5', FALSE, 'http://example.com/blocked3');
+
+INSERT INTO instituicoes (razaoSocial, cnpj, inscricaoEstadual, logradouro, numero, bairro, cidade, estado) VALUES
+('Instituição Alpha', '12.345.678/0001-90', '123456789', 'Rua Exemplo 1', 100, 'Bairro A', 'Cidade X', 'SP'),
+('Instituição Beta', '98.765.432/0001-10', '987654321', 'Avenida Exemplo 2', 200, 'Bairro B', 'Cidade Y', 'RJ'),
+('Instituição Gama', '11.223.344/0001-55', '1122334455', 'Travessa Exemplo 3', 300, 'Bairro C', 'Cidade Z', 'MG'),
+('Instituição Delta', '22.334.455/0001-66', '2233445566', 'Praça Exemplo 4', 400, 'Bairro D', 'Cidade W', 'RS'),
+('Instituição Épsilon', '33.445.566/0001-77', '3344556677', 'Alameda Exemplo 5', 500, 'Bairro E', 'Cidade V', 'BA'),
+('Instituição Zeta', '44.556.677/0001-88', '4455667788', 'Estrada Exemplo 6', 600, 'Bairro F', 'Cidade U', 'PR');
+
+
     
 INSERT INTO acessos (data_hora, ip_maquina, urlWeb, id_index, idInstituicao) VALUES
 -- Laboratório 1
@@ -256,23 +270,6 @@ INSERT INTO acessos (data_hora, ip_maquina, urlWeb, id_index, idInstituicao) VAL
 -- Verificação do view
 SELECT * FROM labs; 
 
-
-INSERT INTO instituicoes (razaoSocial, cnpj, inscricaoEstadual, logradouro, numero, bairro, cidade, estado) VALUES
-('Instituição Alpha', '12.345.678/0001-90', '123456789', 'Rua Exemplo 1', 100, 'Bairro A', 'Cidade X', 'SP'),
-('Instituição Beta', '98.765.432/0001-10', '987654321', 'Avenida Exemplo 2', 200, 'Bairro B', 'Cidade Y', 'RJ'),
-('Instituição Gama', '11.223.344/0001-55', '1122334455', 'Travessa Exemplo 3', 300, 'Bairro C', 'Cidade Z', 'MG'),
-('Instituição Delta', '22.334.455/0001-66', '2233445566', 'Praça Exemplo 4', 400, 'Bairro D', 'Cidade W', 'RS'),
-('Instituição Épsilon', '33.445.566/0001-77', '3344556677', 'Alameda Exemplo 5', 500, 'Bairro E', 'Cidade V', 'BA'),
-('Instituição Zeta', '44.556.677/0001-88', '4455667788', 'Estrada Exemplo 6', 600, 'Bairro F', 'Cidade U', 'PR');
-
-
-INSERT INTO indexacoes (pathLocal, flag, urlWeb) VALUES
-('/local/path/example1', FALSE, 'http://example.com/blocked1'),
-('/local/path/example2', TRUE, 'http://example.com/allowed1'),
-('/local/path/example3', FALSE, 'http://example.com/blocked2'),
-('/local/path/example4', TRUE, 'http://example.com/allowed2'),
-('/local/path/example5', FALSE, 'http://example.com/blocked3');
-
 INSERT INTO 
     grupoPermissoes(nomeGrupo) 
 VALUES 
@@ -291,13 +288,11 @@ FROM funcionarios f
 JOIN grupoPermissoes g
 	ON f.idGrupo = g.idGrupo;
 	
-
-
 -- Tela de Bloqueio!!
-
+create view bloqueios as
 SELECT 
-    a.urlWeb AS 'URL Bloqueado', 
-    a.data_hora AS 'Data'
+    a.urlWeb AS URL_Bloqueado, 
+    a.data_hora AS data_hora
 FROM 
     acessos a
 JOIN 
@@ -305,54 +300,21 @@ JOIN
 WHERE 
     i.flag = FALSE;
 
--- Tela de Estatísticas (gráfico de visão geral) com TODOS os acessos!
-
-SELECT 
-    CASE 
-        WHEN l.laboratorio = 'Laboratório Movel' THEN 'Disp. Móveis'
-        ELSE 'Desktop'
-    END AS 'Tipo de Dispositivo',
-    l.laboratorio AS 'Laboratório',
-    MONTH(a.data_hora) AS 'Mês de acesso',
-    SUM(CASE WHEN l.laboratorio = 'Laboratório Movel' THEN 1 ELSE 0 END) AS 'Contagem Disp. Móveis',
-    SUM(CASE WHEN l.laboratorio <> 'Laboratório Movel' THEN 1 ELSE 0 END) AS 'Contagem Desktop'
-FROM 
-    acessos a
-JOIN 
-    (SELECT 
-        ip_maquina,
-        CASE
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.1') AND INET_ATON('192.168.1.30') THEN 'Laboratório 1'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.31') AND INET_ATON('192.168.1.60') THEN 'Laboratório 2'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.61') AND INET_ATON('192.168.1.90') THEN 'Laboratório 3'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.91') AND INET_ATON('192.168.1.120') THEN 'Laboratório 4'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.121') AND INET_ATON('192.168.1.150') THEN 'Laboratório 5'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.151') AND INET_ATON('192.168.1.180') THEN 'Laboratório 6'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.181') AND INET_ATON('192.168.1.210') THEN 'Laboratório Professores'
-            WHEN INET_ATON(ip_maquina) BETWEEN INET_ATON('192.168.1.211') AND INET_ATON('192.168.1.240') THEN 'Laboratório Movel'
-            ELSE 'Outro Laboratório'
-        END AS laboratorio
-    FROM 
-        acessos) AS l ON a.ip_maquina = l.ip_maquina
-WHERE 
-    l.laboratorio IN ('Laboratório Movel', 'Laboratório 1', 'Laboratório 2', 'Laboratório 3', 'Laboratório 4', 'Laboratório 5', 'Laboratório 6', 'Laboratório Professores')
-GROUP BY 
-    MONTH(a.data_hora), l.laboratorio
-ORDER BY 
-    MONTH(a.data_hora);
-
-
-
 -- Tela de Estatísticas (gráfico de visão geral) acessos BLOQUEADOS!
+select * from acessoxmes;
+
+drop view acessoxmes;
+
+create view acessoxmes as
 SELECT 
     CASE 
         WHEN l.laboratorio = 'Laboratório Movel' THEN 'Disp. Móveis'
         ELSE 'Desktop'
-    END AS 'Tipo de Dispositivo',
-    l.laboratorio AS 'Laboratório',
-    MONTH(a.data_hora) AS 'Mês de acesso',
-    SUM(CASE WHEN l.laboratorio = 'Laboratório Movel' THEN 1 ELSE 0 END) AS 'Contagem Disp. Móveis',
-    SUM(CASE WHEN l.laboratorio <> 'Laboratório Movel' THEN 1 ELSE 0 END) AS 'Contagem Desktop'
+    END AS tipo_dispositivo,
+    l.laboratorio AS laboratorio,
+    MONTH(a.data_hora) AS mes_acesso,
+    SUM(CASE WHEN l.laboratorio = 'Laboratório Movel' THEN 1 ELSE 0 END) AS contagem_disp_movel,
+    SUM(CASE WHEN l.laboratorio <> 'Laboratório Movel' THEN 1 ELSE 0 END) AS contagem_desktop
 FROM 
     acessos a
 JOIN 
@@ -381,10 +343,5 @@ GROUP BY
 ORDER BY 
     MONTH(a.data_hora);
 
-    
-    select * from indexacoes;
 
 
-
-    
-select * from acessos limit 10;
