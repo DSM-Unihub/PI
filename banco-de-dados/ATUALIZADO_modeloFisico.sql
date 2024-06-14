@@ -343,5 +343,9 @@ GROUP BY
 ORDER BY 
     MONTH(a.data_hora);
 
-
+select idFuncionario, foto, nome, email, grupoPermissoes.nomeGrupo, funcXinstituicoes.idInstituicao 
+from funcionarios inner join 
+grupoPermissoes on grupoPermissoes.idGrupo = funcionarios.idGrupo
+inner join funcXinstituicoes on funcionarios.idFuncionario = funcXinstituicoes.idInstituicao
+where funcXinstituicoes.idInstituicao = ?;
 

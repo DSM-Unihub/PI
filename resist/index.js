@@ -19,7 +19,6 @@ connection.query('CREATE DATABASE IF NOT EXISTS resistBD;').then(()=>{
 })
 
 import userControllers from './controllers/userControllers.js';
-import configControllers from './controllers/configControllers.js';
 import estatisticasControllers from './controllers/estatisticasControllers.js'
 import bloqueiosControllers  from "./controllers/bloqueiosControllers.js"
 import session, { Session } from 'express-session'
@@ -37,7 +36,6 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use("/", userControllers);
-app.use("/", configControllers);
 app.use("/", estatisticasControllers)
 app.use("/", bloqueiosControllers)
 
@@ -46,7 +44,7 @@ app.get("/", Auth, async (req, res) => {
         req.session.lab = labs.map(lab => ({
             labName: lab.laboratorio,
             acessosTotais: lab.total_acessos,
-            percentAccess: lab.porcentagem_acessos
+            percentAccess: parseFloat(lab.porcentagem_acessos).toFixed(2)
     })) 
 
     res.render("index",{

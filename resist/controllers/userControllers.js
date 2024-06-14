@@ -2,11 +2,13 @@ import express from 'express'
 import bcrypt from 'bcrypt'
 import Funcionarios from '../models/Funcionarios.js'
 import Instituicoes from '../models/Instituicoes.js'
+import Auth from '../middleware/Auth.js'
 import instXemails from '../models/instXemails.js'
 import instXtelefones from '../models/instXtelefones.js'
 import funcXinstituicoes from '../models/funcXinstituicoes.js'
 import funcionariosXtelefones from '../models/funcionariosXtelefones.js'
 import multer from 'multer';
+import connection from '../config/sequelize-config.js'
 const upload = multer({dest: "public/imgs"})
 const router = express.Router()
 
@@ -16,7 +18,7 @@ router.get("/login", (req, res) => {
     })
 })
 
-router.post("/authenticate", (req, res) => {
+router.post("/authenticate", async (req, res) => {
     const { email, password } = req.body
     Funcionarios.findOne({
         where: { email: email }
@@ -24,13 +26,15 @@ router.post("/authenticate", (req, res) => {
         if (user != undefined) {
             const correct = bcrypt.compareSync(password, user.senha)
             if (correct) {
+                const [instituicao] = await connection.query(`SELECT idInstituicao from funcXinstituicoes where idFuncionario = ${req.session.user.id}`)
                 req.session.user = {
                     id: user.idFuncionario,
                     foto: user.foto,
                     nome: user.nome,
                     email: user.email,
-                    grupo: user.idgrupo
-                }
+                    grupo: user.idgrupo,
+                    idInst: instituicao[0].idInstituicao
+                    }
                 //req.flash("success", "Login efetuado com sucesso!")
                 res.redirect("/")
             } else {
@@ -44,6 +48,11 @@ router.post("/authenticate", (req, res) => {
     })
 })
 
+router.get("/usuarios", Auth, async (req, res)=>{
+    res.render("usuarios",{
+        usuario: req.session.user
+    })
+})
 
 router.get("/cadastro", function (req, res) {
     res.render("cadastro", {
@@ -142,4 +151,7 @@ router.post("/cadastro/new", upload.single("fotoPerfil"), async (req, res) => {
         res.redirect("/")
     })
 
+
+
     export default router
+

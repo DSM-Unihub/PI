@@ -1,0 +1,37 @@
+<%- include('./partials/header.ejs') %>
+    <section
+        class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        <%- include('./partials/navBar.ejs') %>
+            <section class="flex flex-col w-full">
+                <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
+                    <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
+                        <%- include('./partials/headerBar.ejs') %>
+                    </div>
+                </section>
+                <section class="flex flex-col gap-5">
+                    <!-- Dashboard Principal -->
+                    <section class="grid grid-cols-2 px-5 gap-1">
+                        <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                            <p class="text-4xl text-white">Gerenciamento de Usuários</p>
+                            <p class="text-2xl text-white">Administração das permissões e cadastro de perfis secundários.</p>
+                        </div>
+                    </section>
+                    <section class=" grid grid-cols-2 px-5">
+                      <div class="bg-white grid grid-cols-2 p-5 justify-items-center">
+                        <div class="flex flex-col justify-center">
+                            <img  src="/imgs/defaultUser.png" class="rounded-full border border-cinza-border">
+                        </div>
+                        <div class="grid grid-flow-row gap-5">
+                            <p>Isabela</p>
+                            <div class="flex flex-col">
+                                <p>gerente</p>
+                                <p>email</p>
+                            </div>
+                        </div>
+                      </div>
+                    </section>
+
+                </section>
+            </section>
+    </section>
+    <%- include('./partials/footer.ejs') %>
