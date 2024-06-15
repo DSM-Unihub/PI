@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy Resist</title>
+    <style>
+        body {
+            background: linear-gradient(133deg, #f1f0fc, #cdd6e1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            width: 80%;
+        }
+
+        .triangle-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .triangle {
+            width: 500px;
+            height: 500px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            background-color: #E75F42;
+            position: relative;
+        }
+
+        .triangle-inner {
+            width: 460px;
+            height: 460px;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            background-color: #f1f0fc;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .exclamation {
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -40%);
+            font-size: 400px;
+            color: #E75F42;
+        }
+
+        .error-message {
+            color: #2B438D;
+        }
+
+        .error-message h1 {
+            font-size: 100px;
+            font-weight: bold;
+        }
+
+        .error-message p {
+            font-size: 30px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="triangle-container">
+            <div class="triangle">
+                <div class="triangle-inner"></div>
+                <h1 class="exclamation">!</h1>
+            </div>
+        </div>
+        <div class="error-message">
+            <h1>Erro</h1>
+            <p>A URL requisitada não pode ser acessada.</p>
+            <p>O acesso à página: Pagina foi <span class="bold">negado.</span></p>
+            <p>Este site pode possuir conteúdo de <span class="bold">injúria racial.</span> <br>Portanto, foi bloqueado
+                automaticamente pelo <span class="bold">ReSist.</span></p>
+            <p>Procure o responsável pela administração do sistema.</p>
+            <p>Verificado em <span id="date-time"></span></p>
+        </div>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const dateTimeString = now.toLocaleString('pt-BR', options);
+            document.getElementById('date-time').textContent = dateTimeString;
+        }
+
+        // Update the date and time every second
+        setInterval(updateDateTime, 1000);
+
+        // Initial call to display the date and time immediately on load
+        updateDateTime();
+    </script>
+        </div>
+    </div>
+    <p style="position: absolute; right: 20px; bottom: 0; color: #2B438D;">POWERED BY <span style="color: #E75F42;">UNIHUB</span></p>
+</body>
+
+</html>

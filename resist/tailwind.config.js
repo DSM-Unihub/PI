@@ -21,7 +21,8 @@ export default {
         "azul-login-fim":"#0040ED",
         "cinza":"#F9F9F9",
         "red-status":"#F86B6B",
-        "cinza-bg-bloq":"#1A1A1A"
+        "cinza-bg-bloq":"#1A1A1A",
+        "azul-nav-fim": "#234DCB"
       },
       borderWidth:{
         "5": "5em"
