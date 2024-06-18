@@ -183,31 +183,30 @@ INSERT INTO grupoPerXpermissoes (idGrupo, idPermissao) VALUES
 (4, 1);
 
 
-
 CREATE VIEW labs AS
     SELECT 
         subquery.laboratorio AS laboratorio,
         COUNT(subquery.id_acesso) AS total_acessos,
-        COUNT(subquery.id_acesso) * 100.0 / (SELECT 
+        ROUND(COUNT(subquery.id_acesso) * 100.0 / (SELECT 
                 COUNT(0)
             FROM
-                acessos) AS porcentagem_acessos
+                acessos), 2) AS porcentagem_acessos
     FROM
         (SELECT 
             CASE
-					WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.1') AND INET_ATON('192.168.1.30') THEN 'Laboratório 1'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.31') AND INET_ATON('192.168.1.60') THEN 'Laboratório 2'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.61') AND INET_ATON('192.168.1.90') THEN 'Laboratório 3'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.91') AND INET_ATON('192.168.1.120') THEN 'Laboratório 4'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.121') AND INET_ATON('192.168.1.150') THEN 'Laboratório 5'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.151') AND INET_ATON('192.168.1.180') THEN 'Laboratório 6'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.181') AND INET_ATON('192.168.1.210') THEN 'Laboratório Professores'
-                    WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.211') AND INET_ATON('192.168.1.240') THEN 'Laboratório Movel'
-                    ELSE 'Outro Laboratório'
-                END AS laboratorio,
-                acessos.id_acesso AS id_acesso
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.1') AND INET_ATON('192.168.1.30') THEN 'Laboratório 1'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.31') AND INET_ATON('192.168.1.60') THEN 'Laboratório 2'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.61') AND INET_ATON('192.168.1.90') THEN 'Laboratório 3'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.91') AND INET_ATON('192.168.1.120') THEN 'Laboratório 4'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.121') AND INET_ATON('192.168.1.150') THEN 'Laboratório 5'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.151') AND INET_ATON('192.168.1.180') THEN 'Laboratório 6'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.181') AND INET_ATON('192.168.1.210') THEN 'Laboratório Movel'
+                WHEN INET_ATON(acessos.ip_maquina) BETWEEN INET_ATON('192.168.1.211') AND INET_ATON('255.255.255.255') THEN 'Laboratório Professores'
+                ELSE 'Outro Laboratório'
+            END AS laboratorio,
+            acessos.id_acesso AS id_acesso
         FROM
-        acessos) subquery
+            acessos) subquery
     GROUP BY subquery.laboratorio;
     
     INSERT INTO indexacoes (pathLocal, flag, urlWeb) VALUES
@@ -312,23 +311,12 @@ FROM funcionarios f
 JOIN grupoPermissoes g
 	ON f.idGrupo = g.idGrupo;
 	
--- Tela de Bloqueio!!
-create view bloqueios as
-SELECT 
-    a.urlWeb AS URL_Bloqueado, 
-    a.data_hora AS data_hora
-FROM 
-    acessos a
-JOIN 
-    indexacoes i ON a.id_index = i.id_index
-WHERE 
-    i.flag = FALSE;
+
 
 
 
 -- Tela de Estatísticas, consulta completa com as porcentagens!!
 create view acessoxmes as
-select * from indexacoes;
 WITH acessos_laboratorio AS (
     SELECT 
         a.data_hora,
@@ -343,8 +331,8 @@ WITH acessos_laboratorio AS (
             WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.91') AND INET_ATON('192.168.1.120') THEN 'Laboratório 4'
             WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.121') AND INET_ATON('192.168.1.150') THEN 'Laboratório 5'
             WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.151') AND INET_ATON('192.168.1.180') THEN 'Laboratório 6'
-            WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.181') AND INET_ATON('192.168.1.210') THEN 'Laboratório Professores'
-            WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.211') AND INET_ATON('192.168.1.240') THEN 'Laboratório Movel'
+            WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.181') AND INET_ATON('192.168.1.210') THEN 'Laboratório Movel'
+            WHEN INET_ATON(a.ip_maquina) BETWEEN INET_ATON('192.168.1.211') AND INET_ATON('255.255.255.255') THEN 'Laboratório Professores'
             ELSE 'Outro Laboratório'
         END AS laboratorio,
         CASE 
@@ -393,3 +381,20 @@ FROM
     variacao_acessos
 ORDER BY 
     mes_acesso;
+
+-- Tela de Bloqueio!!
+
+
+create view bloqueio as
+ SELECT 
+    a.urlWeb AS URL,
+    a.data_hora AS DataHora
+FROM 
+    acessos a
+JOIN 
+    indexacoes i ON a.id_index = i.id_index
+WHERE 
+    i.flag = TRUE
+    group by URL
+    order by DataHora desc;
+    select * from bloqueio;
