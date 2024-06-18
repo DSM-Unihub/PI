@@ -19,7 +19,7 @@ router.get("/estatisticas", Auth, async (req, res)=>{
             mes: getMonthName(estatisticas.mes_acesso),
             mobile: estatisticas.contagem_disp_movel,
             desktop: estatisticas.contagem_desktop,
-            percent: 7
+            percent: estatisticas.variacao_perc_acessos_bloqueados
             })) 
     res.render("estatisticas", {
         usuario: req.session.user,

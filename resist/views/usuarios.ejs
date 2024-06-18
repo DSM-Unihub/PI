@@ -1,8 +1,10 @@
 <%- include('./partials/header.ejs') %>
     <section
         class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        <section
+        class="hidden md:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim  flex-col p-5 h-screen gap-10">
         <%- include('./partials/navBar.ejs') %>
-            <section class="flex flex-col w-full">
+    </section>            <section class="flex flex-col w-full">
                 <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
                     <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
                         <%- include('./partials/headerBar.ejs') %>

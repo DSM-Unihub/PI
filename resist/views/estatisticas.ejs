@@ -1,241 +1,251 @@
 <%- include('./partials/header.ejs') %>
     <section
         class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
-        <%- include('./partials/navBar.ejs') %>
-            <section class="flex flex-col w-full">
-                <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
-                    <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
-                        <%- include('./partials/headerBar.ejs') %>
+        <section
+            class="hidden md:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim  flex-col p-5 h-screen gap-10">
+            <%- include('./partials/navBar.ejs') %>
+        </section>
+        <section class="flex flex-col w-full">
+            <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
+                <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
+                    <%- include('./partials/headerBar.ejs') %>
+                </div>
+            </section>
+            <section class="flex flex-col gap-5">
+                <!-- Dashboard Principal -->
+                <section class="grid grid-cols-2 px-5 gap-1">
+                    <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                        <p class="text-4xl text-white">Estatísticas</p>
+                        <p class="text-2xl text-white">Acesso aos dados de bloqueio.</p>
                     </div>
                 </section>
-                <section class="flex flex-col gap-5">
-                    <!-- Dashboard Principal -->
-                    <section class="grid grid-cols-2 px-5 gap-1">
-                        <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
-                            <p class="text-4xl text-white">Estatísticas</p>
-                            <p class="text-2xl text-white">Acesso aos dados de bloqueio.</p>
-                        </div>
-                    </section>
-                    <section class="flex flex-row px-5 gap-2 ">
-                        <div class="flex flex-col">
-                            <h3 class="text-azul-text text-base">Visão Geral</h3>
-                            <div class="flex flex-row  p-3 ">
-                                <canvas id="grafico-barra"
-                                    class="w-fit max-w-4xl h-max  rounded-s-xl bg-white "></canvas>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        const ctx = document.getElementById('grafico-barra').getContext('2d');
+                <section class="flex flex-row px-5 gap-2 ">
+                    <div class="flex flex-col">
+                        <h3 class="text-azul-text text-base">Visão Geral</h3>
+                        <div class="flex flex-row  p-3  ">
+                            <canvas id="grafico-barra" class="w-fit max-w-4xl h-full max-h-min  rounded-s-xl bg-white "></canvas>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    const ctx = document.getElementById('grafico-barra').getContext('2d');
 
-                                        const estatisticasPorMes = <%- JSON.stringify(Mes)%>;
-                                        const desktopData = estatisticasPorMes.map(data => data.desktop);
-                                        const mobileData = estatisticasPorMes.map(data => data.mobile);
-                                        const labels = estatisticasPorMes.map(data => data.mes);
-                                        console.log(desktopData)
-                                        new Chart(ctx, {
-                                            type: 'bar',
-                                            data: {
-                                                labels: labels,
-                                                datasets: [
-                                                    {
-                                                        label: 'Desktop',
-                                                        data: desktopData,
-                                                        backgroundColor: '#AFC3FF',
-                                                        borderWidth: 1
-                                                    },
-                                                    {
-                                                        label: 'Disp. Móveis',
-                                                        data: mobileData,
-                                                        backgroundColor: '#2D62FF',
-                                                        borderWidth: 1
-                                                    }
-                                                ]
-                                            },
-                                            options: {
-                                                responsive: true,
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true,
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Valor'
-                                                        }
-                                                    },
-                                                    x: {
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Mes'
-                                                        }
-                                                    }
+                                    const estatisticasPorMes = <%- JSON.stringify(Mes) %>;
+                                    const desktopData = estatisticasPorMes.map(data => data.desktop);
+                                    const mobileData = estatisticasPorMes.map(data => data.mobile);
+                                    const labels = estatisticasPorMes.map(data => data.mes);
+                                    console.log(desktopData)
+                                    new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [
+                                                {
+                                                    label: 'Desktop',
+                                                    data: desktopData,
+                                                    backgroundColor: '#AFC3FF',
+                                                    borderWidth: 1
                                                 },
-                                                plugins: {
-                                                    legend: {
-                                                        display: true,
-                                                        position: 'top'
-                                                    },
-                                                    tooltip: {
-                                                        enabled: true
-                                                    }
-                                                },
-                                                animation: {
-                                                    duration: 1000,
-                                                    easing: 'easeInOutQuad'
+                                                {
+                                                    label: 'Disp. Móveis',
+                                                    data: mobileData,
+                                                    backgroundColor: '#2D62FF',
+                                                    borderWidth: 1
                                                 }
+                                            ]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true,
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Valor'
+                                                    }
+                                                },
+                                                x: {
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Mes'
+                                                    }
+                                                }
+                                            },
+                                            plugins: {
+                                                legend: {
+                                                    display: true,
+                                                    position: 'top'
+                                                },
+                                                tooltip: {
+                                                    enabled: true
+                                                }
+                                            },
+                                            animation: {
+                                                duration: 1000,
+                                                easing: 'easeInOutQuad'
                                             }
-                                        });
+                                        }
                                     });
-                                    
-                                </script>
-                                <div class="flex flex-col w-max bg-cinza rounded-e-xl">
-                                    <% Mes.forEach(Mes=> { %>
-                                        <div
-                                            class="grid grid-cols-4 p-2 gap-3 text-azul-text content-center justify-between self-stretch  h-full px-5">
-                                            <div class="text-start">
-                                                <p class="text-base"><%= Mes.mes %></p>
+                                });
+
+                            </script>
+                            <div class="flex flex-col w-fit bg-cinza rounded-e-xl">
+                                <% Mes.forEach(Mes=> { %>
+                                    <div
+                                        class="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch  h-full px-5">
+                                        <div class="text-start">
+                                            <p class="text-base">
+                                                <%= Mes.mes %>
+                                            </p>
+                                        </div>
+                                        <div class="text-end grid grid-cols-2 justify-end">
+                                            <div class="flex flex-row justify-end">
+                                                <img class="size-4" src="/icons/desktopmarker.svg">
                                             </div>
-                                            <div class="text-end grid grid-cols-2 justify-end">
-                                                <div class="flex flex-row justify-end">
-                                                    <img class="size-4" src="/icons/desktopmarker.svg">
-                                                </div>
-                                                <div class="flex flex-row justify-end">
-                                                    <p class="text-base"><%= Mes.desktop %></p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end grid grid-cols-2 justify-end">
-                                                <div class="flex flex-row justify-end">
-                                                    <img class="size-4" src="/icons/mobilemarker.svg">
-                                                </div>
-                                                <div class="flex flex-row justify-end">
-                                
-                                                    <p class="text-base"><%= Mes.mobile %></p>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="text-center rounded-md justify-center grid grid-cols-2  text-white <% if (Mes.percent > 0) { %>bg-red-status <% } else if (Mes.percent < 0) { %>bg-green-500<% } %> ">
-                                                <div>
-                                                    <p class="text-base"><%= Mes.percent %>%</p>
-                                                </div>
-                                                <div class="flex flex-row justify-center items-center ">
-                                                    <img src="/icons/arrowWhite.svg "
-                                                        class="size-4 <% if (Mes.percent < 0) {%> rotate-180 <%}%> ">
-                                                </div>
+                                            <div class="flex flex-row justify-end">
+                                                <p class="text-base">
+                                                    <%= Mes.desktop %>
+                                                </p>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <% }); %>
-                                </div>
+                                        <div class="text-end grid grid-cols-2 justify-end">
+                                            <div class="flex flex-row justify-end">
+                                                <img class="size-4" src="/icons/mobilemarker.svg">
+                                            </div>
+                                            <div class="flex flex-row justify-end">
+
+                                                <p class="text-base">
+                                                    <%= Mes.mobile %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="text-center rounded-md justify-center grid grid-cols-2  text-white <% if (Mes.percent > 0) { %>bg-red-status <% } else if (Mes.percent < 0) { %>bg-green-500<% } else{%>bg-azul-principal <% }%>  ">
+                                            <div>
+                                                <p class="text-base">
+                                                    <%= Mes.percent %>%
+                                                </p>
+                                            </div>
+                                            <div class="flex flex-row justify-center items-center ">
+                                                <img src="/icons/arrowWhite.svg "
+                                                    class="size-4 <% if (Mes.percent < 0) {%> rotate-180 <%} else if(Mes.percent == 0) {%> -rotate-90 <% } %> ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <% }); %>
                             </div>
                         </div>
-                        <div class="flex flex-col px-3 gap-3">
-                            <h3 class="text-azul-text">Últimos Bloqueios na Rede</h3>
-                            <div class="flex flex-col bg-white rounded-xl justify-between p-3">
-                                <div class="grid grid-cols-2">
-                                    <div class="flex flex-row">
-                                        <img src="/icons/bloqAuto.svg" class="size-5">
-                                        <h3 class="text-azul-text">Bloq. automático</h3>
-                                    </div>
-                                    <div class="flex flex-row">
-                                        <img src="/icons/bloqManual.svg" class="size-5">
-                                        <h3 class="text-azul-text">Bloq. manual</h3>
-                                    </div>
+                    </div>
+                    <div class="flex flex-col px-3 gap-3">
+                        <h3 class="text-azul-text">Últimos Bloqueios na Rede</h3>
+                        <div class="flex flex-col bg-white rounded-xl justify-between p-3">
+                            <div class="grid grid-cols-2">
+                                <div class="flex flex-row">
+                                    <img src="/icons/bloqAuto.svg" class="size-5">
+                                    <h3 class="text-azul-text">Bloq. automático</h3>
                                 </div>
-                                <hr>
-                                <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
-                                    <div class=" p-3">
-                                        <img src="/icons/bloqBarAuto.svg">
-                                    </div>
-                                    <div>
-                                        <img src="/icons/deskBloqAuto.svg">
-                                    </div>
-                                    <div>
-                                        <p class="text-azul-text">Desktop 01
-                                            <br>
-                                            Laboratório 04
-                                        </p>
-                                    </div>
-                                    <div class="self-end flex flex-col">
-                                        <p class="text-azul-text ">01/03/2024 15:51</p>
-                                    </div>
+                                <div class="flex flex-row">
+                                    <img src="/icons/bloqManual.svg" class="size-5">
+                                    <h3 class="text-azul-text">Bloq. manual</h3>
                                 </div>
-                                <hr>
-                                <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
-                                    <div class=" p-3">
-                                        <img src="/icons/bloqBarAuto.svg">
-                                    </div>
-                                    <div>
-                                        <img src="/icons/deskBloqAuto.svg">
-                                    </div>
-                                    <div>
-                                        <p class="text-azul-text">Desktop 07
-                                            <br>
-                                            Laboratório 02
-                                        </p>
-                                    </div>
-                                    <div class="self-end flex flex-col">
-                                        <p class="text-azul-text ">01/03/2024 09:42</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
-                                    <div class=" p-3">
-                                        <img src="/icons/bloqBarManual.svg">
-                                    </div>
-                                    <div>
-                                        <img src="/icons/deskBloqmanual.svg">
-                                    </div>
-                                    <div>
-                                        <p class="text-azul-text">Desktop 12
-                                            <br>
-                                            Laboratório 06
-                                        </p>
-                                    </div>
-                                    <div class="self-end flex flex-col">
-                                        <p class="text-azul-text ">28/02/2024 14:57</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
-                                    <div class=" p-3">
-                                        <img src="/icons/bloqBarAuto.svg">
-                                    </div>
-                                    <div>
-                                        <img src="/icons/mobileBloqAuto.svg">
-                                    </div>
-                                    <div>
-                                        <p class="text-azul-text">Disp. Móvel (Moto E13)
-                                            <br>
-                                            Rede Wi-Fi 04
-                                        </p>
-                                    </div>
-                                    <div class="self-end flex flex-col">
-                                        <p class="text-azul-text ">28/02/2024 13:02</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
-                                    <div class=" p-3">
-                                        <img src="/icons/bloqBarManual.svg">
-                                    </div>
-                                    <div>
-                                        <img src="/icons/mobileBloqManual.svg">
-                                    </div>
-                                    <div>
-                                        <p class="text-azul-text">Disp. Móvel (iPhone 8)
-                                            <br>
-                                            Rede Wi-Fi 01
-                                        </p>
-                                    </div>
-                                    <div class="self-end flex flex-col">
-                                        <p class="text-azul-text ">28/02/2024 13:02</p>
-                                    </div>
-                                </div>
-                                <hr>
-
-
                             </div>
+                            <hr>
+                            <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
+                                <div class=" p-3">
+                                    <img src="/icons/bloqBarAuto.svg">
+                                </div>
+                                <div>
+                                    <img src="/icons/deskBloqAuto.svg">
+                                </div>
+                                <div>
+                                    <p class="text-azul-text">Desktop 01
+                                        <br>
+                                        Laboratório 04
+                                    </p>
+                                </div>
+                                <div class="self-end flex flex-col">
+                                    <p class="text-azul-text ">01/03/2024 15:51</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
+                                <div class=" p-3">
+                                    <img src="/icons/bloqBarAuto.svg">
+                                </div>
+                                <div>
+                                    <img src="/icons/deskBloqAuto.svg">
+                                </div>
+                                <div>
+                                    <p class="text-azul-text">Desktop 07
+                                        <br>
+                                        Laboratório 02
+                                    </p>
+                                </div>
+                                <div class="self-end flex flex-col">
+                                    <p class="text-azul-text ">01/03/2024 09:42</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
+                                <div class=" p-3">
+                                    <img src="/icons/bloqBarManual.svg">
+                                </div>
+                                <div>
+                                    <img src="/icons/deskBloqManual.svg">
+                                </div>
+                                <div>
+                                    <p class="text-azul-text">Desktop 12
+                                        <br>
+                                        Laboratório 06
+                                    </p>
+                                </div>
+                                <div class="self-end flex flex-col">
+                                    <p class="text-azul-text ">28/02/2024 14:57</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
+                                <div class=" p-3">
+                                    <img src="/icons/bloqBarAuto.svg">
+                                </div>
+                                <div>
+                                    <img src="/icons/mobileBloqAuto.svg">
+                                </div>
+                                <div>
+                                    <p class="text-azul-text">Disp. Móvel (Moto E13)
+                                        <br>
+                                        Rede Wi-Fi 04
+                                    </p>
+                                </div>
+                                <div class="self-end flex flex-col">
+                                    <p class="text-azul-text ">28/02/2024 13:02</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="Gradient grid grid-flow-col gap-3 w-fit items-center justify-start">
+                                <div class=" p-3">
+                                    <img src="/icons/bloqBarManual.svg">
+                                </div>
+                                <div>
+                                    <img src="/icons/mobileBloqManual.svg">
+                                </div>
+                                <div>
+                                    <p class="text-azul-text">Disp. Móvel (iPhone 8)
+                                        <br>
+                                        Rede Wi-Fi 01
+                                    </p>
+                                </div>
+                                <div class="self-end flex flex-col">
+                                    <p class="text-azul-text ">28/02/2024 13:02</p>
+                                </div>
+                            </div>
+                            <hr>
+
+
                         </div>
-                    </section>
+                    </div>
                 </section>
             </section>
+        </section>
 
     </section>
     </section>

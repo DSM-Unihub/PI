@@ -1,8 +1,10 @@
 <%- include('./partials/header.ejs') %>
     <section
         class="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
+        <section
+        class="hidden md:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim  flex-col p-5 h-screen gap-10">
         <%- include('./partials/navBar.ejs') %>
-            <section class="flex flex-col w-full">
+    </section>            <section class="flex flex-col w-full">
                 <section class="flex flex-row items-center justify-between h-fit p-6 gap-32">
                     <div class="flex flex-row items-center gap-5 w-full max-w-7xl">
                         <%- include('./partials/headerBar.ejs') %>
@@ -20,7 +22,47 @@
                         <div class="Flex flex-col">
                             <div class="flex flex-row justify-between">
                                 <h3 class="text-azul-text text-base">Editar bloqueios de URL</h3>
-                                <button class="rounded bg-gradient-to-r text-white w-max p-3 from-azul-login-inicio to-azul-login-fim">Ordenar URL's</button>
+                                <button onclick="ordenarURLs()" class="rounded bg-gradient-to-r text-white w-max p-3 from-azul-login-inicio to-azul-login-fim">Ordenar URL's</button>
+                                <script>
+                                    function ordenacaoLexicograficaRecursiva(arr) {
+                                        if (arr.length <= 1) {
+                                            return arr;
+                                        } else {
+                                            const pivot = arr[0];
+                                            const menores = [];
+                                            const iguais = [];
+                                            const maiores = [];
+                            
+                                            for (let str of arr) {
+                                                if (str < pivot) {
+                                                    menores.push(str);
+                                                } else if (str === pivot) {
+                                                    iguais.push(str);
+                                                } else {
+                                                    maiores.push(str);
+                                                }
+                                            }
+                            
+                                            return ordenacaoLexicograficaRecursiva(menores).concat(iguais, ordenacaoLexicograficaRecursiva(maiores));
+                                        }
+                                    }
+                            
+                                    function ordenarURLs() {
+                                        const rows = Array.from(document.querySelectorAll('.bloqueio-row'));
+                                        const urls = rows.map(row => ({
+                                            element: row,
+                                            url: row.querySelector('.url').textContent.trim()
+                                        }));
+                            
+                                        const urlsOrdenadas = ordenacaoLexicograficaRecursiva(urls.map(entry => entry.url));
+                            
+                                        const sortedRows = urlsOrdenadas.map(url => urls.find(entry => entry.url === url).element);
+                            
+                                        const tbody = document.querySelector('tbody');
+                                        tbody.innerHTML = '';
+                                        sortedRows.forEach(row => tbody.appendChild(row));
+                                    }
+                                </script>
                             </div>
                             <div class="bg-white rounded-xl w-max p-5 gap-5">
                                 <table class="table-auto w-full border-separate border-spacing-2">
@@ -34,17 +76,18 @@
                                         </tr>
                                     </thead>
                                     <tbody class="text-azul-text">
-                                        <tr class="border-b justify-self-center  ">
-                                            <td class=" flex flex-col items-center justify-center"><img src="/icons/iconDesktop.svg"></td>
-                                            <td>https://www.sitebloqueado.com/bloqueio?deeplink=%2Fowa%2F</td>
-                                            <td>16/05/2024 - 20:24</td>
-                                            <td>Automático</td>
-                                            <td class="grid grid-cols-2">
-                                                <input class="cursor-pointer" type="checkbox" name="select">
-                                                arrow
-                                                
-                                            </td>
-                                        </tr>
+                                        <% bloq.forEach(bloq => { %>
+                                            <tr class="bloqueio-row border-b justify-self-center  ">
+                                                <td class=" flex flex-col items-center justify-center"><img src="/icons/iconDesktop.svg"></td>
+                                                <td class="url"><%= bloq.URL%></td>
+                                                <td><%= bloq.DataHora%></td>
+                                                <td>Automático</td>
+                                                <td class="grid grid-cols-2">
+                                                    <input class="cursor-pointer" type="checkbox" name="select">
+                                                    arrow
+                                                </td>
+                                            </tr>
+                                            <% }); %>
                                     </tbody>
                                 </table>
                             </div>
@@ -52,7 +95,6 @@
                         <div>
                             Bloqueio Manual
                             <div>
-                                aaaaaaaaaaaaaaaaaaaaaaaaaa
                             </div>
                         </div>
                     </section>
