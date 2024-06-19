@@ -67,3 +67,42 @@ document.addEventListener('DOMContentLoaded', function(){
    
     showPage(currentPage)
 })
+
+function ordenacaoLexicograficaRecursiva(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    } else {
+        const pivot = arr[0];
+        const menores = [];
+        const iguais = [];
+        const maiores = [];
+
+        for (let str of arr) {
+            if (str < pivot) {
+                menores.push(str);
+            } else if (str === pivot) {
+                iguais.push(str);
+            } else {
+                maiores.push(str);
+            }
+        }
+
+        return ordenacaoLexicograficaRecursiva(menores).concat(iguais, ordenacaoLexicograficaRecursiva(maiores));
+    }
+}
+
+function ordenarURLs() {
+    const rows = Array.from(document.querySelectorAll('.bloqueio-row'));
+    const urls = rows.map(row => ({
+        element: row,
+        url: row.querySelector('.url').textContent.trim()
+    }));
+
+    const urlsOrdenadas = ordenacaoLexicograficaRecursiva(urls.map(entry => entry.url));
+
+    const sortedRows = urlsOrdenadas.map(url => urls.find(entry => entry.url === url).element);
+
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+    sortedRows.forEach(row => tbody.appendChild(row));
+}

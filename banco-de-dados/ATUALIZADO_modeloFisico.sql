@@ -216,6 +216,7 @@ CREATE VIEW labs AS
 ('/local/path/example4', TRUE, 'http://example.com/allowed2'),
 ('/local/path/example5', FALSE, 'http://example.com/blocked3');
 
+
 INSERT INTO instituicoes (razaoSocial, cnpj, inscricaoEstadual, logradouro, numero, bairro, cidade, estado) VALUES
 ('Instituição Alpha', '12.345.678/0001-90', '123456789', 'Rua Exemplo 1', 100, 'Bairro A', 'Cidade X', 'SP'),
 ('Instituição Beta', '98.765.432/0001-10', '987654321', 'Avenida Exemplo 2', 200, 'Bairro B', 'Cidade Y', 'RJ'),

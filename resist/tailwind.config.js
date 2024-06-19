@@ -22,7 +22,8 @@ export default {
         "cinza":"#F9F9F9",
         "red-status":"#F86B6B",
         "cinza-bg-bloq":"#1A1A1A",
-        "azul-nav-fim": "#234DCB"
+        "azul-nav-fim": "#234DCB",
+        "azul-buttom":"#2653db"
       },
       borderWidth:{
         "5": "5em"
@@ -30,6 +31,9 @@ export default {
       width:{
         '720':'720px'
       },
+      maxHeight:{
+        '100':"38rem"
+      }
     },
   },
   plugins: [],
