@@ -31,20 +31,23 @@ public class TratamentoDados {
     private String url;
     private int idCadastro_fk;
     private int id_index_fk;
-
+    private String data;
+    private String hora;
     public TratamentoDados() {
     }
 
-    
-    
-    public TratamentoDados(int id_acesso, String data_hora, String ip_maquina, String url, int idCadastro_fk, int id_index_fk) {
+    public TratamentoDados(int id_acesso, String data_hora, String ip_maquina, String url, int idCadastro_fk, int id_index_fk, String data, String hora) {
         this.id_acesso = id_acesso;
         this.data_hora = data_hora;
         this.ip_maquina = ip_maquina;
         this.url = url;
         this.idCadastro_fk = idCadastro_fk;
         this.id_index_fk = id_index_fk;
+        this.data = data;
+        this.hora = hora;
     }
+
+    
 
     public int getId_acesso() {
         return id_acesso;
@@ -92,6 +95,21 @@ public class TratamentoDados {
 
     public void setId_index_fk(int id_index_fk) {
         this.id_index_fk = id_index_fk;
+    }
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     String setUrl() {
@@ -171,10 +189,32 @@ public static String extractDateTimeFromLogLine(String logLine) {
         }
         return null; // Retorna null se a linha não tem o formato esperado
     }
+public static String extractDateFromLogLine(String logLine) {
+    
+        String[] parts = logLine.split("\\s+");
+        if (parts.length >= 4) {
+            
+            String siteWithPort = parts[0];
+            // Remove a porta ":443" se estiver presente
+            return removePort(siteWithPort);
+        }
+        return null; // Retorna null se a linha não tem o formato esperado
+    }
+public static String extractTimeFromLogLine(String logLine) {
+    
+        String[] parts = logLine.split("\\s+");
+        if (parts.length >= 4) {
+            
+            String siteWithPort = parts[1];
+            // Remove a porta ":443" se estiver presente
+            return removePort(siteWithPort);
+        }
+        return null; // Retorna null se a linha não tem o formato esperado
+    }
 
  public static String convertToMySQLFormat(String inputDate) {
         // Define o formato do input com locale apropriado
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss", Locale.ENGLISH);
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss:SSS", Locale.ENGLISH);
         // Define o formato do output (formato MySQL)
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -223,7 +263,5 @@ public static String extractIPFromLogLine(String logLine) {
     Document doc = Jsoup.connect(url).get();
     return doc.outerHtml(); // Retorna o HTML completo da página
 }
-  
-    
     
 }
