@@ -22,7 +22,7 @@ public class Conexao {
         
     final private String driver = "com.mysql.jdbc.Driver";
    
-    final private String url= "jdbc:mysql://127.0.0.1/resistbd";
+    final private String url= "jdbc:mysql://127.0.0.1/resistBD";
     
     final private String usuario="root";
     final private String senha="";
