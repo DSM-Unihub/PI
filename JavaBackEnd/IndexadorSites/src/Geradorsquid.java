@@ -1,17 +1,4 @@
 
-     
-
-
-
-
-
-
-
-
-
-
-
-
 import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,8 +14,8 @@ public class Geradorsquid {
         TratamentoDados dado = new TratamentoDados();
         indexacoes idx = new indexacoes();
         Acessos acc = new Acessos();
-        String squidLogFilePath = "C:\\Users\\bruno\\Desktop\\test\\acc.txt"; // Caminho para o arquivo de log do Squid
-        String positionFilePath = "C:\\Users\\bruno\\Desktop\\test\\arm.txt"; // Caminho para o arquivo que armazena a última posição
+        String squidLogFilePath = "/var/log/squid/access.log"; // Caminho para o arquivo de log do Squid
+        String positionFilePath = "/home/vboxuser/Desktop/arm.txt"; // Caminho para o arquivo que armazena a última posição
         // Criar um conjunto para armazenar os sites já adicionados
         
         
@@ -44,7 +31,14 @@ while (true) {
             while ((line = file.readLine()) != null) {
                 dado.setUrl(dado.extractSiteFromLogLine(line));
                 dado.setIp_maquina(dado.extractIPFromLogLine(line));
-                dado.setData_hora(dado.extractDateTimeFromLogLine(line));
+                dado.setData(dado.extractDateFromLogLine(line));
+                dado.setHora(dado.extractTimeFromLogLine(line));
+                dado.setData_hora(dado.getData()+":" + dado.getHora());
+                
+                //System.out.println(dado.getData()+":" + dado.getHora());
+                     
+                     
+                
                 if(dado.getUrl() == null){
                     continue;
                 }
@@ -113,7 +107,7 @@ while (true) {
                     String htmlComAspasDuplas = html.replace("'", "\"");
                     //banco.setSite(htmlComAspasDuplas);
                     //criando o arquivo e salvando a localização no banco
-                    String local = "C:\\Users\\bruno\\Desktop\\test\\sites\\"+dado.showHost(dado.getUrl())+".txt";
+                    String local = "/home/vboxuser/Desktop/sites/"+dado.showHost(dado.getUrl())+".txt";
                         FileWriter fl = new FileWriter(local);
                     fl.write(htmlComAspasDuplas);
                     
