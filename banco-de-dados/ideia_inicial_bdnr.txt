@@ -1,0 +1,35 @@
+resistBD
+
+//discutir se o funcionário na hora do login escolher qual instituição ele quer ver
+
+indexacoes
+	idIndex
+	pathLocal
+	flag
+	urlWeb
+	termo
+	dataHora
+	ipMaquina
+	
+
+grupoPermissao
+	id
+	nomeGrupo
+	permissoes
+
+funcionarios
+	id
+	foto
+	nome
+	email
+	senha
+	telefone
+	
+instituicao
+	id
+	nome
+	cnpj
+	
+
+
+	
