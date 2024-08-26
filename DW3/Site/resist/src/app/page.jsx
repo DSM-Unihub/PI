@@ -1,4 +1,5 @@
 import Image from "next/image";
+<<<<<<< HEAD:DW3/Site/resist/src/app/page.js
 import Header from "@/components/partials/headerBar";
 import NavBar from "@/components/partials/navBar";
 export default function Home() {
@@ -10,6 +11,13 @@ export default function Home() {
               <Header />
         </section>
       </section>
+=======
+import Index from "../../components/index";
+export default function Home() {
+  return (
+    <main>
+      <Index/>
+>>>>>>> 268c361 (Inicio Tela Login):DW3/Site/resist/src/app/page.jsx
     </main>
   );
 }

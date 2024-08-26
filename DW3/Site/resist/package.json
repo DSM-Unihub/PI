@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "chart.js": "^4.4.4",
     "next": "14.2.5",
+=======
+    "next": "14.2.5",
+    "next-auth": "^4.24.7",
+>>>>>>> 268c361 (Inicio Tela Login)
     "react": "^18",
     "react-dom": "^18"
   },
