@@ -1,8 +1,8 @@
 use resistBD
 
+
 db.indexacoes.insertMany([
   {
-    "idIndex": 1,
     "pathLocal": "/local/path",
     "flag": true,
     "urlWeb": "https://exemplo.com",
@@ -12,10 +12,11 @@ db.indexacoes.insertMany([
   }
 ]);
 
+
+
 db.funcionarios.insertMany([
   {
-    "id": 1,
-    "foto": "url_da_foto.jpg",
+    
     "nome": "Maria Silva",
     "emails": {
       "institucional": "maria.silva@instituicao.com",
@@ -32,33 +33,15 @@ db.funcionarios.insertMany([
         "numero": "+55 11 3344-5566"
       }
     ]
-  },
-  {
-    "id": 2,
-    "foto": "url_da_foto2.jpg",
-    "nome": "João Souza",
-    "emails": {
-      "institucional": "joao.souza@instituicao.com",
-      "pessoal": "joao@exemplo.com"
-    },
-    "senha": "outraSenhaSegura",
-    "telefones": [
-      {
-        "tipo": "celular",
-        "numero": "+55 11 98765-4321"
-      },
-      {
-        "tipo": "fixo",
-        "numero": "+55 11 6655-4433"
-      }
-    ]
+"foto": "url_da_foto.jpg"
   }
 ]);
 
 
+
+
 db.grupoPermissoes.insertMany([
   {
-    "id": 1,
     "nomeGrupo": "Administradores",
     "permissoes": ["criar", "editar", "deletar"],
     "funcionarios": [
@@ -70,7 +53,6 @@ db.grupoPermissoes.insertMany([
 
 
 db.instituicoes.insertOne({
-  "id": 1,
   "nome": "Fatec Registro",
   "cnpj": "12.345.678/0001-90",
   "funcionarios": [

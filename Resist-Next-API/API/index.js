@@ -1,6 +1,5 @@
 import express from "express";
 import mongoose from "./config/db-connection.js";
-
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
