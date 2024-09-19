@@ -10,10 +10,17 @@ form-page {
   display: block;
 }
 
+
 .Background{
-  background-image: url('/icons/bgbar.png');
+  background: url('/imgs/ondasRotate.png');
   background-position: center;
   background-size: cover;
+  filter: hue-rotate(24deg) brightness(0.8)
+}
+
+.header-rounded{
+  border-bottom-left-radius: 45%;
+  border-bottom-right-radius: 45%;
 }
 
 .Gradient{
