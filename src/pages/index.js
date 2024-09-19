@@ -12,14 +12,20 @@ export default function Home() {
           <NavBar />
         </section>
         <section className="flex flex-col w-full lg:overflow-hidden">
-          <section className="flex flex-row items-center justify-between h-fit p-6 md:gap-2 lg:gap-32">
+          <section className="Background gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32 ">
             <HeaderBar />
+            <div className="flex md:hidden flex-col text-wrap h-fit p-5">
+                <p className="text-2xl text-white">Olá,{usuario}</p>
+                <p className="text-lg text-white">
+                  Bem-vindo de volta ao seu dashboard.
+                </p>
+              </div>
           </section>
           <section className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-0">
             {/* Dashboard Principal*/}
             <section className="grid grid-flow-row px-2 lg:px-10 gap-10 lg:gap-1">
               {/* Bem-vindo*/}
-              <div className="flex flex-col text-wrap bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+              <div className="hidden md:flex flex-col text-wrap bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
                 <p className="text-4xl text-white">Olá,{usuario}</p>
                 <p className="text-2xl text-white">
                   Bem-vindo de volta ao seu dashboard.

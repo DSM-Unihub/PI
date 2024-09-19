@@ -1,4 +1,4 @@
-const usuario = "Daniel";
+const usuario = {"nome":"Daniel", "foto": "./imgs/defaultUser.png"};
 
 export default function HeaderBar() {
   return (
@@ -15,21 +15,21 @@ export default function HeaderBar() {
       </div>
       {/*Icons */}
       <div className="flex flex-row gap-5">
-        <div className="flex bg-white border rounded-full w-max h-max p-2">
+        <div className="hidden md:flex bg-white border rounded-full w-max h-max p-2">
           <img className="size-8" src="/icons/blog.svg" />
         </div>
-        <div className="flex bg-white border rounded-full w-max h-max p-2">
+        <div className="flex bg-white border rounded-xl md:rounded-full w-max h-max p-2">
           <img className="size-8" src="/icons/notificacao.svg" />
         </div>
       </div>
       {/*Perfil */}
       <div className="flex flex-row gap-3 lg:gap-5 text-end">
-        <div>
-          <p className="text-azul-text text-xl">{usuario}</p>
+        <div className=" hidden md:flex">
+          <p className="text-azul-text text-xl">{usuario.nome}</p>
           <p className="text-azul-text text-xl">Usuário Business</p>
         </div>
         <div>
-          <img className="size-10 rounded-xl" src={usuario.foto} />
+          <img className=" bg-white size-12 rounded-xl" src={usuario.foto} />
         </div>
       </div>
       </div>
