@@ -23,7 +23,7 @@ def receive_sse_notification():
     except Exception as e:
         # Captura e exibe qualquer erro que ocorrer ao tentar receber a notificação.
         print(f"Erro ao receber notificação: {e}")
-
+    
 if __name__ == "__main__":
     # Inicia a função para receber notificações SSE.
     receive_sse_notification()

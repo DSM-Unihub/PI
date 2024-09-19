@@ -47,5 +47,7 @@ class AppServerSvc(win32serviceutil.ServiceFramework):
             except Exception as e:        
                 print(f"Erro ao receber notificação: {e}")
             time.sleep(10)
+            
+            
 if __name__ == "__main__":
     win32serviceutil.HandleCommandLine(AppServerSvc)
