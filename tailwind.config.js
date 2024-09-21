@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      clipPath: {
+        'custom-curve': 'ellipse(80% 100% at 50% 0%)',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -16,12 +19,16 @@ module.exports = {
         "cinza-claro":"#E2E7F8",
         "azul-title": "#142A6C",
         "azul-text": "#2B438D",
+        "azul-LMT":"#4A71E4",
         "cinza-border": "#CAD3ED",
         "azul-filtro":"#3063FF",
         "azul-principal":"#2D62FF",
         "azul-cinza-claro":"#94A2CB",
         "cinza-principal": "#CCD5F0",
         "cinza-secundario": "#F1EFFC",
+        "cinza-CM":"#8E9ECC",
+        "cinza-gradiente-final":"#EBEFFB",
+        "cinza-gradiente-inicio": "#D7E1FF",
         "laranja-s": "#FD6A4B",
         "laranja-e": "#F34822",
         "azul-gradiente-final":"#4571F9" ,

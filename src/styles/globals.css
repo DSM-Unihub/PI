@@ -26,3 +26,9 @@ form-page {
 .Gradient{
   background: linear-gradient(0.25turn, #1a1a1a00, hsla(0, 0%, 10%, 0.164), #1a1a1a00);
 }
+
+@layer components {
+  .clip-curve {
+    clip-path: ellipse(80% 100% at 50% 0%);
+  }
+}
