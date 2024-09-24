@@ -12,7 +12,7 @@ form-page {
 
 
 .Background{
-  background: url('/imgs/ondasRotate.png');
+  background: url('/imgs/ondas.png');
   background-position: center;
   background-size: cover;
   filter: hue-rotate(24deg) brightness(0.8)
@@ -29,6 +29,20 @@ form-page {
 
 @layer components {
   .clip-curve {
-    clip-path: ellipse(80% 100% at 50% 0%);
+    clip-path:();
   }
+}
+
+@media (max-width: 767px) { 
+    .clip-curve {
+      clip-path: ellipse(80% 100% at 50% 0%);
+    }
+
+  .Background{
+    background: url('/imgs/ondasRotate.png');
+    background-position: center;
+    background-size: cover;
+    filter: hue-rotate(24deg) brightness(0.8)
+  }
+
 }
