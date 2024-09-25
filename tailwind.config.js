@@ -15,6 +15,9 @@ module.exports = {
       colors:{
         "cinza-claro":"#E2E7F8",
         "azul-title": "#142A6C",
+        "block-MBG":"#E3E8F8",
+        "azul-cinza-escuro":"#47578c",
+        "azul-MBT":"#7784ae",
         "azul-text": "#2B438D",
         "azul-LMT":"#4A71E4",
         "cinza-border": "#CAD3ED",

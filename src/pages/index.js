@@ -12,14 +12,14 @@ export default function Home() {
           <NavBar />
         </section>
         <section className="flex flex-col w-full lg:overflow-hidden">
-          <section className="Background gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32 ">
+          <section className="Background clip-curve gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32 ">
             <HeaderBar />
             <div className="flex md:hidden flex-col text-wrap h-fit p-5">
-                <p className="text-2xl text-white">Olá,{usuario}</p>
-                <p className="text-lg text-white">
-                  Bem-vindo de volta ao seu dashboard.
-                </p>
-              </div>
+              <p className="text-2xl text-white">Olá,{usuario}</p>
+              <p className="text-lg text-white">
+                Bem-vindo de volta ao seu dashboard.
+              </p>
+            </div>
           </section>
           <section className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-0">
             {/* Dashboard Principal*/}
@@ -31,9 +31,40 @@ export default function Home() {
                   Bem-vindo de volta ao seu dashboard.
                 </p>
               </div>
-
+              {/* Bloqueios Totais Moblie */}
+              <section className="mt-8 flex flex-col justify-self-center gap-5">
+                <h3 className="text-start text-sm text-azul-cinza-escuro">Bloqueios totais</h3>
+                <section className="flex flex-row md:hidden gap-5 justify-between items-center bg-block-MBG w-fit justify-self-center  rounded-lg">
+                  <img src="./icons/rectangle.svg"></img>
+                  <p className=" text-3xl font-bold text-azul-cinza-escuro">
+                    462
+                  </p>
+                  <p className="text-azul-MBT text-sm text-wrap">
+                    Bloqueios totais <br />
+                    <span className="text-laranja-s">+23%</span> este mês
+                  </p>
+                  <div className="bg-white flex flex-col h-full justify-center items-center w-fit p-3">
+                    <img className="size-8" src="./icons/arrowUL.svg" />
+                    <img className="size-8" src="./icons/arrowDC.svg" />
+                  </div>
+                </section>
+                <section className="flex flex-row md:hidden gap-5 justify-between items-center bg-block-MBG w-fit justify-self-center  rounded-lg">
+                  <img src="./icons/rectangle.svg"></img>
+                  <p className=" text-3xl font-bold text-azul-cinza-escuro">
+                    462
+                  </p>
+                  <p className="text-azul-MBT text-sm text-wrap">
+                    Bloqueios totais <br />{" "}
+                    <span className="text-laranja-s">+23%</span> este mês
+                  </p>
+                  <div className="bg-white flex flex-col h-full justify-center items-center w-fit p-3">
+                    <img className="size-8" src="./icons/arrowUL.svg" />
+                    <img className="size-8" src="./icons/arrowDC.svg" />
+                  </div>
+                </section>
+              </section>
               {/* Atividade Recente*/}
-              <div className="bg-azul-principal rounded-xl h-max">
+              <div className="hidden bg-azul-principal rounded-xl h-max">
                 <div className="flex flex-row justify-between p-3">
                   <p className="text-white text-base p-3 text-center">
                     Atividade recente
@@ -114,7 +145,7 @@ export default function Home() {
               </div>
 
               {/* Bloqueios Gerais*/}
-              <div className="bg-azul-principal rounded-xl h-max">
+              <div className="hidden bg-azul-principal rounded-xl h-max">
                 <div className="flex flex-row justify-between p-3">
                   <p className="text-white text-base p-3 text-center">
                     Visão Geral de Bloqueios
