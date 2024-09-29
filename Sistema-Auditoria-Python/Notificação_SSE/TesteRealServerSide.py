@@ -5,12 +5,14 @@ import os
 
 app = Flask(__name__)
 
-bloqued_sites = set()
-clients = []
+blocked_sites = set()
+clients = {}
 file_path = 'bloqueados.txt'
+squid_log_path = "/var/log/squid/access.log"
 
-def notify_clients(message):
-    clients.put(message)
+def notify_clients(clientId,message):
+    if clientId in clients:
+        clients[clientId].put(message)
 
 
 def read_blocked_sites():
@@ -29,9 +31,25 @@ def monitor_blocked_sites():
 
         for site in new_sites:
             blocked_sites.add(site)
-            notify_clients(f"Site Bloqueado: {site}")
+            # Aqui você pode escolher como registrar qual cliente foi notificado.
         
         time.sleep(10)
+
+def monitor_squid_log():
+    with open(squid_log_path,"r") as f:
+        f.seek(0, os.SEEK_END)
+        while True:
+            line = f.readline()
+            if not line:
+                time.sleep(1)
+                continue
+
+            parts = line.split()
+            if len(parts) > 0:
+                ip_address = parts[0]
+                site = "exemplo.com"
+                if site in blocked_sites:
+                    notify_clients(ip_address, f"Site bloqueado: {site}")
 
 @app.route("/stream")
 
