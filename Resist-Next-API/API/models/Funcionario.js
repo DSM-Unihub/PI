@@ -5,14 +5,9 @@ const telefoneSchema = new mongoose.Schema({
   numero: Number,
 });
 
-const emailsSchema = mongoose.Schema({
-  institucional: String,
-  pessoal: String,
-});
-
 const FuncionarioSchema = new mongoose.Schema({
   nome: String,
-  emails: [emailsSchema],
+  email: String,
   senha: String,
   telefones: [telefoneSchema],
   foto: String,

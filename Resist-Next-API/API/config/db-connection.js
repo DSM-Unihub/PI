@@ -22,6 +22,8 @@ connection.on("open", () => {
   console.log("Conectado ao MongoDB com sucesso!");
 });
 
+
 connect();
+
 
 export default mongoose;

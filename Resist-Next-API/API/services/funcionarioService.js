@@ -1,10 +1,20 @@
-import Funcionarios from "../models/Funcionario.js";
+import Funcionario from "../models/Funcionario.js";
 
 class funcionarioService {
+  
+  async getOne(id) {
+    try {
+      const Funcionario = await Funcionario.findById(id);
+      return Funcionario;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getAll() {
     try {
-      const funcionarios = await Funcionarios.find();
-      return funcionarios;
+      const Funcionarios = await Funcionario.find();
+      return Funcionarios;
     } catch (error) {
       console.log(error);
     }
@@ -12,7 +22,7 @@ class funcionarioService {
 
   async Create(nome, emails, senha, telefones, foto) {
     try {
-      const newFuncionario = new Funcionarios({
+      const newFuncionario = new Funcionario({
         nome,
         emails,
         senha,
@@ -27,7 +37,7 @@ class funcionarioService {
 
   async Delete(id) {
     try {
-      await Funcionarios.findByIdAndDelete(id);
+      await Funcionario.findByIdAndDelete(id);
       console.log(`Funcionario com id ${id} foi Deletado`);
     } catch (error) {
       console.log(error);
@@ -36,7 +46,7 @@ class funcionarioService {
 
   async Update(nome, emails, senha, telefones, foto) {
     try {
-      await Funcionarios.findByIdAndUpdate(id, {
+      await Funcionario.findByIdAndUpdate(id, {
         nome,
         emails,
         senha,
@@ -48,6 +58,8 @@ class funcionarioService {
       console.log(error);
     }
   }
+
+  
 }
 
 export default new funcionarioService()
