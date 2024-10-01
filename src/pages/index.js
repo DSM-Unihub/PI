@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 import HeaderBar from "./partials/headerBar.js";
 import NavBar from "./partials/navBar.js";
+import { useEffect, useRef } from "react";
+import Chart from "chart.js/auto";
 
 // Load the Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +24,9 @@ export default function Home() {
             {/* Welcome Message for Mobile */}
             <div className="flex md:hidden flex-col text-wrap h-fit p-5">
               <p className="text-2xl text-white">Olá, {usuario}</p>
-              <p className="text-lg text-white">Bem-vindo de volta ao seu dashboard.</p>
+              <p className="text-lg text-white">
+                Bem-vindo de volta ao seu dashboard.
+              </p>
             </div>
           </div>
 
@@ -31,6 +35,9 @@ export default function Home() {
             <div className="grid grid-flow-row px-2 lg:px-10 gap-10 lg:gap-1">
               {/* Welcome Section for Desktop */}
               <WelcomeSection usuario={usuario} />
+
+              {/* Graph Overview Section */}
+              <GraphOverview mesData={mesData} />
 
               {/* Total Lockdowns Section */}
               <TotalLockdowns />
@@ -51,12 +58,153 @@ export default function Home() {
   );
 }
 
+// Graficos
+const GraphOverview = ({ mesData }) => {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = chartRef.current.getContext("2d");
+    const desktopData = mesData.map((data) => data.desktop);
+    const mobileData = mesData.map((data) => data.mobile);
+    const labels = mesData.map((data) => data.mes);
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Desktop",
+            data: desktopData,
+            backgroundColor: "#AFC3FF",
+            borderWidth: 1,
+          },
+          {
+            label: "Disp. Móveis",
+            data: mobileData,
+            backgroundColor: "#2D62FF",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: "Valor",
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Mês",
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: "top",
+          },
+          tooltip: {
+            enabled: true,
+          },
+        },
+        animation: {
+          duration: 1000,
+          easing: "easeInOutQuad",
+        },
+      },
+    });
+  }, [mesData]);
+
+  return (
+    <div className="flex flex-col">
+      <h3 className="text-azul-text text-base">Visão Geral</h3>
+      <div className="flex flex-row p-3">
+        <canvas
+          ref={chartRef}
+          className="w-fit max-w-4xl h-full max-h-min rounded-s-xl bg-white"
+        ></canvas>
+        <div className="flex flex-col w-fit bg-cinza rounded-e-xl">
+          {mesData.map((mes) => (
+            <div
+              key={mes.mes}
+              className="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch h-full px-5"
+            >
+              <div className="text-start">
+                <p className="text-base">{mes.mes}</p>
+              </div>
+              <div className="text-end grid grid-cols-2 justify-end">
+                <div className="flex flex-row justify-end">
+                  <img
+                    className="size-4"
+                    src="/icons/desktopmarker.svg"
+                    alt="Desktop marker"
+                  />
+                </div>
+                <div className="flex flex-row justify-end">
+                  <p className="text-base">{mes.desktop}</p>
+                </div>
+              </div>
+              <div className="text-end grid grid-cols-2 justify-end">
+                <div className="flex flex-row justify-end">
+                  <img
+                    className="size-4"
+                    src="/icons/mobilemarker.svg"
+                    alt="Mobile marker"
+                  />
+                </div>
+                <div className="flex flex-row justify-end">
+                  <p className="text-base">{mes.mobile}</p>
+                </div>
+              </div>
+              <div
+                className={`text-center rounded-md justify-center grid grid-cols-2 text-white ${
+                  mes.percent > 0
+                    ? "bg-red-status"
+                    : mes.percent < 0
+                    ? "bg-green-500"
+                    : "bg-azul-principal"
+                }`}
+              >
+                <div>
+                  <p className="text-base">{mes.percent}%</p>
+                </div>
+                <div className="flex flex-row justify-center items-center">
+                  <img
+                    src="/icons/arrowWhite.svg"
+                    className={`size-4 ${
+                      mes.percent < 0
+                        ? "rotate-180"
+                        : mes.percent === 0
+                        ? "-rotate-90"
+                        : ""
+                    }`}
+                    alt="Arrow"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+          <hr />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Component for Welcome Section
 function WelcomeSection({ usuario }) {
   return (
     <div className="hidden md:flex flex-col text-wrap bg-gradient-to-r from-laranja-s to-laranja-e p-5 rounded-xl">
       <p className="text-4xl text-white">Olá, {usuario}</p>
-      <p className="text-2xl text-white">Bem-vindo de volta ao seu dashboard.</p>
+      <p className="text-2xl text-white">
+        Bem-vindo de volta ao seu dashboard.
+      </p>
     </div>
   );
 }
@@ -70,7 +218,9 @@ function TotalLockdowns() {
 
   return (
     <section className="mt-8 flex flex-col justify-self-center gap-5">
-      <h3 className="text-start text-sm text-azul-cinza-escuro">Bloqueios totais</h3>
+      <h3 className="text-start text-sm text-azul-cinza-escuro">
+        Bloqueios totais
+      </h3>
       {lockdowns.map((lockdown, index) => (
         <LockdownCard key={index} lockdown={lockdown} />
       ))}
@@ -83,7 +233,9 @@ function LockdownCard({ lockdown }) {
   return (
     <section className="flex flex-row md:hidden gap-5 justify-between items-center bg-block-MBG w-fit justify-self-center rounded-lg">
       <img src="./icons/rectangle.svg" alt="Lockdown Icon" />
-      <p className="text-3xl font-bold text-azul-cinza-escuro">{lockdown.count}</p>
+      <p className="text-3xl font-bold text-azul-cinza-escuro">
+        {lockdown.count}
+      </p>
       <p className="text-azul-MBT text-sm text-wrap">
         Bloqueios totais <br />
         <span className="text-laranja-s">{lockdown.percentage}</span> este mês
@@ -101,7 +253,9 @@ function RecentActivity() {
   return (
     <div className="hidden bg-azul-principal rounded-xl h-max">
       <div className="flex flex-row justify-between p-3">
-        <p className="text-white text-base p-3 text-center">Atividade recente</p>
+        <p className="text-white text-base p-3 text-center">
+          Atividade recente
+        </p>
         <ActivityFilter />
       </div>
       <ActivityList />
@@ -123,11 +277,31 @@ function ActivityFilter() {
 // Component for Activity List
 function ActivityList() {
   const activities = [
-    { text: "Novo bloqueio realizado automaticamente pelo sistema", date: "22/03/24", icon: "/icons/bloqueio-blue.svg" },
-    { text: "Novo dispositivo desktop cadastrado", date: "22/03/24", icon: "/icons/PC-blue.svg" },
-    { text: "Nova exceção adicionada manualmente", date: "21/03/24", icon: "/icons/plus-blue.svg" },
-    { text: "Novo dispositivo móvel cadastrado", date: "20/03/24", icon: "/icons/Celular-blue.svg" },
-    { text: "Novo usuário criado pelo administrador", date: "17/03/24", icon: "/icons/user-blue.svg" },
+    {
+      text: "Novo bloqueio realizado automaticamente pelo sistema",
+      date: "22/03/24",
+      icon: "/icons/bloqueio-blue.svg",
+    },
+    {
+      text: "Novo dispositivo desktop cadastrado",
+      date: "22/03/24",
+      icon: "/icons/PC-blue.svg",
+    },
+    {
+      text: "Nova exceção adicionada manualmente",
+      date: "21/03/24",
+      icon: "/icons/plus-blue.svg",
+    },
+    {
+      text: "Novo dispositivo móvel cadastrado",
+      date: "20/03/24",
+      icon: "/icons/Celular-blue.svg",
+    },
+    {
+      text: "Novo usuário criado pelo administrador",
+      date: "17/03/24",
+      icon: "/icons/user-blue.svg",
+    },
   ];
 
   return (
@@ -159,7 +333,9 @@ function GeneralLockdowns() {
   return (
     <div className="hidden bg-azul-principal rounded-xl h-max">
       <div className="flex flex-row justify-between p-3">
-        <p className="text-white text-base p-3 text-center">Visão Geral de Bloqueios</p>
+        <p className="text-white text-base p-3 text-center">
+          Visão Geral de Bloqueios
+        </p>
       </div>
       <LockdownOverview />
     </div>
@@ -188,7 +364,9 @@ function LockdownStatistics({ count, change, period }) {
       <div className="flex flex-col gap-3 items-center self-center">
         <div className="flex flex-row gap-2">
           <p className="text-4xl text-azul-text">{count}</p>
-          <p className="text-azul-text text-base">Bloq. <br /> totais</p>
+          <p className="text-azul-text text-base">
+            Bloq. <br /> totais
+          </p>
         </div>
         <div className="flex flex-row gap-2">
           <p className="text-red-500">{change}</p>
@@ -220,7 +398,7 @@ function RightDashboard() {
       <div className="bg-azul-principal h-80 rounded-xl p-5 flex flex-col justify-center items-center">
         <p className="text-white">Gráfico de Incidência (Placeholder)</p>
       </div>
-      
+
       {/* Future Features Placeholder */}
       <div className="bg-azul-principal rounded-xl p-5 mt-5 h-80">
         <p className="text-white">Futuras Funcionalidades (Placeholder)</p>

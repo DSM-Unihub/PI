@@ -1,3 +1,7 @@
+import axios from "axios";
+import { useState } from "react";
+
+
 export default function Login() {
   return (
     <>
@@ -69,7 +73,7 @@ function DesktopLoginForm() {
 function MobileLoginForm() {
   return (
     <div className="flex md:hidden flex-col p-5">
-      <form className="flex flex-col gap-6">
+      <form className="flex flex-col gap-6" method="post">
         <input className="rounded-3xl p-4 text-lg shadow-md" type="text" placeholder="E-mail" />
         <input className="rounded-3xl p-4 text-lg shadow-md" type="password" placeholder="Senha" />
       </form>
