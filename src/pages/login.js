@@ -1,6 +1,5 @@
 import { useState } from "react";
-import api from "./api/services";
-
+import api from "./services/api.js"
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,11 +50,12 @@ export default function Login() {
               <form
                 method="post"
                 onSubmit={(e) => handleSubmit(e, email, password)}
-                className="flex flex-col"
+                className="flex flex-col gap-4"
               >
                 <input
                   label="E-mail"
                   type="email"
+                  className=" border rounded-lg "
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
