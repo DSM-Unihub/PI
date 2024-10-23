@@ -1,65 +1,77 @@
-import Funcionario from "../models/Funcionario.js";
+import Funcionario from "../models/Funcionario.js"; // Importa o modelo Funcionario
 
-class funcionarioService {
-  
+class FuncionarioService {
+  // Busca um único funcionário pelo ID
   async getOne(id) {
     try {
-      const Funcionario = await Funcionario.findById(id);
-      return Funcionario;
+      const funcionario = await Funcionario.findById(id);
+      if (!funcionario) {
+        throw new Error(`Funcionário com ID ${id} não encontrado`); // Lança um erro se o funcionário não for encontrado
+      }
+      return funcionario; // Retorna o funcionário encontrado
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao buscar funcionário:", error); // Loga o erro no console
+      throw error; // Relança o erro para tratamento posterior
     }
   }
 
+  // Busca todos os funcionários
   async getAll() {
     try {
-      const Funcionarios = await Funcionario.find();
-      return Funcionarios;
+      return await Funcionario.find(); // Retorna todos os funcionários
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao buscar funcionários:", error); // Loga o erro no console
+      throw error; // Relança o erro para tratamento posterior
     }
   }
 
-  async Create(nome, emails, senha, telefones, foto) {
+  // Cria um novo funcionário
+  async create(dadosFuncionario) {
     try {
-      const newFuncionario = new Funcionario({
-        nome,
-        emails,
-        senha,
-        telefones,
-        foto,
-      });
-      await newFuncionario.save();
+      const novoFuncionario = new Funcionario(dadosFuncionario); // Cria uma nova instância do funcionário
+      return await novoFuncionario.save(); // Salva e retorna o novo funcionário
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao criar funcionário:", error); // Loga o erro no console
+      throw error; // Relança o erro para tratamento posterior
     }
   }
 
-  async Delete(id) {
+  // Deleta funcionário pelo ID
+  async delete(id) {
     try {
-      await Funcionario.findByIdAndDelete(id);
-      console.log(`Funcionario com id ${id} foi Deletado`);
+      const funcionarioDeletado = await Funcionario.findByIdAndDelete(id); // Tenta deletar o funcionário
+      if (!funcionarioDeletado) {
+        throw new Error(`Funcionário com ID ${id} não encontrado para exclusão`); // Lança um erro se o funcionário não for encontrado
+      }
+      console.log(`Funcionário com ID ${id} foi deletado`); // Loga a exclusão
+      return funcionarioDeletado; // Retorna o funcionário deletado
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao deletar funcionário:", error); // Loga o erro no console
+      throw error; // Relança o erro para tratamento posterior
     }
   }
 
-  async Update(nome, emails, senha, telefones, foto) {
+  // Atualiza um funcionário pelo ID
+  async update(id, dadosAtualizados) {
     try {
-      await Funcionario.findByIdAndUpdate(id, {
-        nome,
-        emails,
-        senha,
-        telefones,
-        foto,
-      });
-      console.log(`Dados do Funcionario com id ${id} alterados com sucesso!`);
+      const funcionarioAtualizado = await Funcionario.findByIdAndUpdate(
+        id,
+        dadosAtualizados,
+        { new: true } // Retorna o documento atualizado
+      );
+
+      if (!funcionarioAtualizado) {
+        throw new Error(`Funcionário com ID ${id} não encontrado para atualização`); // Lança um erro se o funcionário não for encontrado
+      }
+
+      console.log(`Dados do funcionário com ID ${id} foram atualizados com sucesso!`); // Loga a atualização
+      return funcionarioAtualizado; // Retorna o funcionário atualizado
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao atualizar funcionário:", error); // Loga o erro no console
+      throw error; // Relança o erro para tratamento posterior
     }
   }
-
-  
 }
 
-export default new funcionarioService()
+// Exporta uma instância única do FuncionarioService
+export default new FuncionarioService();

@@ -1,86 +1,92 @@
 import funcionarioService from "../services/funcionarioService.js";
-
 import { ObjectId } from "mongodb";
 
-const getAllFuncionarios = async (req, res) => {
-  try {
-    const funcionarios = await funcionarioService.getAll();
-    const funcionariosSemSenha = funcionarios.map(
-      ({ senha, ...resto }) => resto
-    );
-    res.status(200).json({ funcionarios: funcionariosSemSenha });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Erro interno no servidor!" });
-  }
-};
-
-const createFuncionario = async (req, res) => {
-  try {
-    const { nome, emails, senha, telefones, foto } = req.body;
-    await funcionarioService.Create(nome, emails, senha, telefones, foto);
-    res.sendStatus(201);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Erro interno no servidor!" });
-  }
-};
-
-const updateFuncionario = async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const id = req.params.id;
-
-      const { nome, emails, senha, telefones, foto } = req.body;
-      await funcionarioService.Update(nome, emails, senha, telefones, foto);
-      res.sendStatus(200).json("Dados do Usuario alterado");
-    } else {
-      res.sendStatus(400);
+class FuncionarioController {
+  // Busca todos os funcionários
+  async getAllFuncionarios(req, res) {
+    try {
+      const funcionarios = await funcionarioService.getAll();
+      // Remove o campo 'senha' de cada funcionário
+      const funcionariosSemSenha = funcionarios.map(({ senha, ...resto }) => resto);
+      res.status(200).json({ funcionarios: funcionariosSemSenha });
+    } catch (error) {
+      console.error("Erro ao buscar funcionários:", error);
+      res.status(500).json({ error: "Erro interno no servidor!" });
     }
-  } catch (error) {
-    console.log(error);
-    res.status.json({ error: "Erro interno no servidor!" });
   }
-};
 
-const deleteFuncionario = async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const id = req.params.id;
-      funcionarioService.Delete(id);
-      res.sendStatus(204).json("Usuario Deletado!");
-    } else {
-      res.sendStatus(400);
+  // Cria um novo funcionário
+  async createFuncionario(req, res) {
+    try {
+      const funcionarioCriado = await funcionarioService.create(req.body);
+      res.status(201).json({ message: "Funcionário criado com sucesso!", funcionario: funcionarioCriado });
+    } catch (error) {
+      console.error("Erro ao criar funcionário:", error);
+      res.status(500).json({ error: "Erro ao criar funcionário!" });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Erro interno no servidor" });
   }
-};
 
-const getOneFuncionario = async (req, res) => {
-  try {
-    if (ObjectId.isValid(req.params.id)) {
-      const id = req.params.id;
-      const funcionario = await funcionarioService.getById(id);
-      const funcionarioSemSenha = {
-       ...funcionario,
-        senha: null,
-      };
-      res.status(200).json({ funcionario: funcionarioSemSenha });
-    } else {
-      res.sendStatus(400);
+  // Atualiza um funcionário existente
+  async updateFuncionario(req, res) {
+    try {
+      const { id } = req.params;
+      // Valida o ID
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "ID inválido!" });
+      }
+      const funcionarioAtualizado = await funcionarioService.update(id, req.body);
+      if (funcionarioAtualizado) {
+        res.status(200).json({ message: "Funcionário atualizado com sucesso!", funcionario: funcionarioAtualizado });
+      } else {
+        res.status(404).json({ error: "Funcionário não encontrado!" });
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar funcionário:", error);
+      res.status(500).json({ error: "Erro ao atualizar funcionário!" });
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Erro interno no servidor!" });
+  }
+
+  // Deleta um funcionário
+  async deleteFuncionario(req, res) {
+    try {
+      const { id } = req.params;
+      // Valida o ID
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "ID inválido!" });
+      }
+      const funcionarioDeletado = await funcionarioService.delete(id);
+      if (funcionarioDeletado) {
+        res.status(200).json({ message: "Funcionário deletado com sucesso!" });
+      } else {
+        res.status(404).json({ error: "Funcionário não encontrado!" });
+      }
+    } catch (error) {
+      console.error("Erro ao deletar funcionário:", error);
+      res.status(500).json({ error: "Erro ao deletar funcionário!" });
+    }
+  }
+
+  // Busca um funcionário por ID
+  async getOneFuncionario(req, res) {
+    try {
+      const { id } = req.params;
+      // Valida o ID
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "ID inválido!" });
+      }
+      const funcionario = await funcionarioService.getOne(id);
+      if (funcionario) {
+        const { senha, ...funcionarioSemSenha } = funcionario.toObject();
+        res.status(200).json({ funcionario: funcionarioSemSenha });
+      } else {
+        res.status(404).json({ error: "Funcionário não encontrado!" });
+      }
+    } catch (error) {
+      console.error("Erro ao buscar funcionário:", error);
+      res.status(500).json({ error: "Erro ao buscar funcionário!" });
+    }
   }
 }
 
-export default {
-  getAllFuncionarios,
-  updateFuncionario,
-  createFuncionario,
-  deleteFuncionario,
-  getOneFuncionario,
-};
+// Exporta uma instância única do FuncionarioController
+export default new FuncionarioController();

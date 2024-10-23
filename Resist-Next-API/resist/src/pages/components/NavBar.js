@@ -1,4 +1,4 @@
-export default function avBar() {
+export default function NavBar() {
   return (
     <>
       <div className="flex flex-col gap-5 h-fit">

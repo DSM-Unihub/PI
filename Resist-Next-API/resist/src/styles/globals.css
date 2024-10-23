@@ -46,3 +46,17 @@ form-page {
   }
 
 }
+
+.container-login{
+  @apply w-full gap-8 md:gap-0 h-screen flex flex-col md:flex-row md:items-center bg-gradient-to-b from-cinza-gradiente-inicio to-cinza-gradiente-final;
+  .login-image{
+    @apply w-full md:w-2/5 lg:w-full h-72 md:h-full Background clip-curve p-5;
+    .resist-logo{
+      @apply md:hidden flex size-7;
+    }
+  }
+}
+
+.login-form-container{
+  @apply flex h-full w-full justify-around flex-col align-middle gap-5 md:p-5 lg:h-fit;
+}

@@ -1,17 +1,25 @@
-import express from "express"
-import funcionarioController from "../controllers/funcionarioController.js"
-import Auth from "../middleware/Auth.js"
+import express from "express";
+import funcionarioController from "../controllers/funcionarioController.js";
+import Auth from "../middleware/Auth.js";
 
-const funcionariosRoutes = express.Router()
+const router = express.Router();
 
-funcionariosRoutes.get("/funcionarios", Auth.Authorization, funcionarioController.getAllFuncionarios)
+// Middleware para verificar a autorização em todas as rotas de funcionários
+router.use(Auth.Authorization);
 
-funcionariosRoutes.post("/funcionario", Auth.Authorization, funcionarioController.createFuncionario)
+// Rota para buscar todos os funcionários
+router.get("/funcionarios", funcionarioController.getAllFuncionarios);
 
-funcionariosRoutes.delete("/funcionario/:id", Auth.Authorization, funcionarioController.deleteFuncionario)
+// Rota para buscar um funcionário específico por ID
+router.get("/funcionarios/:id", funcionarioController.getOneFuncionario);
 
-funcionariosRoutes.put("/funcionario/:id", Auth.Authorization, funcionarioController.updateFuncionario)
+// Rota para criar um novo funcionário
+router.post("/funcionarios", funcionarioController.createFuncionario);
 
-funcionariosRoutes.get("/funcionario/:id", Auth.Authorization, funcionarioController.getOneFuncionario)
+// Rota para atualizar um funcionário existente
+router.put("/funcionarios/:id", funcionarioController.updateFuncionario);
 
-export default funcionariosRoutes
+// Rota para deletar um funcionário
+router.delete("/funcionarios/:id", funcionarioController.deleteFuncionario);
+
+export default router;
