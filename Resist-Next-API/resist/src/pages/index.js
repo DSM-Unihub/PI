@@ -3,6 +3,7 @@ import HeaderBar from "./components/HeaderBar.js";
 import NavBar from "./components/NavBar.js";
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import Head from "next/head.js";
 
 // Load the Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -11,15 +12,19 @@ const usuario = "Daniel"; // User's name
 export default function Home() {
   return (
     <>
+    <Head>
+      <title>Resist</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
       <section className="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full">
         {/* Left Navigation Bar */}
-        <nav className="hidden md:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-5 h-screen gap-10">
+        <nav className="nav-container">
           <NavBar />
         </nav>
 
         {/* Main Content Area */}
-        <section className="flex flex-col w-full lg:overflow-hidden">
-          <div className="Background clip-curve gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32">
+        <section className="main-container">
+          <div className="header-container">
             <HeaderBar />
             {/* Welcome Message for Mobile */}
             <div className="flex md:hidden flex-col text-wrap h-fit p-5">
@@ -37,7 +42,7 @@ export default function Home() {
               <WelcomeSection usuario={usuario} />
 
               {/* Graph Overview Section */}
-              <GraphOverview mesData={mesData} />
+              {/* <GraphOverview mesData={mesData} /> */}
 
               {/* Total Lockdowns Section */}
               <TotalLockdowns />
@@ -59,143 +64,143 @@ export default function Home() {
 }
 
 // Graficos
-const GraphOverview = ({ mesData }) => {
-  const chartRef = useRef(null);
+// const GraphOverview = ({ mesData }) => {
+//   const chartRef = useRef(null);
 
-  useEffect(() => {
-    const ctx = chartRef.current.getContext("2d");
-    const desktopData = mesData.map((data) => data.desktop);
-    const mobileData = mesData.map((data) => data.mobile);
-    const labels = mesData.map((data) => data.mes);
+//   useEffect(() => {
+//     const ctx = chartRef.current.getContext("2d");
+//     const desktopData = mesData.map((data) => data.desktop);
+//     const mobileData = mesData.map((data) => data.mobile);
+//     const labels = mesData.map((data) => data.mes);
 
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: labels,
-        datasets: [
-          {
-            label: "Desktop",
-            data: desktopData,
-            backgroundColor: "#AFC3FF",
-            borderWidth: 1,
-          },
-          {
-            label: "Disp. Móveis",
-            data: mobileData,
-            backgroundColor: "#2D62FF",
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: "Valor",
-            },
-          },
-          x: {
-            title: {
-              display: true,
-              text: "Mês",
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            display: true,
-            position: "top",
-          },
-          tooltip: {
-            enabled: true,
-          },
-        },
-        animation: {
-          duration: 1000,
-          easing: "easeInOutQuad",
-        },
-      },
-    });
-  }, [mesData]);
+//     new Chart(ctx, {
+//       type: "bar",
+//       data: {
+//         labels: labels,
+//         datasets: [
+//           {
+//             label: "Desktop",
+//             data: desktopData,
+//             backgroundColor: "#AFC3FF",
+//             borderWidth: 1,
+//           },
+//           {
+//             label: "Disp. Móveis",
+//             data: mobileData,
+//             backgroundColor: "#2D62FF",
+//             borderWidth: 1,
+//           },
+//         ],
+//       },
+//       options: {
+//         responsive: true,
+//         scales: {
+//           y: {
+//             beginAtZero: true,
+//             title: {
+//               display: true,
+//               text: "Valor",
+//             },
+//           },
+//           x: {
+//             title: {
+//               display: true,
+//               text: "Mês",
+//             },
+//           },
+//         },
+//         plugins: {
+//           legend: {
+//             display: true,
+//             position: "top",
+//           },
+//           tooltip: {
+//             enabled: true,
+//           },
+//         },
+//         animation: {
+//           duration: 1000,
+//           easing: "easeInOutQuad",
+//         },
+//       },
+//     });
+//   }, [mesData]);
 
-  return (
-    <div className="flex flex-col">
-      <h3 className="text-azul-text text-base">Visão Geral</h3>
-      <div className="flex flex-row p-3">
-        <canvas
-          ref={chartRef}
-          className="w-fit max-w-4xl h-full max-h-min rounded-s-xl bg-white"
-        ></canvas>
-        <div className="flex flex-col w-fit bg-cinza rounded-e-xl">
-          {mesData.map((mes) => (
-            <div
-              key={mes.mes}
-              className="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch h-full px-5"
-            >
-              <div className="text-start">
-                <p className="text-base">{mes.mes}</p>
-              </div>
-              <div className="text-end grid grid-cols-2 justify-end">
-                <div className="flex flex-row justify-end">
-                  <img
-                    className="size-4"
-                    src="/icons/desktopmarker.svg"
-                    alt="Desktop marker"
-                  />
-                </div>
-                <div className="flex flex-row justify-end">
-                  <p className="text-base">{mes.desktop}</p>
-                </div>
-              </div>
-              <div className="text-end grid grid-cols-2 justify-end">
-                <div className="flex flex-row justify-end">
-                  <img
-                    className="size-4"
-                    src="/icons/mobilemarker.svg"
-                    alt="Mobile marker"
-                  />
-                </div>
-                <div className="flex flex-row justify-end">
-                  <p className="text-base">{mes.mobile}</p>
-                </div>
-              </div>
-              <div
-                className={`text-center rounded-md justify-center grid grid-cols-2 text-white ${
-                  mes.percent > 0
-                    ? "bg-red-status"
-                    : mes.percent < 0
-                    ? "bg-green-500"
-                    : "bg-azul-principal"
-                }`}
-              >
-                <div>
-                  <p className="text-base">{mes.percent}%</p>
-                </div>
-                <div className="flex flex-row justify-center items-center">
-                  <img
-                    src="/icons/arrowWhite.svg"
-                    className={`size-4 ${
-                      mes.percent < 0
-                        ? "rotate-180"
-                        : mes.percent === 0
-                        ? "-rotate-90"
-                        : ""
-                    }`}
-                    alt="Arrow"
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-          <hr />
-        </div>
-      </div>
-    </div>
-  );
-};
+//   return (
+//     <div className="flex flex-col">
+//       <h3 className="text-azul-text text-base">Visão Geral</h3>
+//       <div className="flex flex-row p-3">
+//         <canvas
+//           ref={chartRef}
+//           className="w-fit max-w-4xl h-full max-h-min rounded-s-xl bg-white"
+//         ></canvas>
+//         <div className="flex flex-col w-fit bg-cinza rounded-e-xl">
+//           {mesData.map((mes) => (
+//             <div
+//               key={mes.mes}
+//               className="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch h-full px-5"
+//             >
+//               <div className="text-start">
+//                 <p className="text-base">{mes.mes}</p>
+//               </div>
+//               <div className="text-end grid grid-cols-2 justify-end">
+//                 <div className="flex flex-row justify-end">
+//                   <img
+//                     className="size-4"
+//                     src="/icons/desktopmarker.svg"
+//                     alt="Desktop marker"
+//                   />
+//                 </div>
+//                 <div className="flex flex-row justify-end">
+//                   <p className="text-base">{mes.desktop}</p>
+//                 </div>
+//               </div>
+//               <div className="text-end grid grid-cols-2 justify-end">
+//                 <div className="flex flex-row justify-end">
+//                   <img
+//                     className="size-4"
+//                     src="/icons/mobilemarker.svg"
+//                     alt="Mobile marker"
+//                   />
+//                 </div>
+//                 <div className="flex flex-row justify-end">
+//                   <p className="text-base">{mes.mobile}</p>
+//                 </div>
+//               </div>
+//               <div
+//                 className={`text-center rounded-md justify-center grid grid-cols-2 text-white ${
+//                   mes.percent > 0
+//                     ? "bg-red-status"
+//                     : mes.percent < 0
+//                     ? "bg-green-500"
+//                     : "bg-azul-principal"
+//                 }`}
+//               >
+//                 <div>
+//                   <p className="text-base">{mes.percent}%</p>
+//                 </div>
+//                 <div className="flex flex-row justify-center items-center">
+//                   <img
+//                     src="/icons/arrowWhite.svg"
+//                     className={`size-4 ${
+//                       mes.percent < 0
+//                         ? "rotate-180"
+//                         : mes.percent === 0
+//                         ? "-rotate-90"
+//                         : ""
+//                     }`}
+//                     alt="Arrow"
+//                   />
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//           <hr />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 // Component for Welcome Section
 function WelcomeSection({ usuario }) {
