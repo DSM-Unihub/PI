@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
-import HeaderBar from "./partials/headerBar.js";
-import NavBar from "./partials/navBar.js";
+import HeaderBar from "./components/HeaderBar.js";
+import NavBar from "./components/NavBar.js";
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 

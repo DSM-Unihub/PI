@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Chart from 'chart.js/auto';
-import NavBar from './partials/navBar.js'
-import HeaderBar from './partials/headerBar';
+import NavBar from './components/NavBar.js'
+import HeaderBar from './components/HeaderBar.js';
 
 export default function Estatisticas({ Mes }) {
   useEffect(() => {
