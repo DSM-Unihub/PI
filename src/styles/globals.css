@@ -65,13 +65,27 @@ form-page {
   @apply flex h-full w-full justify-around flex-col align-middle gap-5 md:p-5 lg:h-fit;
 }
 
-.nav-container{
-  @apply hidden lg:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-5 h-screen gap-10;
+.navDesk-container{
+  @apply hidden lg:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-3 h-screen gap-10;
   .navIcons-container{
-    @apply flex flex-col gap-10 h-screen justify-between;
-    .navIcon{
-      @apply size-10 hover:scale-110 duration-300 w-full hover:pointer-events-none;
+    @apply flex flex-col h-full justify-between;
+    .navIcon-container{
+      @apply flex w-full h-fit flex-row justify-center;
+      .navIcon{
+        @apply size-10 p-2 hover:scale-110 duration-300 cursor-pointer;
+      }
     }
+  }
+}
+
+.navMob-container{
+  @apply flex lg:hidden flex-row left-1/2 -translate-x-1/2 fixed justify-center bg-white bottom-0 z-10 p-3 w-fit gap-2 rounded-t-3xl;
+
+  .navIcon-container{
+    @apply p-3 w-max h-fit flex flex-col items-center
+  }
+  .navIcon{
+    @apply size-8 duration-300 cursor-pointer;
   }
 }
 
@@ -85,6 +99,23 @@ form-page {
 .headerBar{
   @apply flex flex-row items-center gap-2 lg:gap-5 w-full
 }
+
 .headerIcon{
-  @apply hidden lg:flex bg-white border rounded-full w-max h-max p-2
+  @apply hidden lg:flex bg-white border rounded-full w-max h-max p-2;
+}
+
+.home-container{
+  @apply flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-0
+}
+
+.dashLeft-container{
+  @apply grid grid-flow-row px-2 lg:px-10 gap-10 lg:gap-1
+}
+
+.welcomeArea{
+  @apply hidden md:flex flex-col text-wrap bg-gradient-to-r from-laranja-s to-laranja-e p-5 rounded-xl h-fit
+}
+
+.container-principal{
+  @apply flex flex-row justify-start bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full 
 }
