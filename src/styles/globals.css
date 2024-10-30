@@ -79,7 +79,7 @@ form-page {
 }
 
 .navMob-container{
-  @apply flex lg:hidden flex-row left-1/2 -translate-x-1/2 fixed justify-center bg-white bottom-0 z-10 p-3 w-fit gap-2 rounded-t-3xl;
+  @apply flex lg:hidden flex-row left-1/2 -translate-x-1/2 fixed justify-center bg-white bottom-0 z-30 p-3 w-fit gap-2 rounded-t-3xl;
 
   .navIcon-container{
     @apply p-3 w-max h-fit flex flex-col items-center
@@ -120,13 +120,19 @@ form-page {
   @apply flex flex-row justify-start bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full 
 }
 
-.lockdown-container{
-  @apply mt-8 flex flex-col  justify-self-center gap-5;
+  
+  
+
+.dashRight-container{
+}
+
+.component-container{
+  @apply flex flex-col items-start p-5;
   .title{
-    @apply text-start text-sm text-azul-cinza-escuro
+    @apply text-base text-start text-azul-cinza-escuro;
   }
   .lockdownStatic-container{
-    @apply flex flex-row md:hidden gap-5 justify-between items-center bg-block-MBG w-fit justify-self-center rounded-xl;
+    @apply flex flex-row md:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-fit  justify-self-center rounded-xl;
     .text{
       @apply text-azul-MBT text-sm text-wrap
     }
@@ -134,7 +140,5 @@ form-page {
       @apply bg-white flex flex-col h-full justify-center items-center w-fit p-3 rounded-e-lg
     }
   }
-}
 
-.dashRight-container{
 }
