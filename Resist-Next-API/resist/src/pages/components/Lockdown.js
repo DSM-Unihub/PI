@@ -1,6 +1,6 @@
 const Lockdown = () => {
   return (
-    <section className="lockdown-container">
+    <section className="component-container">
       <h3 className="title">Bloqueios totais</h3>
       <div className="lockdownStatic-container">
         <img src="./icons/rectangle.svg" alt="Lockdown Icon" />

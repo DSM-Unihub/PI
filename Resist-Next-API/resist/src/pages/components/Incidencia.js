@@ -1,102 +1,77 @@
 import Chart from "chart.js/auto";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
+
 const Incidencia = () => {
-  data=[{index: 0, value:}]
-  const chartRef = useRef(null);
+  const data = [
+    { index: 0, value: 100, labName: "Lab 00" },
+    { index: 1, value: 50, labName: "Lab 01" },
+    { index: 2, value: 22, labName: "Lab 02" },
+    { index: 3, value: 34, labName: "Lab 03" },
+    { index: 4, value: 40, labName: "Lab 04" },
+    { index: 5, value: 55, labName: "Lab 05" },
+  ];
+
+  const chartRef = useRef({});
+
   useEffect(() => {
-    const ctx = document.getElementById("LaboratorioTeste").getContext("2d");
-    if (chartRef.current) {
-      chartRef.current.destroy();
-    }
+    // Pre-renderiza todos os gráficos de uma vez
+    data.forEach((dados) => {
+      const canvas = document.getElementById(`${dados.labName}`);
 
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const [numItemsShow, setNumItemsShow] = useState(4)
-    const carouselRef = useRef(null);
-    const startXRef = useRef(0);
+      if (canvas && !chartRef.current[dados.labName]) {
+        const ctx = canvas.getContext("2d");
 
-    const handleSlideChange = (direction) =>{
-      if(direction === "prev"){
-        setCurrentIndex((prevIndex) =>{
-          prevIndex === 0 ? data.lenght -1 : prevIndex - 1
-        })
-      } else{
-        setCurrentIndex((prevIndex) =>(prevIndex +1) % data.lenght)
+        chartRef.current[dados.labName] = new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            datasets: [
+              {
+                label: `${dados.labName}`,
+                data: [100 - dados.value, dados.value],
+                borderWidth: 1,
+                backgroundColor: ["#DEE4F7", "#F23A13"],
+              },
+            ],
+          },
+          options: {
+            plugins: {
+              legend: { display: false },
+              tooltip: { enabled: false },
+            },
+            cutout: "67%",
+          },
+        });
       }
-    }
-
-    const handleDragStart = (event) => {
-      startXRef.current = event.clientX || event.touches[0].clientX
-      document.addEventListener("mouseup", handleDragEnd)
-      document.addEventListener("touchend", handleDragEnd)
-    }
-
-    const handleDragEnd = (event) => {
-      document.removeEventListener("mouseup", handleDragEnd)
-      document.removeEventListener("touchend", handleDragEnd)
-
-      const currentX = event.ClientX || event.changeTouches[0].clientX
-      const deltaX = currentX - startXRef.current
-      const threshold = carouselRef.current.offsetWith * 0.2
-
-      if (deltaX > threshold){
-        handleSlideChange("prev")
-      }else if (deltaX < -threshold){
-        handleSlideChange("next")
-      }
-    }
-
-
-    chartRef.current = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        datasets: [
-          {
-            label: "Lab - Laboratorio Teste",
-            data: [100 - 50, 50],
-            borderWidth: 1,
-            backgroundColor: ["#DEE4F7", "#F23A13"],
-          },
-        ],
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: false, // Oculta a legenda
-          },
-          tooltip: {
-            enabled: false, // Desabilita as dicas de ferramentas
-          },
-        },
-        cutout: "65%", // Define a porcentagem de corte
-      },
     });
-  }, []);
+  }, []); // Executa apenas uma vez no carregamento
+
   return (
     <>
-      {/* Graficos de Incidencia por sala */}
-      <div class=" flex flex-col gap-4 justify-self-center ">
-        <p class="text-base text-start text-azul-cinza-escuro">
+      <div className="component-container">
+        <h1 className="title">
           Nível de incidência por laboratório
-        </p>
-        <div className="flex flex-row gap-4">
-          {/* Graficos */}
-          <div class="flex flex-row gap-3"
-          ref={carouselRef}
-          onMouseDown={handleDragStart}
-          onMouseUp={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchEnd={handleDragEnd}>
-            {/* Lab */}
-            {[...data, ...data, ...data].slice(currentIndex, currentIndex + numItemsShow).map((dados, index)=>(            <div class="bg-azul-principal rounded-xl h-max" >
-              <p class="text-white text-base p-3 text-center">
-                Laboratorio Teste
-              </p>
-              {/* canvas */}
-              <div class="bg-white h-max rounded-b-xl flex flex-row justify-center items-center p-2 relative">
-                <canvas id="LaboratorioTeste" class="w-max max-h-40"></canvas>
-                <p class="text-azul-text text-xl absolute z-10">50%</p>
+        </h1>
+
+        <div className="overflow-x-auto w-full flex">
+          <div className="flex flex-row gap-3 py-2">
+            {data.map((dados) => (
+              <div
+                key={dados.labName}
+                className="bg-azul-principal rounded-xl flex-shrink-0"
+                style={{
+                  minWidth: "150px", // Define uma largura mínima para cada item
+                }}
+              >
+                <p className="text-white text-base p-3 text-center">
+                  {dados.labName}
+                </p>
+                <div className="bg-white flex flex-row justify-center items-center h-max rounded-b-xl p-2 relative">
+                  <canvas id={`${dados.labName}`} className="w-full max-h-40"></canvas>
+                  <p className="text-azul-text text-xl absolute z-10">
+                    {dados.value}%
+                  </p>
+                </div>
               </div>
-            </div>
             ))}
           </div>
         </div>
@@ -104,4 +79,5 @@ const Incidencia = () => {
     </>
   );
 };
+
 export default Incidencia;

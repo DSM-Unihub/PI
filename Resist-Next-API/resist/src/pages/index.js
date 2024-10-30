@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar.js";
 import Incidencia from "./components/Incidencia.js";
 import Head from "next/head.js";
 import Lockdown from "./components/Lockdown.js";
+import ActiveDevices from "./components/ActiveDevices.js";
 // Load the Inter font
 const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
               <Welcome usuario={usuario} />
 
               {/* Recent Activity Section */}
-              {/* <RecentActivity /> */}
+              <RecentActivity />
 
               {/* Total Lockdowns Section */}
               <Lockdown />
@@ -41,6 +42,7 @@ export default function Home() {
             {/* Right Dashboard Section */}
             <div className="dashRight-container">
               <Incidencia />
+              <ActiveDevices />
             </div>
           </section>
         </section>
