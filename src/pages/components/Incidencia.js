@@ -47,26 +47,23 @@ const Incidencia = () => {
 
   return (
     <>
-      <div className="component-container">
+      <div className="component-container ">
         <h1 className="title">
           Nível de incidência por laboratório
         </h1>
 
-        <div className="overflow-x-auto w-full flex">
-          <div className="flex flex-row gap-3 py-2">
+        <div className="overflow-x-auto lg:h-72 lg:overflow-x-clip overflow-y-scroll w-full flex">
+          <div className="flex flex-row md:grid md:grid-cols-4 gap-3 py-2">
             {data.map((dados) => (
               <div
                 key={dados.labName}
-                className="bg-azul-principal rounded-xl flex-shrink-0"
-                style={{
-                  minWidth: "150px", // Define uma largura mínima para cada item
-                }}
+                className="bg-azul-principal rounded-xl flex-shrink-0 w-fit max-w-30 max-h-30"
               >
-                <p className="text-white text-base p-3 text-center">
+                <p className="text-white text-base p-2 text-center">
                   {dados.labName}
                 </p>
-                <div className="bg-white flex flex-row justify-center items-center h-max rounded-b-xl p-2 relative">
-                  <canvas id={`${dados.labName}`} className="w-full max-h-40"></canvas>
+                <div className="bg-white flex flex-row justify-center items-center h-fit w-fit rounded-b-xl p-1 relative">
+                  <canvas id={`${dados.labName}`} className="w-full max-w-30 max-h-30"></canvas>
                   <p className="text-azul-text text-xl absolute z-10">
                     {dados.value}%
                   </p>

@@ -14,6 +14,7 @@ const Lockdown = () => {
           <img className="size-8" src="./icons/arrowDC.svg" alt="Arrow Down" />
         </div>
       </div>
+      
     </section>
   );
 };
