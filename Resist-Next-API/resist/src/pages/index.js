@@ -5,9 +5,18 @@ import Incidencia from "./components/Incidencia.js";
 import Head from "next/head.js";
 import Lockdown from "./components/Lockdown.js";
 import ActiveDevices from "./components/ActiveDevices.js";
+import Calendar from "react-calendar";
+import { useState, useEffect } from "react";
+import FooterContent from "./components/FooterContent.js";
 // Load the Inter font
 const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
+  const [value, onChange] = useState(new Date());
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   return (
     <>
@@ -35,18 +44,23 @@ export default function Home() {
 
               {/* Total Lockdowns Section */}
               <Lockdown />
-              {/* General Lockdowns Overview */}
-              {/* <GeneralLockdowns /> */}
             </div>
 
             {/* Right Dashboard Section */}
             <div className="dashRight-container">
               <Incidencia />
-              <ActiveDevices />
+              <div className="flex  flex-col lg:flex-row gap-2 mt-4">
+                <ActiveDevices />
+                <div className="component-container">
+                  <h2 className="title">Histórico por data</h2>
+                  {isMounted && <Calendar onChange={onChange} value={value} />}
+                </div>
+              </div>
             </div>
           </section>
         </section>
       </section>
+      <FooterContent />
     </>
   );
 }
@@ -66,8 +80,8 @@ function Welcome(usuario) {
 // Component for Recent Activity
 function RecentActivity() {
   return (
-    <div className="lg:flex flex-col hidden bg-azul-principal rounded-xl h-max">
-      <div className="flex flex-row justify-between p-3">
+    <div className="lg:flex flex-col hidden bg-azul-principal rounded-xl h-max lg:h-72 overflow-y-auto">
+      <div className="flex flex-row justify-between p-3 ">
         <p className="text-white text-base p-3 text-center">
           Atividade recente
         </p>
