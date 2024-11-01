@@ -130,7 +130,7 @@ export default function NavBar() {
           </div>
           
           <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness' : ''}`}>
-            <Link href="/logout">
+            <Link href="/login">
               <img className="navIcon " src="/icons/Logout.svg" />
             </Link>
           </div>
