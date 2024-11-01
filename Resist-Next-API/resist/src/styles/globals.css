@@ -105,7 +105,7 @@ form-page {
 }
 
 .home-container{
-  @apply flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-0
+  @apply flex flex-col lg:grid lg:grid-flow-col gap-10 lg:gap-0
 }
 
 .dashLeft-container{
@@ -124,7 +124,7 @@ form-page {
   
 
 .dashRight-container{
-  @apply flex-col relative lg:bottom-8
+  @apply flex flex-col lg:grid lg:grid-flow-row relative lg:bottom-8 lg:pe-1
 }
 
 .component-container{

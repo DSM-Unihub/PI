@@ -39,10 +39,10 @@ const ActiveDevices = () => {
   ];
   return (
     <>
-      <div className="component-container overflow-y-auto lg:h-52 lg:rounded-xl">
+      <div className="component-container lg:rounded-xl">
         <h2 className="title">Ativos Agora</h2>
         <div className="flex flex-col items-center justify-center self-center md:self-start p-4 md:p-1 bg-white rounded-xl">
-          <table className="text-center ">
+          <table className="text-center text-nowrap max-h-40">
             <thead className=" text-azul-title font-bold text-base">
               <tr>
                 <th>Nome</th>
@@ -50,13 +50,13 @@ const ActiveDevices = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody className="">
+            <tbody>
               {data.map((dados) => (
                 <tr key={dados.id} className="border-b border-separate">
                   <td>{dados.nome}</td>
-                  <td>{dados.quantidade}</td>
+                  <td >{dados.quantidade}</td>
                   <td>
-                    <img src={``} />
+                    <img src={`./icons/status-green.svg`} />
                   </td>
                 </tr>
               ))}
