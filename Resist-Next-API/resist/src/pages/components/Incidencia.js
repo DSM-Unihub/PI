@@ -9,6 +9,8 @@ const Incidencia = () => {
     { index: 3, value: 34, labName: "Lab 03" },
     { index: 4, value: 40, labName: "Lab 04" },
     { index: 5, value: 55, labName: "Lab 05" },
+    { index: 6, value: 55, labName: "Lab 06" },
+    { index: 7, value: 55, labName: "Lab 07" },
   ];
 
   const chartRef = useRef({});
@@ -47,13 +49,13 @@ const Incidencia = () => {
 
   return (
     <>
-      <div className="component-container ">
+      <div className="component-container xl:p-2 ">
         <h1 className="title">
           Nível de incidência por laboratório
         </h1>
 
         <div className="overflow-x-auto relative flex w-full">
-          <div className="flex flex-row lg:grid lg:grid-cols-4 xl:grid-cols-5 gap-3 py-2">
+          <div className="flex flex-row lg:flex lg:flex-row lg:flex-wrap lg:justify-between gap-3 py-2">
             {data.map((dados) => (
               <div
                 key={dados.labName}
@@ -63,7 +65,7 @@ const Incidencia = () => {
                   {dados.labName}
                 </p>
                 <div className="bg-white flex flex-row justify-center items-center h-fit w-fit rounded-b-xl p-1 relative">
-                  <canvas id={`${dados.labName}`} className="w-full max-h-28 xl:max-h-32"></canvas>
+                  <canvas id={`${dados.labName}`} className="w-full max-h-28 lg:max-h-30 xl:max-h-42"></canvas>
                   <p className="text-azul-text text-xl absolute z-10">
                     {dados.value}%
                   </p>

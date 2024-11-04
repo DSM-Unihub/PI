@@ -34,7 +34,7 @@ export default function Home() {
         {/* Main Content Area */}
         <section className="main-container">
           <HeaderBar usuario={usuario} />
-          <section className="home-container">
+          <section className="home-container ">
             {/* Left Dashboard Section */}
             <div className="dashLeft-container">
               {/* Welcome Section for Desktop */}
@@ -50,9 +50,9 @@ export default function Home() {
             {/* Right Dashboard Section */}
             <div className="dashRight-container">
               <Incidencia />
-              <div className="flex  flex-col lg:flex-row gap-2 mt-4">
+              <div className="flex  flex-col lg:flex-row gap-2 mt-4 ">
                 <ActiveDevices />
-                <div className="component-container">
+                <div className="flex flex-col self-start text-azul-title text-lg p-5 lg:p-0 ">
                   <h2 className="title">Histórico por data</h2>
                   {isMounted && <Calendar onChange={onChange} value={value} />}
                 </div>
