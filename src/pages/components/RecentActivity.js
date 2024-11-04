@@ -31,27 +31,27 @@ function ActivityList() {
   const activities = [
     {
       text: "Novo bloqueio realizado automaticamente pelo sistema",
-      date: "22/03/24",
+      date: "22/09/24",
       icon: "/icons/bloqueio-blue.svg",
     },
     {
       text: "Novo dispositivo desktop cadastrado",
-      date: "22/03/24",
+      date: "22/09/24",
       icon: "/icons/PC-blue.svg",
     },
     {
       text: "Nova exceção adicionada manualmente",
-      date: "21/03/24",
+      date: "21/09/24",
       icon: "/icons/plus-blue.svg",
     },
     {
       text: "Novo dispositivo móvel cadastrado",
-      date: "20/03/24",
+      date: "20/09/24",
       icon: "/icons/Celular-blue.svg",
     },
     {
       text: "Novo usuário criado pelo administrador",
-      date: "17/03/24",
+      date: "17/09/24",
       icon: "/icons/user-blue.svg",
     },
   ];
@@ -70,7 +70,7 @@ function ActivityItem({ activity }) {
   return (
     <div className="flex flex-row justify-between p-1 items-center">
       <div className="flex flex-row justify-start items-center gap-5">
-        <div className="border-2 border-azul-principal rounded-full p-1">
+        <div className="border-2 border-azul-principal rounded-full p-1 xl:p-3">
           <img src={activity.icon} className="size-4" alt="Activity Icon" />
         </div>
         <p className="text-sm text-azul-text">{activity.text}</p>

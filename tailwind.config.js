@@ -48,7 +48,8 @@ module.exports = {
         '720':'720px'
       },
       maxHeight:{
-        '100':"38rem"
+        '100':"38rem",
+        "42": "10.06rem"
       }
     },
   },
