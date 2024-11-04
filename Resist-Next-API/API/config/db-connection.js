@@ -7,19 +7,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Obtém as credenciais do banco de dados das variáveis de ambiente
-const { DB_PASS, DB_NAME, DB_USER } = process.env;
+const mongoDBURI = process.env.mongoDBURI;
 
 // Função assíncrona para conectar ao MongoDB
 const connect = async () => {
   try {
-    // Constrói a string de conexão
-    const connectionString = `mongodb+srv://${DB_USER}:${DB_PASS}@auladw3.qpo0l.mongodb.net/${DB_NAME}?retryWrites=true&w=majority&appName=AulaDW3`;
-    
-    // Tenta conectar ao MongoDB
-    await mongoose.connect(connectionString, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    // Tenta conectar ao MongoDB usando a URI das variáveis de ambiente
+    await mongoose.connect(mongoDBURI);
     
     console.log("Conectado ao MongoDB com sucesso");
   } catch (error) {
