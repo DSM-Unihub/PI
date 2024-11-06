@@ -118,18 +118,18 @@ export default function NavBar() {
           </div>
           <div className="flex flex-col justify-center gap-5">
             
-          <div className={`navIcon-container ${isActive('/ajuda') ? 'rounded-3xl bg-cinza-principal brightness' : ''}`}>
+          <div className={`navIcon-container ${isActive('/ajuda') ? 'rounded-3xl bg-cinza-principal brightness duration-300 ' : ''}`}>
           <Link href="/ajuda">
             <img className="navIcon " src="/icons/Ajudamenu.svg" />
           </Link>
           </div>
-          <div className={`navIcon-container ${isActive('/config') ? 'rounded-3xl bg-cinza-principal brightness' : ''}`}>
+          <div className={`navIcon-container ${isActive('/config') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
             <Link href="/config">
               <img className="navIcon " src="/icons/Configs.svg" />
             </Link>
           </div>
           
-          <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness' : ''}`}>
+          <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
             <Link href="/login">
               <img className="navIcon " src="/icons/Logout.svg" />
             </Link>

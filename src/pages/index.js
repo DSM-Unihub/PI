@@ -21,10 +21,7 @@ export default function Home() {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   return (
     <>
-      <Head>
-        <title>Resist</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+ 
       <section className="container-principal">
         {/* Left Navigation Bar */}
         <nav>
