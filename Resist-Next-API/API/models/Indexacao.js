@@ -21,11 +21,16 @@ const IndexSchema = new mongoose.Schema({
   flag: {
     type: Boolean,
     default: false, // Define que o acesso não está bloqueado por padrão
-  }
+  },
+  tipoInsercao: {
+    type: String,
+    enum: ["Manual", "Automatico"], // Corrigido para "Manual" (tipicamente usado)
+    required: true, // Torna o campo obrigatório
+  },
 }, { timestamps: true }); // Adiciona campos de timestamps (createdAt e updatedAt)
 
 // Criação do modelo Indexacao baseado no schema
-const Indexacao = mongoose.model("indexacoe", IndexSchema);
+const Indexacao = mongoose.model("indexacao", IndexSchema); // Corrigido o nome da coleção para "indexacao"
 
 // Exporta o modelo Indexacao para uso em outros módulos
 export default Indexacao;

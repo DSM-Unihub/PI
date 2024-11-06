@@ -9,20 +9,20 @@ export default function Estatisticas() {
 
  
   return (
-    <section className="flex flex-row justify-start h-screen bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full max-h-screen">
-      <section className="hidden md:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-5 h-screen gap-10">
-        <NavBar />
-      </section>
-      <section className="flex flex-col w-full">
-        <section className="flex flex-row items-center justify-between h-fit p-6 gap-32">
+    <section className="container-principal">
+        {/* Left Navigation Bar */}
+        <nav>
+          <NavBar />
+        </nav>
+        {/* Main Content Area */}
+        <section className="main-container">
           <HeaderBar usuario={usuario} />
-        </section>
-        <section className="flex flex-col gap-5 lg:overflow-hidden">
+        <section className="flex flex-col gap-3">
           {/* Dashboard Principal */}
-          <section className="grid grid-cols-2 px-5 gap-1">
+          <section className="grid grid-cols-2 px-4 gap-1">
             <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
-              <p className="text-4xl text-white">Estatísticas</p>
-              <p className="text-2xl text-white">
+              <p className="lg:text-3xl text-4xl text-white">Estatísticas</p>
+              <p className="lg:text-xl text-2xl text-white">
                 Acesso aos dados de bloqueio.
               </p>
             </div>
@@ -33,7 +33,6 @@ export default function Estatisticas() {
               <h3 className="text-azul-text">Últimos Bloqueios na Rede</h3>
               <div className="flex flex-col bg-white rounded-xl justify-between p-3">
                 {/* Dados dos bloqueios */}
-                {/* Ajuste os dados conforme necessário */}
                 {[...Array(5)].map((_, index) => (
                   <div
                     key={index}

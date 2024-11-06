@@ -23,8 +23,8 @@ const Lockdown = () => {
             </p>
           </div>
           <div className="bg-azul-gradiente-final flex flex-col rounded-br-xl items-center justify-center">
-            <p className="text-base text-white"><span className="text-4xl">381</span> em Setembro</p>
-            <p className="text-base text-white"><span className="text-4xl">428</span> em Outubro</p>
+            <p className="text-base text-white"><span className="text-4xl lg:text-3xl">381</span> em Setembro</p>
+            <p className="text-base text-white"><span className="text-4xl lg:text-3xl">428</span> em Outubro</p>
           </div>
         </div>
       </div>

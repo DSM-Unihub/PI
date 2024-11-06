@@ -1,35 +1,43 @@
 import Chart from "chart.js/auto";
-import { useRef, useEffect } from "react";
-
+import { useRef, useEffect, useState } from "react";
+import url from "../services/url";
+import axios from "axios";
 const Incidencia = () => {
-  const data = [
-    { index: 0, value: 100, labName: "Lab 00" },
-    { index: 1, value: 50, labName: "Lab 01" },
-    { index: 2, value: 22, labName: "Lab 02" },
-    { index: 3, value: 34, labName: "Lab 03" },
-    { index: 4, value: 40, labName: "Lab 04" },
-    { index: 5, value: 55, labName: "Lab 05" },
-    { index: 6, value: 55, labName: "Lab 06" },
-    { index: 7, value: 55, labName: "Lab 07" },
-  ];
-
+  const [labs, setLabs] = useState([])
   const chartRef = useRef({});
+
+  // Função para buscar os dados dos bloqueios
+  const fetchLabs = async () => {
+    try {
+      const response = await axios.get(`${url}/bloqueios-estatisticas`);
+      setLabs(response.data[0].bloqueiosPorLaboratorio); // Atualiza o estado com os dados dos laboratórios
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    fetchLabs();
+  }, []);
+
 
   useEffect(() => {
     // Pre-renderiza todos os gráficos de uma vez
-    data.forEach((dados) => {
-      const canvas = document.getElementById(`${dados.labName}`);
+    if(labs.length > 0) {
+    labs.forEach((lab) => {
+      const canvas = document.getElementById(`${lab.laboratorio}`);
 
-      if (canvas && !chartRef.current[dados.labName]) {
+      if (canvas && !chartRef.current[lab.laboratorio]) {
         const ctx = canvas.getContext("2d");
 
-        chartRef.current[dados.labName] = new Chart(ctx, {
+        chartRef.current[lab.laboratorio] = new Chart(ctx, {
           type: "doughnut",
           data: {
             datasets: [
               {
-                label: `${dados.labName}`,
-                data: [100 - dados.value, dados.value],
+                label: `${lab.laboratorio}`,
+                data: [100 - lab.bloqueios, lab.bloqueios],
                 borderWidth: 1,
                 backgroundColor: ["#DEE4F7", "#F23A13"],
               },
@@ -45,7 +53,8 @@ const Incidencia = () => {
         });
       }
     });
-  }, []); // Executa apenas uma vez no carregamento
+  }
+  }, [labs]); // Executa apenas uma vez no carregamento
 
   return (
     <>
@@ -56,18 +65,18 @@ const Incidencia = () => {
 
         <div className="overflow-x-auto relative flex w-full">
           <div className="flex flex-row lg:flex lg:flex-row lg:flex-wrap lg:justify-between gap-3 py-2">
-            {data.map((dados) => (
+            {labs.map((lab) => (
               <div
-                key={dados.labName}
+                key={lab.laboratorio}
                 className="bg-azul-principal rounded-xl flex-shrink-0 w-fit"
               >
                 <p className="text-white text-base p-2 text-center">
-                  {dados.labName}
+                  {lab.laboratorio}
                 </p>
-                <div className="bg-white flex flex-row justify-center items-center h-fit w-fit rounded-b-xl p-1 relative">
-                  <canvas id={`${dados.labName}`} className="w-full max-h-28 lg:max-h-30 xl:max-h-42"></canvas>
+                <div className="bg-white flex flex-row justify-center items-center h-fit w-full rounded-b-xl p-1 relative">
+                  <canvas id={`${lab.laboratorio}`} className="w-full max-h-28 lg:max-h-30 xl:max-h-42"></canvas>
                   <p className="text-azul-text text-xl absolute z-10">
-                    {dados.value}%
+                    {lab.porcentagem}%
                   </p>
                 </div>
               </div>

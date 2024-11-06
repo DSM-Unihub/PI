@@ -90,16 +90,92 @@ export const EstatisticasBloqueios = async () => {
             $push: {
               laboratorio: "$_id.laboratorio",
               bloqueios: "$bloqueiosPorLaboratorio",
-              porcentagem: {
-                $multiply: [
-                  {
-                    $divide: ["$bloqueiosPorLaboratorio", "$totalBloqueiosMes"],
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          bloqueiosPorLaboratorio: {
+            $map: {
+              input: "$bloqueiosPorLaboratorio",
+              as: "item",
+              in: {
+                laboratorio: "$$item.laboratorio",
+                bloqueios: "$$item.bloqueios",
+                porcentagem: {
+                  $cond: {
+                    if: { $eq: ["$totalBloqueiosMes", 0] },
+                    then: 0,
+                    else: {
+                      $round: [
+                        {
+                          $multiply: [
+                            {
+                              $divide: ["$$item.bloqueios", "$totalBloqueiosMes"],
+                            },
+                            100,
+                          ],
+                        },
+                        2, // Arredondando para 2 casas decimais
+                      ],
+                    },
                   },
-                  100,
-                ],
+                },
               },
             },
           },
+        },
+      },
+      
+      {
+        // Ordenando os laboratórios dentro do array de cada mês/ano
+        $addFields: {
+          bloqueiosPorLaboratorio: {
+            $sortArray: {
+              input: "$bloqueiosPorLaboratorio",
+              sortBy: { laboratorio: 1 }, // Ordena os laboratórios em ordem alfabética
+            },
+          },
+        },
+      },
+      {
+        // Recupera as últimas atividades de inserção
+        $lookup: {
+          from: "indexacaos", // Nome da coleção de atividades de inserção
+          pipeline: [
+            {
+              $project: {
+                tipoInsercao: 1, // Tipo de inserção: manual ou automático
+                dataHora: 1,     // Data da inserção
+              },
+            },
+            { $sort: { dataHora: -1 } }, // Ordena pela data de inserção mais recente
+            { $limit: 5 }, // Limita para as últimas 5 atividades
+          ],
+          as: "ultimasAtividades", // Inclui as atividades no resultado final
+        },
+      },
+      {
+        $lookup: {
+          from: "indexacaos", // Nome da coleção de atividades de inserção
+          pipeline: [
+            {
+              $project: {
+                tipoInsercao: 1, // Tipo de inserção: manual ou automático
+                dataHora: {
+                  $dateToString: {
+                    format: "%d/%m/%Y", // Formato de data sem a hora
+                    date: "$dataHora",  // Campo dataHora
+                  },
+                },
+           // Data da inserção
+              },
+            },
+            { $sort: { dataHora: -1 } }, // Ordena pela data de inserção mais recente
+            { $limit: 5 }, // Limita para as últimas 5 atividades
+          ],
+          as: "ultimasAtividades", // Inclui as atividades no resultado final
         },
       },
       {
@@ -108,10 +184,24 @@ export const EstatisticasBloqueios = async () => {
           ano: "$_id.ano",
           totalBloqueiosMes: 1,
           bloqueiosPorLaboratorio: 1,
+          ultimasAtividades: 1, // Inclui as últimas atividades de inserção
           _id: 0,
         },
       },
-      { $sort: { ano: 1, mes: 1 } },
+      {
+        // Adicionando uma etapa de verificação para depuração
+        $addFields: {
+          ultimasAtividadesCheck: {
+            $cond: {
+              if: { $eq: [{ $size: "$ultimasAtividades" }, 0] },
+              then: "Sem atividades de inserção", // Mensagem para caso não encontre atividades
+              else: "Atividades encontradas",
+            },
+          },
+        },
+      },
+      // Ordenando os dados finais por ano e mês
+      { $sort: { "ano": 1, "mes": 1 } },
     ];
 
     return await Indexacao.aggregate(pipeline);
