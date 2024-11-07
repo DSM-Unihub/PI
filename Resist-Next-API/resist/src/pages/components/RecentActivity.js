@@ -6,8 +6,8 @@ const RecentActivity = () => {
   const [atividades, setAtividades] = useState([])
   const fetchAtividades = async () =>{
     try {
-      const response = await axios.get(`${url}/bloqueios-estatisticas`);
-      setAtividades(response.data[0].ultimasAtividades);
+      const response = await axios.get(`${url}/ultimas-atividades`);
+      setAtividades(response.data);
     } catch (error) {
       console.error("Error fetching atividades:", error);
       throw error
@@ -58,7 +58,7 @@ function ActivityList({atividades}) {
               </div>
               <p className="text-sm text-azul-text">Novo Bloqueio {atividade.tipoInsercao} realizado </p>
             </div>
-            <p className="text-sm text-azul-text">{atividade.dataHora}</p>
+            <p className="text-sm text-azul-text">{atividade.data}</p>
           </div>
       ))}
     </div>

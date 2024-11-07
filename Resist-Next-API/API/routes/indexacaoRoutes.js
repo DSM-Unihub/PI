@@ -5,7 +5,8 @@ const router = express.Router();
 
 
 // Rota para obter estatísticas de bloqueios por mês e por laboratório
-router.get("/estatisticas-labs", indexacaoController.getEstatisticasBloqueios);
+router.get("/estatisticas-labs", indexacaoController.getEstatisticasLabs);
+router.get("/estatisticas-mes", indexacaoController.getEstatisticasBloqueios);
 router.get("/ultimas-atividades", indexacaoController.getUltimasAtividades);
 
 export default router;

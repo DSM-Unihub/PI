@@ -1,6 +1,7 @@
 import Indexacao from "../models/Indexacao.js";
 
 class indexacaoService{
+  
   async getEstatisticasLabs(){
     try {
       // Obtenha todos os registros de bloqueios
@@ -71,6 +72,88 @@ class indexacaoService{
       throw new Error("Erro ao obter as últimas atividades");
     }
   }
+
+
+  // Função para obter as estatísticas de bloqueios
+ async getEstatisticasMensais(){
+  try {
+    const dataAtual = new Date();
+    const anoAtual = dataAtual.getFullYear();
+    const mesAtual = dataAtual.getMonth() + 1;
+
+    // Função auxiliar para formatar o mês como nome
+    const obterNomeMes = (mes) => {
+      const meses = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+      ];
+      return meses[mes - 1];
+    };
+
+    // Consulta para os últimos três meses
+    const [dadosMesAtual, dadosMesAnterior, dadosDoisMesesAtras] = await Promise.all([
+      Indexacao.countDocuments({
+        flag: true,
+        dataHora: {
+          $gte: new Date(anoAtual, mesAtual - 1, 1),
+          $lt: new Date(anoAtual, mesAtual, 1)
+        }
+      }),
+      Indexacao.countDocuments({
+        flag: true,
+        dataHora: {
+          $gte: new Date(anoAtual, mesAtual - 2, 1),
+          $lt: new Date(anoAtual, mesAtual - 1, 1)
+        }
+      }),
+      Indexacao.countDocuments({
+        flag: true,
+        dataHora: {
+          $gte: new Date(anoAtual, mesAtual - 3, 1),
+          $lt: new Date(anoAtual, mesAtual - 2, 1)
+        }
+      })
+    ]);
+
+    // Calcular as variações de percentual
+    const variacaoMesAnterior = dadosMesAnterior
+      ? ((dadosMesAtual - dadosMesAnterior) / dadosMesAnterior) * 100
+      : 0;
+    
+    // Variação Total considerando os três meses: Novembro vs (Setembro + Outubro)
+    const totalDosTresMeses = dadosMesAnterior + dadosDoisMesesAtras;
+    let variacaoTotal = 0;
+    if (totalDosTresMeses > 0) {
+      variacaoTotal = ((dadosMesAtual - totalDosTresMeses) / totalDosTresMeses) * 100;
+    }
+
+    // Se a variação total for 0, exibe uma mensagem específica
+    const variacaoTotalMensagem = variacaoTotal === 0 ? "Nenhuma Variação" : variacaoTotal.toFixed(2);
+
+    return {
+      mesAtual: {
+        mes: obterNomeMes(mesAtual),
+        ano: anoAtual,
+        bloqueios: dadosMesAtual
+      },
+      mesAnterior: {
+        mes: obterNomeMes(mesAtual - 1),
+        ano: anoAtual,
+        bloqueios: dadosMesAnterior
+      },
+      doisMesesAtras: {
+        mes: obterNomeMes(mesAtual - 2),
+        ano: anoAtual,
+        bloqueios: dadosDoisMesesAtras
+      },
+      porcentagemVariacaoMesAnterior: variacaoMesAnterior.toFixed(2),
+      porcentagemVariacaoTotal: variacaoTotalMensagem // Exibe a mensagem ou o valor de variação total
+    };
+  } catch (error) {
+    console.error("Erro ao obter estatísticas mensais:", error);
+    throw new Error("Erro ao obter estatísticas mensais");
+  }
+  };
 }
 
 export default new indexacaoService();
