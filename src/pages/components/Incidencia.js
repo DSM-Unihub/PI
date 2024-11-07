@@ -9,8 +9,8 @@ const Incidencia = () => {
   // Função para buscar os dados dos bloqueios
   const fetchLabs = async () => {
     try {
-      const response = await axios.get(`${url}/bloqueios-estatisticas`);
-      setLabs(response.data[0].bloqueiosPorLaboratorio); // Atualiza o estado com os dados dos laboratórios
+      const response = await axios.get(`${url}/estatisticas-labs`);
+      setLabs(response.data.estatisticasLaboratorios); // Atualiza o estado com os dados dos laboratórios
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       throw error;
@@ -37,7 +37,7 @@ const Incidencia = () => {
             datasets: [
               {
                 label: `${lab.laboratorio}`,
-                data: [100 - lab.bloqueios, lab.bloqueios],
+                data: [100 - lab.porcentagem, lab.porcentagem],
                 borderWidth: 1,
                 backgroundColor: ["#DEE4F7", "#F23A13"],
               },
