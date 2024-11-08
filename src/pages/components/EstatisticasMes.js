@@ -1,27 +1,30 @@
 import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
-
+import url from "../services/url";
+import axios from "axios";
 const EstatisticasMes = () => {
-    const Mes = [
-        { mes: "Jan", mobile: 11, desktop: 21, percent: 10 },
-        { mes: "Fev", mobile: 12, desktop: 22, percent: 10 },
-        { mes: "Mar", mobile: 13, desktop: 23, percent: 10 },
-        { mes: "Abr", mobile: 14, desktop: 24, percent: 10 },
-        { mes: "Mai", mobile: 15, desktop: 25, percent: 10 },
-        { mes: "Jun", mobile: 61, desktop: 62, percent: 10 },
-        { mes: "Jul", mobile: 71, desktop: 72, percent: -10 },
-        { mes: "Ago", mobile: 81, desktop: 80, percent: 10 },
-        { mes: "Set", mobile: 91, desktop: 92, percent: 10 },
-        { mes: "Out", mobile: 100, desktop: 200, percent: 10 },
-        { mes: "Nov", mobile: 110, desktop: 210, percent: 10 },
-        { mes: "Dez", mobile: 120, desktop: 220, percent: -10 },
-      ];
+    const [bloqueios, setBloqueios] = useState([])
+    const fetchBloqueiosMes = async () =>{
+      try {
+        const response = await axios.get(`${url}/bloqueios-mes`);
+        setBloqueios(response.data);
+      } catch (error) {
+        console.error("Error fetching estatísticas do mês:", error);
+        throw error;
+      }
+    }
+
+    useEffect(()=>{
+      fetchBloqueiosMes();
+    })
+
       useEffect(() => {
+        if(bloqueios.length === 0) return
         const ctx = document.getElementById("grafico-barra").getContext("2d");
     
-        const estatisticasPorMes = Mes;
-        const desktopData = estatisticasPorMes.map((data) => data.desktop);
-        const mobileData = estatisticasPorMes.map((data) => data.mobile);
+        const estatisticasPorMes = bloqueios;
+        const desktopData = estatisticasPorMes.map((data) => data.desktopBloqueios);
+        const mobileData = estatisticasPorMes.map((data) => data.mobileBloqueios);
         const labels = estatisticasPorMes.map((data) => data.mes);
     
         const myChart = new Chart(ctx, {
@@ -78,9 +81,8 @@ const EstatisticasMes = () => {
         return () => {
           myChart.destroy();
         };
-      }, [Mes]);
-    
-    
+      }, [bloqueios]);
+   
     return(
         <>
         <div className="flex flex-col">
@@ -91,9 +93,9 @@ const EstatisticasMes = () => {
                   className="w-fit max-w-4xl h-full max-h-min rounded-s-xl bg-white"
                 ></canvas>
                 <div className="flex flex-col w-fit bg-cinza rounded-e-xl">
-                  {Mes.map((item, index) => (
+                  {bloqueios.map((item) => (
                     <div
-                      key={index}
+                      key={item.mes}
                       className="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch h-full px-5"
                     >
                       <div className="text-start">
@@ -108,7 +110,7 @@ const EstatisticasMes = () => {
                           />
                         </div>
                         <div className="flex flex-row justify-end">
-                          <p className="text-base">{item.desktop}</p>
+                          <p className="text-base">{item.desktopBloqueios}</p>
                         </div>
                       </div>
                       <div className="text-end grid grid-cols-2 justify-end">
@@ -120,7 +122,7 @@ const EstatisticasMes = () => {
                           />
                         </div>
                         <div className="flex flex-row justify-end">
-                          <p className="text-base">{item.mobile}</p>
+                          <p className="text-base">{item.mobileBloqueios}</p>
                         </div>
                       </div>
                       <div
@@ -133,7 +135,7 @@ const EstatisticasMes = () => {
                         }`}
                       >
                         <div>
-                          <p className="text-base">{item.percent}%</p>
+                          <p className="text-base">{item.porcentagemVariacaoMesAnterior}%</p>
                         </div>
                         <div className="flex flex-row justify-center items-center">
                           <img
