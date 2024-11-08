@@ -4,6 +4,8 @@ import url from "../services/url";
 import axios from "axios";
 const EstatisticasMes = () => {
     const [bloqueios, setBloqueios] = useState([])
+    const [layout, setLayout] = useState('x')
+    
     const fetchBloqueiosMes = async () =>{
       try {
         const response = await axios.get(`${url}/bloqueios-mes`);
@@ -16,9 +18,14 @@ const EstatisticasMes = () => {
 
     useEffect(()=>{
       fetchBloqueiosMes();
-    })
+    },[])
 
       useEffect(() => {
+        if(window.innerWidth < 1024){
+          setLayout('y')
+        }else{
+          setLayout('x')
+        }
         if(bloqueios.length === 0) return
         const ctx = document.getElementById("grafico-barra").getContext("2d");
     
@@ -47,13 +54,14 @@ const EstatisticasMes = () => {
             ],
           },
           options: {
+            indexAxis: layout,
             responsive: true,
             scales: {
               y: {
                 beginAtZero: true,
                 title: {
                   display: true,
-                  text: "Valor",
+                  text: "Bloqueios",
                 },
               },
               x: {
@@ -72,8 +80,13 @@ const EstatisticasMes = () => {
                 enabled: true,
               },
             },
+            hover:{
+              mode: 'index',
+              intersect: false,
+
+            },
             animation: {
-              duration: 1000,
+              duration: 800,
               easing: "easeInOutQuad",
             },
           },
@@ -85,23 +98,23 @@ const EstatisticasMes = () => {
    
     return(
         <>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
               <h3 className="text-azul-text text-base">Visão Geral</h3>
-              <div className="flex flex-row p-3">
+              <div className="flex flex-row py-3">
                 <canvas
                   id="grafico-barra"
-                  className="w-fit max-w-4xl h-full max-h-min rounded-s-xl bg-white"
+                  className="rounded-s-xl max-h-96  max-w-2xl lg:max-w-xl bg-white"
                 ></canvas>
-                <div className="flex flex-col w-fit bg-cinza rounded-e-xl">
+                <div className="flex flex-col w-full bg-cinza rounded-e-xl">
                   {bloqueios.map((item) => (
                     <div
                       key={item.mes}
-                      className="grid grid-cols-4 p-2 gap-2 text-azul-text content-center justify-between self-stretch h-full px-5"
+                      className="grid grid-cols-4 py-1 text-azul-text px-2"
                     >
                       <div className="text-start">
                         <p className="text-base">{item.mes}</p>
                       </div>
-                      <div className="text-end grid grid-cols-2 justify-end">
+                      <div className=" flex flex-row w-fit items-center">
                         <div className="flex flex-row justify-end">
                           <img
                             className="size-4"
@@ -113,7 +126,7 @@ const EstatisticasMes = () => {
                           <p className="text-base">{item.desktopBloqueios}</p>
                         </div>
                       </div>
-                      <div className="text-end grid grid-cols-2 justify-end">
+                      <div className="flex flex-row items-center w-fit ">
                         <div className="flex flex-row justify-end">
                           <img
                             className="size-4"
@@ -126,10 +139,10 @@ const EstatisticasMes = () => {
                         </div>
                       </div>
                       <div
-                        className={`text-center rounded-md justify-center grid grid-cols-2 text-white ${
-                          item.percent > 0
+                        className={` rounded-md  flex flex-row justify-self-end items-center gap-1 w-fit text-white ${
+                          item.porcentagemVariacaoMesAnterior > 0
                             ? "bg-red-status"
-                            : item.percent < 0
+                            : item.porcentagemVariacaoMesAnterior < 0
                             ? "bg-green-500"
                             : "bg-azul-principal"
                         }`}
@@ -141,9 +154,9 @@ const EstatisticasMes = () => {
                           <img
                             src="./icons/arrowW.svg"
                             className={`size-4 ${
-                              item.percent < 0
+                              item.porcentagemVariacaoMesAnterior < '0.00'
                                 ? "rotate-180"
-                                : item.percent === 0
+                                : item.porcentagemVariacaoMesAnterior === '0.00'
                                 ? "-rotate-90"
                                 : ""
                             }`}

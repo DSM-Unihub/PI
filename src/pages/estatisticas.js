@@ -17,18 +17,17 @@ export default function Estatisticas() {
         {/* Main Content Area */}
         <section className="main-container">
           <HeaderBar usuario={usuario} />
-        <section className="flex flex-col gap-3">
+        <section className="grid grid-cols-3 gap-1">
           {/* Dashboard Principal */}
-          <section className="grid grid-cols-2 px-4 gap-1">
+          <section className="flex flex-col col-span-2 px-4 gap-1">
             <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
               <p className="lg:text-3xl text-4xl text-white">Estatísticas</p>
               <p className="lg:text-xl text-2xl text-white">
                 Acesso aos dados de bloqueio.
               </p>
             </div>
-          </section>
-          <section className="flex flex-row px-5 gap-2">
             <EstatisticasMes />
+          </section>
             <div className="flex flex-col px-3 gap-3">
               <h3 className="text-azul-text">Últimos Bloqueios na Rede</h3>
               <div className="flex flex-col bg-white rounded-xl justify-between p-3">
@@ -71,6 +70,5 @@ export default function Estatisticas() {
           </section>
         </section>
       </section>
-    </section>
   );
 }
