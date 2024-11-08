@@ -8,5 +8,5 @@ const router = express.Router();
 router.get("/estatisticas-labs", indexacaoController.getEstatisticasLabs);
 router.get("/estatisticas-mes", indexacaoController.getEstatisticasBloqueios);
 router.get("/ultimas-atividades", indexacaoController.getUltimasAtividades);
-
+router.get("/bloqueios-mes", indexacaoController.getBloqueiosPorMes)
 export default router;

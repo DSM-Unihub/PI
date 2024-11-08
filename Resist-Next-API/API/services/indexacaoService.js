@@ -1,7 +1,89 @@
 import Indexacao from "../models/Indexacao.js";
 
 class indexacaoService{
-  
+  async getBloqueiosPorMesesAno() {
+    try {
+      const dataAtual = new Date();
+      const anoAtual = dataAtual.getFullYear();
+
+      const obterNomeMes = (mes) => {
+        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        return meses[mes - 1];
+      };
+
+      // Agrupamento e contagem de bloqueios por mês do ano atual
+      const bloqueiosPorMes = await Indexacao.aggregate([
+        {
+          $match: {
+            flag: true,
+            dataHora: {
+              $gte: new Date(anoAtual, 0, 1), // Início do ano atual
+              $lt: new Date(anoAtual + 1, 0, 1) // Início do próximo ano
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              mes: { $month: "$dataHora" },
+              tipo: {
+                $cond: [
+                  { $eq: ["$laboratorio", "Laboratório Mobile"] },
+                  "Mobile",
+                  "Desktop"
+                ]
+              }
+            },
+            totalBloqueios: { $sum: 1 }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.mes",
+            bloqueios: {
+              $push: {
+                tipo: "$_id.tipo",
+                total: "$totalBloqueios"
+              }
+            },
+            totalMensal: { $sum: "$totalBloqueios" }
+          }
+        },
+        {
+          $sort: { "_id": 1 } // Ordena pelos meses do ano
+        }
+      ]);
+
+      // Estruturação dos dados e cálculo de variação mensal
+      const dadosMensais = bloqueiosPorMes.map((item, index, arr) => {
+        const mesAtual = item._id;
+        const totalDesktop = item.bloqueios.find(b => b.tipo === "Desktop")?.total || 0;
+        const totalMobile = item.bloqueios.find(b => b.tipo === "Mobile")?.total || 0;
+        const totalBloqueios = item.totalMensal;
+        
+        // Cálculo da variação em relação ao mês anterior
+        const totalMesAnterior = index > 0 ? arr[index - 1].totalMensal : 0;
+        const variacao = totalMesAnterior
+          ? ((totalBloqueios - totalMesAnterior) / totalMesAnterior) * 100
+          : 0;
+
+        return {
+          mes: obterNomeMes(mesAtual),
+          ano: anoAtual,
+          totalBloqueios,
+          desktopBloqueios: totalDesktop,
+          mobileBloqueios: totalMobile,
+          porcentagemVariacaoMesAnterior: variacao.toFixed(2)
+        };
+      });
+
+      return dadosMensais;
+    } catch (error) {
+      console.error("Erro ao obter bloqueios por meses do ano:", error);
+      throw new Error("Erro ao obter bloqueios por meses do ano");
+    }
+  }
+
   async getEstatisticasLabs(){
     try {
       // Obtenha todos os registros de bloqueios
@@ -115,7 +197,11 @@ class indexacaoService{
       })
     ]);
 
-    // Calcular as variações de percentual
+    // Cálculo da média móvel dos últimos três meses
+    const totalBloqueiosTresMeses = dadosMesAtual + dadosMesAnterior + dadosDoisMesesAtras;
+    const mediaMovelTresMeses = totalBloqueiosTresMeses / 3;
+
+    // Cálculo das variações de percentual
     const variacaoMesAnterior = dadosMesAnterior
       ? ((dadosMesAtual - dadosMesAnterior) / dadosMesAnterior) * 100
       : 0;
@@ -126,9 +212,6 @@ class indexacaoService{
     if (totalDosTresMeses > 0) {
       variacaoTotal = ((dadosMesAtual - totalDosTresMeses) / totalDosTresMeses) * 100;
     }
-
-    // Se a variação total for 0, exibe uma mensagem específica
-    const variacaoTotalMensagem = variacaoTotal === 0 ? "Nenhuma Variação" : variacaoTotal.toFixed(2);
 
     return {
       mesAtual: {
@@ -147,13 +230,14 @@ class indexacaoService{
         bloqueios: dadosDoisMesesAtras
       },
       porcentagemVariacaoMesAnterior: variacaoMesAnterior.toFixed(2),
-      porcentagemVariacaoTotal: variacaoTotalMensagem // Exibe a mensagem ou o valor de variação total
+      porcentagemVariacaoTotal: variacaoTotal.toFixed(2),
+      mediaMovelTresMeses: mediaMovelTresMeses.toFixed(2) // Média móvel dos três meses
     };
   } catch (error) {
     console.error("Erro ao obter estatísticas mensais:", error);
     throw new Error("Erro ao obter estatísticas mensais");
   }
-  };
+}
 }
 
 export default new indexacaoService();

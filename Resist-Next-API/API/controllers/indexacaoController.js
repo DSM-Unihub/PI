@@ -31,8 +31,19 @@ const getEstatisticasBloqueios = async (req, res) => {
   }
 }
 
+const getBloqueiosPorMes = async (req, res) => {
+  try {
+    const bloqueiosMes = await indexacaoService.getBloqueiosPorMesesAno();
+    res.status(200).json(bloqueiosMes);
+  } catch (error) {
+    console.error("Erro ao buscar estatísticas de bloqueios:", error);
+    res.status(500).json({ error: "Erro ao buscar estatísticas de bloqueios" });
+  }
+}
+
 export default{
   getEstatisticasLabs,
   getEstatisticasBloqueios,
-  getUltimasAtividades
+  getUltimasAtividades,
+  getBloqueiosPorMes
 }
