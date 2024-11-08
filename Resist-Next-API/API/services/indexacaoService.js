@@ -7,7 +7,7 @@ class indexacaoService{
       const anoAtual = dataAtual.getFullYear();
 
       const obterNomeMes = (mes) => {
-        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
         return meses[mes - 1];
       };
 
