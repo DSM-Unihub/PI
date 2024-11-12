@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
+
 form-page {
   display: none;
 }
@@ -133,6 +136,7 @@ form-page {
     @apply text-base text-start text-azul-cinza-escuro;
   }
   .lockdownStatic-container {
+    
     max-width: 315px;
     @apply flex flex-row lg:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-full  justify-self-center rounded-xl;
     .text {
