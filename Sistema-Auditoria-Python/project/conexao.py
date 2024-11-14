@@ -5,7 +5,7 @@ from datetime import datetime
 class Conexao:
     def __init__(self):
         # URL de conexão para o MongoDB Atlas. Substitua com as suas credenciais e URL.
-        self.client = MongoClient("mongodb+srv://mandiradaniel:admin@auladw3.qpo0l.mongodb.net/resist?retryWrites=true&w=majority&appName=AulaDW3")
+        self.client = MongoClient("")
         
         # Seleciona o banco de dados
         self.db = self.client['resist']  # Substitua 'resistBD' pelo nome do seu banco de dados.
