@@ -9,7 +9,7 @@ import os
 # Configuração MongoDB Atlas
 print("Tentando conectar ao MongoDB Atlas...")
 try:
-    client = MongoClient("mongodb+srv://mandiradaniel:fatec-dsm3@auladw3.qpo0l.mongodb.net/resist?retryWrites=true&w=majority&appName=AulaDW3")
+    client = MongoClient("mongodb+srv://:@auladw3.qpo0l.mongodb.net/?retryWrites=true&w=majority&appName=")
     print("Conexão ao MongoDB Atlas bem-sucedida.")
 except Exception as e:
     print(f"Erro ao conectar ao MongoDB Atlas: {e}")
