@@ -1,42 +1,40 @@
-import mysql.connector
+from pymongo import MongoClient
+from datetime import datetime
 
-# Classe responsável por gerenciar a conexão com o banco de dados MySQL.
+# Classe responsável por gerenciar a conexão com o banco de dados MongoDB.
 class Conexao:
     def __init__(self):
-        # Estabelece uma conexão com o banco de dados MySQL usando as credenciais fornecidas.
-        self.conn = mysql.connector.connect(
-            host='127.0.0.1',         # Endereço do servidor MySQL (localhost neste caso)
-            #port='3307',            # Comentado; porta padrão é 3306 se não especificada
-            user='root',              # Usuário do banco de dados, aqui configurado como 'root'.
-            password='',              # Senha do usuário do banco de dados (vazia neste exemplo).
-            database='resistBD'       # Nome do banco de dados ao qual estamos nos conectando.
-        )
-        # Cria um cursor para executar comandos SQL.
-        # O cursor é necessário para enviar comandos SQL e processar resultados.
-        self.cursor = self.conn.cursor()
+        # URL de conexão para o MongoDB Atlas. Substitua com as suas credenciais e URL.
+        self.client = MongoClient("mongodb+srv://mandiradaniel:admin@auladw3.qpo0l.mongodb.net/resist?retryWrites=true&w=majority&appName=AulaDW3")
+        
+        # Seleciona o banco de dados
+        self.db = self.client['resist']  # Substitua 'resistBD' pelo nome do seu banco de dados.
 
-    def execute_sql(self, sql):
-        # Executa um comando SQL (INSERT, UPDATE, DELETE) e faz o commit das alterações no banco de dados.
+    def insert_document(self, collection_name, ipMaquina, urlWeb, dataHora, flag, tipoInsercao):
+        # Insere um documento na coleção especificada com os dados fornecidos.
         try:
-            self.cursor.execute(sql)   # Envia a instrução SQL para o banco de dados.
-            self.conn.commit()         # Salva as alterações no banco de dados.
-        except mysql.connector.Error as e:
-            # Captura e imprime erros que ocorrem ao executar o SQL.
-            # Útil para depuração de falhas no comando SQL.
-            print(f"Erro ao executar SQL: {e}")
+            collection = self.db[collection_name]
+            document = {
+                "ipMaquina": ipMaquina,
+                "urlWeb": urlWeb,
+                "dataHora": dataHora,
+                "flag": flag,
+                "tipoInsercao": tipoInsercao
+            }
+            result = collection.insert_one(document)  # Insere o documento e retorna o ID do documento.
+            print(f"Documento inserido com ID: {result.inserted_id}")
+        except Exception as e:
+            print(f"Erro ao inserir documento: {e}")
 
-    def fetch_result(self, sql):
-        # Executa uma consulta SQL (SELECT) e retorna todos os resultados.
+    def fetch_results(self, collection_name, query={}):
+        # Executa uma consulta na coleção especificada e retorna todos os documentos que correspondem ao filtro.
         try:
-            self.cursor.execute(sql)   # Envia a consulta SQL para o banco de dados.
-            return self.cursor.fetchall()  # Retorna todos os resultados da consulta.
-        except mysql.connector.Error as e:
-            # Captura e imprime erros que ocorrem ao buscar resultados.
+            collection = self.db[collection_name]
+            return list(collection.find(query))  # Retorna todos os documentos que correspondem à consulta.
+        except Exception as e:
             print(f"Erro ao buscar resultado: {e}")
             return []  # Retorna uma lista vazia em caso de erro.
 
     def close(self):
-        # Fecha o cursor e a conexão com o banco de dados.
-        # Importante para liberar recursos e encerrar a conexão corretamente.
-        self.cursor.close()  # Fecha o cursor.
-        self.conn.close()    # Fecha a conexão com o banco de dados.
+        # Fecha a conexão com o MongoDB Atlas.
+        self.client.close()
