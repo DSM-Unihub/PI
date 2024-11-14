@@ -1,0 +1,118 @@
+############################## INSTALAÇÃO ######################################
+Instalar o XAMPP no Debian: https://www.youtube.com/watch?v=AzG1CypXHb0&t=1s 
+(instalar o executavel do xampp)
+cd /Downloads
+ls
+sudo chmod 777 xampp-linux(tab)
+sudo ./xampp-linux(tab)
+
+Para Executar pelo CMD:
+cd /opt/lampp
+sudo ./manager-linux-x64.run
+
+Instalar o Mysql
+Para instalar o Mysql Workbench, você pode entrar no navegador e baixar por lá mesmo.
+(Baixar o Mysql para linux)
+
+Instalando o JDK:https://www.youtube.com/watch?v=EyRFv9PwJMw
+sudo apt updatem
+sudo apt upgrade
+sudo chmod 777 (nome do arquivo.deb)
+sudo apt install ./(nome do arquivo.deb)
+
+Instalando O Apache:https://www.youtube .com/watch?v=M9S8n1uAscs
+sudo apt update
+sudo apt upgrade
+sudo chmod 777 (nome do arquivo.deb)
+sudo apt install ./(nome do arquivo.deb)
+
+Squid
+https://www.youtube.com/watch?v=TFWCNWjZk-Q&t=1750s
+Para instalar o squid: 
+su 
+apt install squid
+para entrar no diretorio:
+cd /etc/squid
+
+
+
+Configurando o Script de Restart Squid
+
+sudo apt-get update
+sudo apt-get install inotify-tools
+sudo monitor_file.sh
+
+#!/bin/bash
+
+# Caminho para o arquivo a ser monitorado
+file_to_watch="/etx/squid/bloqueados.txt"
+
+# Inicializa o tamanho do arquivo
+last_size=$(stat -c%s "$file_to_watch")
+
+while true; do
+    # Usa inotifywait para monitorar modificações no arquivo
+    inotifywait -e modify "$file_to_watch" > /dev/null 2>&1
+
+    # Obtém o tamanho atual do arquivo
+    new_size=$(stat -c%s "$file_to_watch")
+
+    # Verifica se o tamanho do arquivo aumentou
+    if [ "$new_size" -gt "$last_size" ]; then
+        echo "Nova linha adicionada. Reiniciando o Squid..."
+        sudo systemctl restart squid
+        last_size=$new_size
+    fi
+done
+
+chmod +x monitor_file.sh
+
+
+######################################################################################
+
+
+############################## CONFIGURAÇÃO NAT ######################################
+Configurando o NAT: https://www.youtube.com/watch?v=WRAKoYF9tJU
+Para entender como funciona: https://www.youtube.com/watch?v=jJT95DQqHHw
+
+Instalar o ifconfig:
+sudo apt install net-tools (para testar use o camando: sudo ifconfig)
+
+sudo modprobe iptable_nat-+
+         echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+Instalar o iptables:
+sudo apt install iptables
+
+         sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
+Squid Drop todos sem Proxy
+
+iptables -A FORWARD -j DROP
+
+##################################################################################
+############################################################################################
+
+
+############################## CODIGOS QUE POSSO USAR ######################################
+
+CODIGOS QUE POSSO USAR
+
+Apagar os Dados do access.log
+sudo truncate -s 0 /var/log/squid/access.log
+
+Dar upgrade no mysql
+sudo /opt/lampp/bin/mysql_upgrade
+
+Restart squid
+systemctl restart squid.service
+squid -k reconfigure
+
+Dar Permissão ao access.log
+sudo chmod o+r /var/log/squid/access.log
+
+Mostrar cada Linha Adicionada Automaticamente
+tail -f /var/log/squid/access.log
+
+Script para dar Restart no Squid automaticamente
+./monitor_file.sh
