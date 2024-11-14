@@ -18,6 +18,8 @@ class Indexacoes:
             )
         except Exception as e:
             print(f"Erro ao indexar site: {e}")
+        
+        
 
 class Acessos:
     def __init__(self, db):
@@ -28,3 +30,12 @@ class Acessos:
             self.db['acessos'].insert_one(dados_acesso)
         except Exception as e:
             print(f"Erro ao registrar acesso: {e}")
+    
+    def save_access(self, dados_acesso):
+        try:
+            self.db['acessos'].insert_one(dados_acesso)
+            print(f"Acesso salvo com sucesso para URL: {dados_acesso['urlWeb']}")
+        except Exception as e:
+            print(f"Erro ao salvar acesso: {e}")
+            
+    

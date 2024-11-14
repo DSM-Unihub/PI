@@ -7,7 +7,7 @@ from acessos import Acessos
 # Semáforo para limitar o número de requisições simultâneas
 semaforo = threading.Semaphore(5)  # Limita a 5 requisições simultâneas
 
-def processar_linha(line, dado, idx, acc, position_file_path):
+def processar_linha(line, dado, idx, position_file_path):
     try:
         url = dado.extract_site_from_log_line(line)
         if url:
@@ -49,11 +49,7 @@ def processar_linha(line, dado, idx, acc, position_file_path):
                 print(f"DataHora: {dado.data_hora}")
                 print(f"Máquina que acessou (IP): {dado.ip_maquina}")
 
-                # Registro de acesso
-                acc.set_url(dado.url)
-                acc.set_data_hora(dado.convert_to_mysql_format(dado.data_hora))
-                acc.set_ip_maquina(dado.ip_maquina)
-                acc.cadastrar()
+               
 
                 # Adiciona o site ao arquivo de armamento
                 dado.append_site_to_arm_file(position_file_path, line.strip())
@@ -75,7 +71,6 @@ def processar_linha(line, dado, idx, acc, position_file_path):
 def main():
     dado = TratamentoDados()  # Classe responsável por tratar os dados do log.
     idx = Indexacoes()        # Classe responsável por indexar URLs no banco de dados.
-    acc = Acessos()           # Classe responsável por registrar acessos no banco de dados.
     
     squid_log_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\access.txt"  # Caminho do arquivo de log de acessos.
     position_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\arm.txt"      # Caminho do arquivo de posição (armazenamento de URLs já processadas).
@@ -89,7 +84,7 @@ def main():
                 semaforo.acquire()
 
                 # Cria uma nova thread para processar cada linha
-                thread = threading.Thread(target=processar_linha, args=(line, dado, idx, acc, position_file_path))
+                thread = threading.Thread(target=processar_linha, args=(line, dado, idx, position_file_path))
                 threads.append(thread)
                 thread.start()
 

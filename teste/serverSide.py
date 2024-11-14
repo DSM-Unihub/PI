@@ -8,7 +8,7 @@ notificacoes = []
 @app.route('/notify_blocked', methods=['POST'])
 def notify_blocked():
     dados = request.get_json()
-    notificacoes.append(f"Site bloqueado: {dados['url']} - Motivo: {dados['motivo']}")
+    notificacoes.append(f"Site bloqueado: {dados['url']} - Motivo: {dados['mensagem']}")
     return '', 204
 
 @app.route('/stream')

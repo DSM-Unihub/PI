@@ -1,19 +1,23 @@
 import time
 import threading
 from pymongo import MongoClient
-from tratamento_dados import TratamentoDados
+from tratamentoDados import TratamentoDados
 from indexacoes import Indexacoes
-from acessos import Acessos
 import requests
+import os
 
 # Configuração MongoDB Atlas
-client = MongoClient("sua_string_de_conexao_mongodb_atlas")
-db = client['nome_do_banco']
+print("Tentando conectar ao MongoDB Atlas...")
+try:
+    client = MongoClient("mongodb+srv://mandiradaniel:fatec-dsm3@auladw3.qpo0l.mongodb.net/resist?retryWrites=true&w=majority&appName=AulaDW3")
+    print("Conexão ao MongoDB Atlas bem-sucedida.")
+except Exception as e:
+    print(f"Erro ao conectar ao MongoDB Atlas: {e}")
 
+db = client['resist']
 # Inicializa as classes de tratamento, indexação e acessos
 dado = TratamentoDados(db)
 idx = Indexacoes(db)
-acc = Acessos(db)
 
 # Semáforo para limitar o número de requisições simultâneas
 semaforo = threading.Semaphore(5)
@@ -23,74 +27,103 @@ class MonitorLog:
         self.squid_log_file_path = squid_log_file_path
         self.position_file_path = position_file_path
         self.processed_lines = set()
+        print("MonitorLog inicializado com sucesso.")
 
     def tail_file(self):
-        """
-        Método para ler o arquivo de log continuamente.
-        """
+        print("Método para ler o arquivo de log continuamente.")
         try:
             with open(self.squid_log_file_path, 'r') as file:
-                file.seek(0, os.SEEK_END)
+                print(f"Arquivo {self.squid_log_file_path} aberto para monitoramento.")
+                file.seek(0, os.SEEK_END)  # Move para o final do arquivo
                 
                 while True:
+                    print("Aguardando novas linhas no arquivo de log...")
                     line = file.readline()
-                    if not line:
+                    
+                    if not line:  # Se não há uma nova linha, espera um pouco
                         time.sleep(0.1)
                         continue
                     
+                    print(f"Nova linha de log detectada: {line.strip()}")
                     if line.strip() not in self.processed_lines:
                         threading.Thread(target=self.process_line, args=(line,)).start()
                         self.processed_lines.add(line.strip())
-
         except Exception as e:
             print(f"Erro ao monitorar o arquivo de log: {e}")
 
     def process_line(self, line):
-        """
-        Processa cada linha de log e interage com MongoDB.
-        """
-        url = dado.extract_site_from_log_line(line)
-        if url:
-            # Define dados da URL
-            dado.url = url if url.startswith("http") else f"http://{url}"
-            dado.ip_maquina = dado.extract_ip_from_log_line(line)
-            dado.data = dado.extract_date_from_log_line(line)
-            dado.hora = dado.extract_time_from_log_line(line)
-            dado.data_hora = f"{dado.data}:{dado.hora}"
+        with semaforo:
+            print("Iniciando processamento da linha de log.")
+            url = dado.extract_site_from_log_line(line)
+            if url:
+                print(f"URL extraída: {url}")
+                dado.url = url if url.startswith("http") else f"http://{url}"
+                dado.ip_maquina = dado.extract_ip_from_log_line(line)
+                dado.data = dado.extract_date_from_log_line(line)
+                dado.hora = dado.extract_time_from_log_line(line)
+                dado.data_hora = f"{dado.data}:{dado.hora}"
+                print(f"Dados extraídos -> URL: {dado.url}, IP: {dado.ip_maquina}, Data/Hora: {dado.data_hora}")
 
-            if not idx.is_site_indexed(dado.url):
-                html = dado.extract_html(dado.url) or ""
-                flag = dado.verificar_flag_no_html(html, "explosões")
+                if not idx.is_site_indexed(dado.url):
+                    print(f"URL não indexada previamente. Iniciando indexação de {dado.url}")
+                    html = dado.extract_html(dado.url) or ""
+                    flag = dado.verificar_flag_no_html(html, "explosões")
+                    print(f"Verificação de palavra-chave 'explosões' no HTML: {'Encontrado' if flag else 'Não encontrado'}")
 
-                if flag:
-                    with open("bloqueados.txt", 'a') as bloqueados_file:
-                        bloqueados_file.write(f"{dado.url}\n")
+                    if flag:
+                        print(f"Adicionando {dado.url} ao arquivo bloqueados.txt e enviando notificação.")
+                        with open("C:\\Users\\fatec-dsm3\\Downloads\\bloqueados.txt", 'a') as bloqueados_file:
+                            bloqueados_file.write(f"{dado.url}\n")
 
-                    dado.store_bloqueado_notification(dado.url, "explosões")
-                
-                clean_html = dado.remove_html_tags(html)
-                dado.append_site_to_arm_file(self.position_file_path, line.strip())
+                        dado.store_bloqueado_notification(dado.url, "explosões")
+                    
+                    clean_html = dado.remove_html_tags(html)
+                    print("HTML limpo de tags para armazenamento local.")
 
-                idx.indexar_site({
-                    "ipMaquina": dado.ip_maquina,
-                    "urlWeb": dado.url,
-                    "dataHora": dado.data_hora,
-                    "flag": flag,
-                    "tipoInsercao": "Automatico"
-                })
+                    dado.append_site_to_arm_file(self.position_file_path, line.strip())
+                    print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
+
+                    idx.indexar_site({
+                        "ipMaquina": dado.ip_maquina,
+                        "urlWeb": dado.url,
+                        "dataHora": dado.data_hora,
+                        "flag": flag,
+                        "tipoInsercao": "Automatico"
+                    })
+                    print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
+                else:
+                    print(f"URL {dado.url} já indexada. Salvando como acesso.")
+                    idx.save_access({
+                        "ipMaquina": dado.ip_maquina,
+                        "urlWeb": dado.url,
+                        "dataHora": dado.data_hora
+                    })
+                    print(f"Acesso salvo com sucesso no MongoDB para a URL {dado.url}")
             else:
-                acc.registrar_acesso({
-                    "urlWeb": dado.url,
-                    "ipMaquina": dado.ip_maquina,
-                    "dataHora": dado.data_hora
-                })
+                print("Nenhuma URL válida encontrada na linha de log.")
+
+def check_required_files():
+    required_files = [
+        "C:\\Users\\fatec-dsm3\\Downloads\\access.txt",
+        "C:\\Users\\fatec-dsm3\\Downloads\\arm.txt",
+        "C:\\Users\\fatec-dsm3\\Downloads\\bloqueados.txt"
+    ]
+    
+    for file_path in required_files:
+        if not os.path.exists(file_path):
+            with open(file_path, 'w') as f:
+                pass
+            print(f"Arquivo criado: {file_path}")
 
 def main():
-    squid_log_file_path = "/caminho/para/access.log"
-    position_file_path = "/caminho/para/arm.txt"
-
+    check_required_files()
+    squid_log_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\access.txt"
+    position_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\arm.txt"
+    
+    print("Inicializando monitor de log...")
     monitor = MonitorLog(squid_log_file_path, position_file_path)
     monitor.tail_file()
 
 if __name__ == "__main__":
+    print("Iniciando o script principal...")
     main()
