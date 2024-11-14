@@ -1,13 +1,22 @@
 import time
-import os
 import threading
 from pymongo import MongoClient
 from tratamento_dados import TratamentoDados
 from indexacoes import Indexacoes
 from acessos import Acessos
+import requests
+
+# Configuração MongoDB Atlas
+client = MongoClient("sua_string_de_conexao_mongodb_atlas")
+db = client['nome_do_banco']
+
+# Inicializa as classes de tratamento, indexação e acessos
+dado = TratamentoDados(db)
+idx = Indexacoes(db)
+acc = Acessos(db)
 
 # Semáforo para limitar o número de requisições simultâneas
-semaforo = threading.Semaphore(5)  # Limita a 5 requisições simultâneas
+semaforo = threading.Semaphore(5)
 
 class MonitorLog:
     def __init__(self, squid_log_file_path, position_file_path):
@@ -21,21 +30,16 @@ class MonitorLog:
         """
         try:
             with open(self.squid_log_file_path, 'r') as file:
-                # Vai até o final do arquivo (não processa as linhas antigas)
                 file.seek(0, os.SEEK_END)
                 
                 while True:
-                    # Lê a próxima linha
                     line = file.readline()
                     if not line:
-                        # Aguarda um pouco se não houver novas linhas
                         time.sleep(0.1)
                         continue
                     
-                    # Se a linha não foi processada antes, processa
                     if line.strip() not in self.processed_lines:
-                        self.process_line(line)
-                        # Marca a linha como processada
+                        threading.Thread(target=self.process_line, args=(line,)).start()
                         self.processed_lines.add(line.strip())
 
         except Exception as e:
@@ -43,75 +47,47 @@ class MonitorLog:
 
     def process_line(self, line):
         """
-        Processa cada linha de log, verificando se o site já foi indexado e processando conforme necessário.
+        Processa cada linha de log e interage com MongoDB.
         """
-        dado = TratamentoDados(db)  # Instancia a classe de dados com a conexão ao banco
-        idx = Indexacoes(db)        # Instancia a classe de indexações
-        acc = Acessos(db)           # Instancia a classe de acessos
-
         url = dado.extract_site_from_log_line(line)
         if url:
+            # Define dados da URL
             dado.url = url if url.startswith("http") else f"http://{url}"
             dado.ip_maquina = dado.extract_ip_from_log_line(line)
             dado.data = dado.extract_date_from_log_line(line)
             dado.hora = dado.extract_time_from_log_line(line)
             dado.data_hora = f"{dado.data}:{dado.hora}"
 
-            # Carrega os sites previamente adicionados
-            sites_adicionados = dado.load_sites_from_file(self.position_file_path)
-            if dado.url and dado.url not in sites_adicionados:
-                print(f"Novo site no arquivo de log: {dado.url}")
+            if not idx.is_site_indexed(dado.url):
+                html = dado.extract_html(dado.url) or ""
+                flag = dado.verificar_flag_no_html(html, "explosões")
+
+                if flag:
+                    with open("bloqueados.txt", 'a') as bloqueados_file:
+                        bloqueados_file.write(f"{dado.url}\n")
+
+                    dado.store_bloqueado_notification(dado.url, "explosões")
                 
-                # Verifica se o site já foi indexado
-                if not idx.is_site_indexed(dado.url):
-                    print(f"Indexando e salvando no banco: {dado.url}")
-
-                    # Extração do HTML do site
-                    html = dado.extract_html(dado.url) or ""
-
-                    # Verifica se o conteúdo contém a palavra "explosões"
-                    flag = dado.verificar_flag_no_html(html, "explosões")
-
-                    if flag:
-                        # Adiciona a URL ao arquivo bloqueados.txt
-                        with open("bloqueados.txt", 'a') as bloqueados_file:
-                            bloqueados_file.write(f"{dado.url}\n")
-                        print(f"URL {dado.url} adicionada ao arquivo bloqueados.txt")
-
-                    # Limpa o HTML (remove tags) antes de salvar localmente
-                    clean_html = dado.remove_html_tags(html)
-
-                    # Adiciona a URL ao arquivo de armamento
-                    dado.append_site_to_arm_file(self.position_file_path, line.strip())
-
-                    # Salvamento do conteúdo limpo do HTML em arquivo
-                    local = f"C:\\Users\\fatec-dsm3\\Downloads\\{dado.show_host(dado.url)}.txt"
-                    with open(local, 'w') as file:
-                        file.write(clean_html)
-
-                    # Define a flag com base na verificação do conteúdo
-                    idx.set_flag(flag)  # Define a flag para True se "explosões" foi encontrado
-
-                else:
-                    print(f"O site {dado.url} já foi indexado. Salvando em Acessos.")
-
-                    # Registro de acesso (se o site já foi indexado)
-                    acc.set_url(dado.url)
-                    acc.set_data_hora(dado.convert_to_mysql_format(dado.data_hora))
-                    acc.set_ip_maquina(dado.ip_maquina)
-                    acc.cadastrar()
-
-                # Adiciona o site ao arquivo de armamento
+                clean_html = dado.remove_html_tags(html)
                 dado.append_site_to_arm_file(self.position_file_path, line.strip())
 
+                idx.indexar_site({
+                    "ipMaquina": dado.ip_maquina,
+                    "urlWeb": dado.url,
+                    "dataHora": dado.data_hora,
+                    "flag": flag,
+                    "tipoInsercao": "Automatico"
+                })
             else:
-                print(f"O site {dado.url} já foi processado anteriormente.")
-        else:
-            print(f"URL inválida ou não encontrada na linha: {line}")
+                acc.registrar_acesso({
+                    "urlWeb": dado.url,
+                    "ipMaquina": dado.ip_maquina,
+                    "dataHora": dado.data_hora
+                })
 
 def main():
-    squid_log_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\access.txt"  # Caminho do arquivo de log de acessos
-    position_file_path = "C:\\Users\\fatec-dsm3\\Downloads\\arm.txt"      # Caminho do arquivo de posição (armazenamento de URLs já processadas)
+    squid_log_file_path = "/caminho/para/access.log"
+    position_file_path = "/caminho/para/arm.txt"
 
     monitor = MonitorLog(squid_log_file_path, position_file_path)
     monitor.tail_file()
