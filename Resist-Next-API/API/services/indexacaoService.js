@@ -84,6 +84,17 @@ class indexacaoService{
     }
   }
 
+  async getAllBlocks(){
+    try {
+      // Obtenha todos os registros de bloqueios
+      const bloqueios = await Indexacao.find({ flag: true });
+      return bloqueios;
+    } catch (error) {
+      console.error("Erro ao buscar todos os bloqueios:", error);
+      throw new Error("Erro ao buscar todos os bloqueios");
+    }
+  }
+
   async getEstatisticasLabs(){
     try {
       // Obtenha todos os registros de bloqueios

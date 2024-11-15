@@ -30,7 +30,7 @@ const IndexSchema = new mongoose.Schema({
 }, { timestamps: true }); // Adiciona campos de timestamps (createdAt e updatedAt)
 
 // Criação do modelo Indexacao baseado no schema
-const Indexacao = mongoose.model("indexacao", IndexSchema); // Corrigido o nome da coleção para "indexacao"
+const Indexacao = mongoose.model("indexacoe", IndexSchema); // Corrigido o nome da coleção para "indexacao"
 
 // Exporta o modelo Indexacao para uso em outros módulos
 export default Indexacao;
