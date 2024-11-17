@@ -9,6 +9,12 @@ class Indexacoes:
             print(f"Erro ao verificar indexação do site: {e}")
             return False
 
+    def buscar_site_por_url(self, url):
+        # Buscar a URL na coleção de indexações
+        site = self.db['indexacoes'].find_one({"urlWeb": url})
+        return site
+    
+    
     def indexar_site(self, dados_site):
         try:
             self.db['indexacoes'].update_one(

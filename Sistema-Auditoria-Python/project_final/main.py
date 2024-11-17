@@ -2,15 +2,14 @@ import time
 import threading
 from pymongo import MongoClient
 from tratamentoDados import TratamentoDados
-from indexacoes import Indexacoes
+from indexacoes import Indexacoes, Acessos
 import requests
 import os
 
 # Configuração MongoDB Atlas
 print("Tentando conectar ao MongoDB Atlas...")
 try:
-    client = MongoClient("sua string de conexão")
-    print("Conexão ao MongoDB Atlas bem-sucedida.")
+    client = MongoClient(">>>>sua string de conexao aqui<<<<")
 except Exception as e:
     print(f"Erro ao conectar ao MongoDB Atlas: {e}")
 
@@ -18,6 +17,7 @@ db = client['resist']
 # Inicializa as classes de tratamento, indexação e acessos
 dado = TratamentoDados(db)
 idx = Indexacoes(db)
+acc = Acessos(db)
 
 # Semáforo para limitar o número de requisições simultâneas
 semaforo = threading.Semaphore(5)
@@ -58,31 +58,36 @@ class MonitorLog:
             if url:
                 print(f"URL extraída: {url}")
                 dado.url = url if url.startswith("http") else f"http://{url}"
+                dado.url = dado.url.replace(":433", "")
                 dado.ip_maquina = dado.extract_ip_from_log_line(line)
                 dado.data = dado.extract_date_from_log_line(line)
                 dado.hora = dado.extract_time_from_log_line(line)
                 dado.data_hora = f"{dado.data}:{dado.hora}"
                 print(f"Dados extraídos -> URL: {dado.url}, IP: {dado.ip_maquina}, Data/Hora: {dado.data_hora}")
 
+ 
                 if not idx.is_site_indexed(dado.url):
                     print(f"URL não indexada previamente. Iniciando indexação de {dado.url}")
                     html = dado.extract_html(dado.url) or ""
-                    flag = dado.verificar_flag_no_html(html, "msn")
+                    termo = "explosões"  # O termo que você está verificando no HTML
+               
+                    flag = dado.verificar_flag_no_html(html, "explosões")
                     print(f"Verificação de palavra-chave 'explosões' no HTML: {'Encontrado' if flag else 'Não encontrado'}")
 
                     if flag:
+                        termobd = termo
                         print(f"Adicionando {dado.url} ao arquivo bloqueados.txt e enviando notificação.")
                         with open("C:\\Users\\bruno\\Desktop\\pastas_pi\\bloqueados.txt", 'a') as bloqueados_file:
                             bloqueados_file.write(f"{dado.url}\n")
-
-                        dado.store_bloqueado_notification(dado.url, "explosões")
+                    else:
+                        termobd = ""
                     
                     clean_html = dado.remove_html_tags(html)
                     print("HTML limpo de tags para armazenamento local.")
                     print(f"\n\n~~~~~~~~~~~~\n{clean_html}\n\n~~~~~~~~~~\n\n")
 
                     #tirando os caracter q vai dar problema
-                    nome_arquivo = dado.url.replace("http://", "").replace("https://", "").replace("/", "_").replace(":", "_")
+                    nome_arquivo = dado.url.replace("http://", "").replace("https://", "").replace("/", "_").replace(":", "_").replace(".","_")
 
                     
                     #lugar p salvar os htmls
@@ -97,23 +102,36 @@ class MonitorLog:
                     with open(caminho_html, 'w', encoding='utf-8') as f:
                         f.write(clean_html)
                         
+                    print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ caminho:{caminho_html}")
                     dado.append_site_to_arm_file(self.position_file_path, line.strip())
                     print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
 
                     idx.indexar_site({
+                        "PathLocal": caminho_html,
+                        "flag": flag,
+                        "urlWeb": dado.url,
+                        "termo": termobd,
+                        "dataHora": dado.data_hora,
+                        "ipMaquina": dado.ip_maquina,
+                        "tipoInsercao": "Automatico",
+                    })
+                    print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
+               
+                else:
+                    print(f"URL {dado.url} já indexada. Salvando como acesso.")
+                    indexed_site = idx.buscar_site_por_url(dado.url)  # Função para buscar o site pelo URL
+                    
+                    if indexed_site:
+                        flag = indexed_site.get('flag', None)  # Obter a flag do site indexado
+                    else:
+                        flag = None  # Se não encontrar, assume flag como None
+
+                   
+                    acc.registrar_acesso({
                         "ipMaquina": dado.ip_maquina,
                         "urlWeb": dado.url,
                         "dataHora": dado.data_hora,
-                        "flag": flag,
-                        "tipoInsercao": "Automatico"
-                    })
-                    print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
-                else:
-                    print(f"URL {dado.url} já indexada. Salvando como acesso.")
-                    idx.save_access({
-                        "ipMaquina": dado.ip_maquina,
-                        "urlWeb": dado.url,
-                        "dataHora": dado.data_hora
+                        "flag":flag
                     })
                     print(f"Acesso salvo com sucesso no MongoDB para a URL {dado.url}")
             else:
