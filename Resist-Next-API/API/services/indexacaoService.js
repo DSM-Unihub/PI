@@ -84,10 +84,10 @@ class indexacaoService{
     }
   }
 
-  async getAllBlocks(){
+  async getAllBlocks() {
     try {
-      // Obtenha todos os registros de bloqueios
-      const bloqueios = await Indexacao.find({ flag: true });
+      // Removido o filtro de flag para retornar todas as indexações
+      const bloqueios = await Indexacao.find();
       return bloqueios;
     } catch (error) {
       console.error("Erro ao buscar todos os bloqueios:", error);
@@ -249,6 +249,55 @@ class indexacaoService{
     throw new Error("Erro ao obter estatísticas mensais");
   }
 }
+
+async createBlock(data) {
+  try {
+    // Validação dos dados necessários
+    if (!data.url) {
+      throw new Error("URL é obrigatória");
+    }
+
+    // Garante que todos os campos necessários estejam presentes
+    const bloqueioData = {
+      url: data.url,
+      motivo: data.motivo || "Bloqueio Manual",
+      periodo: data.periodo || "Indefinido",
+      tipoInsercao: data.tipoInsercao || "Manual",
+      ipMaquina: data.ipMaquina || "192.168.1.1",
+      urlWeb: data.urlWeb || data.url,
+      dataHora: data.dataHora || new Date(),
+      flag: data.flag !== undefined ? data.flag : true
+    };
+
+    // Cria um novo bloqueio no banco de dados
+    const novoBloqueio = new Indexacao(bloqueioData);
+    const bloqueioSalvo = await novoBloqueio.save();
+    
+    if (!bloqueioSalvo) {
+      throw new Error("Falha ao salvar o bloqueio");
+    }
+
+    return bloqueioSalvo;
+  } catch (error) {
+    console.error("Erro ao criar bloqueio:", error);
+    throw new Error(error.message || "Erro ao criar bloqueio");
+  }
+}
+
+async updateBlock(id, data) {
+  try {
+    // Encontra o bloqueio pelo ID e atualiza os dados
+    const bloqueioAtualizado = await Indexacao.findByIdAndUpdate(id, data, { new: true });
+    if (!bloqueioAtualizado) {
+      throw new Error("Bloqueio não encontrado");
+    }
+    return bloqueioAtualizado;
+  } catch (error) {
+    console.error("Erro ao atualizar bloqueio:", error);
+    throw new Error("Erro ao atualizar bloqueio");
+  }
+}
+
 }
 
 export default new indexacaoService();

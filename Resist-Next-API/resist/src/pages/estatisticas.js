@@ -23,7 +23,7 @@ export default function Estatisticas() {
           {/* Dashboard Principal */}
           <section className="flex flex-col col-span-2 px-4 gap-1">
             <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
-              <p className="lg:text-3xl text-4xl text-white">Estatísticas</p>
+              <h2 className="lg:text-3xl text-4xl text-white">Estatísticas</h2>
               <p className="lg:text-xl text-2xl text-white">
                 Acesso aos dados de bloqueio.
               </p>

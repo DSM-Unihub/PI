@@ -10,4 +10,7 @@ router.get("/estatisticas-mes", indexacaoController.getEstatisticasBloqueios);
 router.get("/ultimas-atividades", indexacaoController.getUltimasAtividades);
 router.get("/bloqueios-mes", indexacaoController.getBloqueiosPorMes)
 router.get("/bloqueios", indexacaoController.getAllBlocks);
+router.post("/bloqueios", indexacaoController.createBlock);
+router.put("/bloqueios/:id", indexacaoController.updateBlock);
+
 export default router;
