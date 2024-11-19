@@ -96,7 +96,7 @@ const BlockList = () => {
                   {bloq.tipoInsercao}
                 </td>
                 <td className="p-2 border-b border-black">
-                  <span className={`px-2 py-1 rounded ${bloq.flag ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                  <span className={`px-2 py-1 rounded ${bloq.flag ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
                     {bloq.flag ? 'Ativo' : 'Inativo'}
                   </span>
                 </td>
@@ -112,7 +112,6 @@ const BlockList = () => {
                   >
                     <option value="">Selecione...</option>
                     <option value="toggle">Alterar Status</option>
-                    <option value="details">Detalhes</option>
                   </select>
                 </td>
               </tr>
