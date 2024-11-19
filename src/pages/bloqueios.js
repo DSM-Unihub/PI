@@ -1,54 +1,112 @@
+import { useState } from "react";
 import BlockList from "./components/BlockList";
 import FooterContent from "./components/FooterContent";
 import HeaderBar from "./components/HeaderBar";
 import NavBar from "./components/NavBar";
+import axios from "axios";
+import url from "./services/url"; // Supondo que o url seja o serviço para a API
 
-const bloqueios = () => {
+const Bloqueios = () => {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
+  const [urlInput, setUrlInput] = useState("");
+  const [termoInput, setTermoInput] = useState("");
+  const [periodoInput, setPeriodoInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Função para adicionar um novo bloqueio manual
+  const adicionarBloqueioManual = async () => {
+    if (!urlInput) {
+      alert("A URL é obrigatória!");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const novoBloqueio = {
+        url: urlInput,
+        urlWeb: urlInput,
+        motivo: termoInput || "Bloqueio Manual",
+        periodo: periodoInput || "Indefinido",
+        tipoInsercao: "Manual",
+        ipMaquina: "192.168.1.1",
+        dataHora: new Date().toISOString(),
+        flag: true
+      };
+
+      const response = await axios.post(`${url}/bloqueios`, novoBloqueio);
+      
+      if (response.data.success) {
+        setUrlInput("");
+        setTermoInput("");
+        setPeriodoInput("");
+        alert("Bloqueio adicionado com sucesso!");
+        
+        // Atualizar a lista de bloqueios
+        if (typeof window !== 'undefined') {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao adicionar o bloqueio:", error);
+      alert(error.response?.data?.error || "Erro ao adicionar o bloqueio. Por favor, tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
-      <section className="container-principal ">
+      <section className="container-principal">
         <NavBar />
-        <section className="main-container ">
+        <section className="main-container">
           <HeaderBar usuario={usuario} />
-          <section class="flex flex-col gap-5 overflow-hidden">
+          <section className="flex flex-col gap-5 overflow-hidden">
             {/* Dashboard Principal */}
-            <section class="grid grid-cols-2 px-5 gap-1">
-              <div class="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
-                <p class="text-2xl text-white">
+            <section className="flex flex-row px-5 mt-5 gap-1">
+              <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
+                <p className="text-2xl text-white">
                   Acesso aos dados de bloqueio manuais e automáticos.
                 </p>
               </div>
             </section>
-            <section class="flex flex-row gap-x-5 px-5 max-h-screen">
+            <section className="flex flex-col-reverse mb-10 gap-10 px-5">
               <BlockList />
-              <div class="flex flex-col w-full">
-                <div class="p-3 gap-5">
-                  <h3 class="text-azul-text font-bold text-lg">
-                    Bloqueio Manual
-                  </h3>
+              <div className="flex flex-col w-full">
+                <div className="p-3 gap-5">
+                  <h3 className="text-azul-text font-bold text-lg">Bloqueio Manual</h3>
                 </div>
-                <div class="flex flex-col bg-white rounded-xl p-5 max-w-full h-full max-h-100 gap-5 justify-between">
-                  <div class="flex flex-col gap-5">
+                <div className="flex flex-col bg-white rounded-xl p-5 max-w-full h-full max-h-100 gap-5 justify-between">
+                  <div className="flex flex-col gap-5">
                     <input
                       type="text"
                       placeholder="URL"
-                      class="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      className="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      value={urlInput}
+                      onChange={(e) => setUrlInput(e.target.value)}
                     />
                     <input
                       type="text"
                       placeholder="Motivo (opcional)"
-                      class="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      className="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      value={termoInput}
+                      onChange={(e) => setTermoInput(e.target.value)}
                     />
                     <input
                       type="text"
-                      placeholder="Período"
-                      class="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      placeholder="Período (opcional)"
+                      className="border-2 border-azul-cinza-claro text-azul-text w-full h-fit p-3 rounded-xl"
+                      value={periodoInput}
+                      onChange={(e) => setPeriodoInput(e.target.value)}
                     />
                   </div>
                   <div>
-                    <button class="text-white bg-azul-buttom w-full h-fit rounded-xl p-3">
-                      Adicionar Bloqueio Manual
+                    <button
+                      className="text-white bg-azul-buttom w-full h-fit rounded-xl p-3"
+                      onClick={adicionarBloqueioManual}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Adicionando..." : "Adicionar Bloqueio Manual"}
                     </button>
                   </div>
                 </div>
@@ -61,4 +119,5 @@ const bloqueios = () => {
     </>
   );
 };
-export default bloqueios;
+
+export default Bloqueios;
