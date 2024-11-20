@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="pt-br">
       <Head>
+        <meta charSet="UTF-8" />
         <title>Resist</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>

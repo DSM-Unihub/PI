@@ -9,11 +9,18 @@ import Calendar from "react-calendar";
 import { useState, useEffect } from "react";
 import FooterContent from "./components/FooterContent.js";
 import RecentActivity from "./components/RecentActivity.js";
-// Load the Inter font
-const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
 export default function Home() {
   const [value, onChange] = useState(new Date());
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -21,10 +28,10 @@ export default function Home() {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   return (
     <>
- 
+  
       <section className="container-principal">
         {/* Left Navigation Bar */}
-          <NavBar />
+        <NavBar />
         {/* Main Content Area */}
         <section className="main-container">
           <HeaderBar usuario={usuario} />
