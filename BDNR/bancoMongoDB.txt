@@ -1,0 +1,39 @@
+db.indexacoes.insertMany([
+  {
+    "pathLocal": "/local/path",
+    "flag": true,
+    "urlWeb": "https://exemplo.com",
+    "termo": "consulta",
+    "dataHora": ISODate("2024-08-31T10:00:00Z"),
+    "ipMaquina": "192.168.0.1",
+    "tipoInsercao" : "Automatico"
+  }
+]);
+
+db.acessos.insertMany([
+  {
+    "flag": true,
+    "urlWeb": "https://exemplo.com",
+    "dataHora": ISODate("2024-08-31T10:00:00Z"),
+    "ipMaquina": "192.168.0.1",
+  }
+]);
+
+// Inserção na coleção funcionarios com os dados simplificados
+db.funcionarios.insertMany([
+  {
+    "nome": "Maria Silva",
+    "email": "maria.silva@instituicao.com",
+    "senha": "senhaSegura", 
+    "telefone": "+55 11 91234-5678",
+    "foto": "url_da_foto.jpg",
+    "instituicao": {
+      "nome": "Fatec Registro",
+      "cnpj": "12.345.678/0001-90",
+      "conexao": "https://conexao-api.exemplo.com",
+    },
+    "permissoes": ["criar", "editar", "deletar"]
+  },
+]);
+
+
