@@ -1,22 +1,41 @@
 import { useState } from "react";
-import api from "./services/api.js"
+import { useRouter } from "next/router";
+import axios from "axios";
+import url from "./services/url";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (event, email, password) => {
     event.preventDefault();
-    console.log(email, password);
+  
+    // Validação básica
+    if (!email || !password) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+  
     try {
-      const response = await api.post("auth", {
-        email: email,
-        password: password,
+      const response = await axios.post(`${url}/login`, {
+        email,
+        senha: password,
       });
-      console.log(response);
+  
+      const { token } = response.data;
+  
+      // Armazena o token
+      localStorage.setItem("token", token);
+  
+      // Redireciona o usuário
+      router.push("/");
     } catch (error) {
-      console.log(error);
+      console.error("Erro no login:", error.response?.data || error.message);
+      alert("Erro ao fazer login. Verifique suas credenciais.");
     }
   };
+  
+
   return (
     <>
       <section className="container-login">
@@ -68,6 +87,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Insira sua senha"
+                  required
                 />
                 {/* Component for the remember me checkbox */}
                 <div className="flex flex-row items-baseline gap-3">
@@ -118,30 +138,38 @@ export default function Login() {
               <form
                 className="flex flex-col gap-6"
                 method="post"
-                onSubmit={handleSubmit}
+                onSubmit={(e) => handleSubmit(e, email, password)}
               >
                 <input
                   className="rounded-3xl p-4 text-lg shadow-md"
                   type="text"
                   placeholder="E-mail"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 <input
                   className="rounded-3xl p-4 text-lg shadow-md"
                   type="password"
                   placeholder="Senha"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
+                <button
+                  className="bg-azul-principal text-lg p-2 rounded-full text-white font-bold"
+                  type="submit"
+                >
+                  Entrar
+                </button>
               </form>
             </div>
           </div>
 
           {/* Component for mobile actions */}
           <div className="flex md:hidden p-2 flex-col gap-2">
-            <button
-              className="bg-azul-principal text-lg p-2 rounded-full text-white font-bold"
-              onClick={handleSubmit}
-            >
-              Entrar
-            </button>
+
             <div className="flex h-fit flex-row justify-around border-2 border-azul-principal rounded-full">
               <div className="bg-azul-principal h-fit m-1 w-full p-1 text-center rounded-full">
                 <p className="text-white text-lg font-bold">Login</p>
