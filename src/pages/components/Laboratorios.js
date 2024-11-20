@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Chart } from "chart.js";
 
-const laboratorios = [1,2,3,4,5,6]
-
 const Laboratorios = (laboratorios) => {
   useEffect(() => {
     laboratorios.forEach((laboratorio) => {
