@@ -24,10 +24,7 @@ export default function Home() {
  
       <section className="container-principal">
         {/* Left Navigation Bar */}
-        <nav>
           <NavBar />
-        </nav>
-
         {/* Main Content Area */}
         <section className="main-container">
           <HeaderBar usuario={usuario} />

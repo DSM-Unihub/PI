@@ -19,4 +19,5 @@ router.post("/bloqueios", indexacaoController.createBlock);
 
 router.put("/bloqueios/:id", indexacaoController.updateBlock);
 
+router.delete("/bloqueios/:id", indexacaoController.deleteBlock);
 export default router;

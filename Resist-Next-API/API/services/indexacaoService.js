@@ -298,6 +298,20 @@ async updateBlock(id, data) {
   }
 }
 
+async deleteBlock(id) {
+  try {
+    // Encontra o bloqueio pelo ID e remove-o
+    const bloqueioExcluido = await Indexacao.findByIdAndDelete(id);
+    if (!bloqueioExcluido) {
+      throw new Error("Bloqueio não encontrado");
+    }
+    return bloqueioExcluido;
+  } catch (error) {
+    console.error("Erro ao excluir bloqueio:", error);
+    throw new Error("Erro ao excluir bloqueio");
+  }
+}
+
 }
 
 export default new indexacaoService();

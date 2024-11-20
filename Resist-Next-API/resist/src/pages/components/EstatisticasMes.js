@@ -116,7 +116,7 @@ const EstatisticasMes = () => {
         <div className="flex flex-col lg:flex-row py-3">
           <canvas
             id="grafico-barra"
-            className={`max-w-2xl lg:max-w-xl bg-white rounded-s-xl ${
+            className={`max-w-4xl bg-white rounded-s-xl ${
               layout === "y" ? "max-h-96" : "max-h-96"
             }`}
           ></canvas>

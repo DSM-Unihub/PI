@@ -63,16 +63,16 @@ const Bloqueios = () => {
           <HeaderBar usuario={usuario} />
           <section className="flex flex-col gap-5 overflow-hidden">
             {/* Dashboard Principal */}
-            <section className="flex flex-row px-5 mt-5 gap-1">
+            <section className="flex flex-row px-5 lg:px-2 mt-5 lg:mt-0 gap-1 max-w-">
               <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl">
                 <p className="text-2xl text-white">
                   Acesso aos dados de bloqueio manuais e automáticos.
                 </p>
               </div>
             </section>
-            <section className="flex flex-col-reverse mb-10 gap-10 px-5">
+            <section className="flex flex-col-reverse lg:grid lg:grid-cols-3 mb-10 gap-10 lg:gap-2 lg:px-2 lg:mb-0 px-5">
               <BlockList />
-              <div className="flex flex-col w-full">
+              <div className="flex flex-col w-full col-span-1">
                 <div className="p-3 gap-5">
                   <h3 className="text-azul-text font-bold text-lg">Bloqueio Manual</h3>
                 </div>

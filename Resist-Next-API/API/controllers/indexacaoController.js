@@ -117,6 +117,25 @@ const updateBlock = async (req, res) => {
   }
 };
 
+// Controlador para remover um bloqueio
+ const deleteBlock = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validação do ID
+    if (!id) {
+      return res.status(400).json({ error: "ID do bloqueio é obrigatório." });
+    }
+
+    await indexacaoService.deleteBlock(id);
+
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erro ao remover bloqueio:", error);
+    res.status(500).json({ error: "Erro ao remover bloqueio" });
+  }
+};
+
 export default {
   getEstatisticasLabs,
   getEstatisticasBloqueios,
@@ -125,4 +144,5 @@ export default {
   getAllBlocks,
   createBlock,
   updateBlock,
+  deleteBlock,
 };

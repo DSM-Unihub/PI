@@ -7,7 +7,7 @@ export default function HeaderBar({usuario}) {
             type="text"
             name="pesquisa"
             placeholder="Pesquisar"
-            className="p-1 w-full rounded-lg"
+            className="p-1 w-full max-w-3xl rounded-lg"
           />
           {/*Icons */}
           <div className="flex flex-row gap-5">
@@ -19,10 +19,9 @@ export default function HeaderBar({usuario}) {
             </div>
           </div>
           {/*Perfil */}
-          <div className="flex flex-row gap-3 lg:gap-5 text-end">
+          <div className="flex flex-row gap-3 lg:gap-2 text-end">
             <div className=" hidden md:flex">
-              <p className="text-azul-text text-xl">{usuario.nome}</p>
-              <p className="text-azul-text text-xl">Usuário Business</p>
+              <p className="text-azul-text text-xl">{usuario.nome} Usuário Administrativo</p>
             </div>
             <div>
               <img
