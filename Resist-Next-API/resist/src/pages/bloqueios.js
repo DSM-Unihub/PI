@@ -35,6 +35,9 @@ const Bloqueios = () => {
         flag: true
       };
 
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
       const response = await axios.post(`${url}/bloqueios`, novoBloqueio);
       
       if (response.data.success) {
