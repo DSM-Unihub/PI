@@ -1,12 +1,19 @@
 import { useEffect } from "react";
-import NavBar from "./components/NavBar.js";
-import HeaderBar from "./components/HeaderBar.js";
-import EstatisticasMes from "./components/EstatisticasMes.js";
-import FooterContent from "./components/FooterContent.js";
-
+import NavBar from "../components/NavBar.js";
+import HeaderBar from "../components/HeaderBar.js";
+import EstatisticasMes from "../components/EstatisticasMes.js";
+import FooterContent from "../components/FooterContent.js";
+import { useRouter } from "next/router.js";
 export default function Estatisticas() {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
+  const router = useRouter()
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
   return (
     <>
       <section className="container-principal ">

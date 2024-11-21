@@ -1,17 +1,18 @@
 import { useState } from "react";
-import BlockList from "./components/BlockList";
-import FooterContent from "./components/FooterContent";
-import HeaderBar from "./components/HeaderBar";
-import NavBar from "./components/NavBar";
+import BlockList from "../components/BlockList";
+import FooterContent from "../components/FooterContent";
+import HeaderBar from "../components/HeaderBar";
+import NavBar from "../components/NavBar";
 import axios from "axios";
-import url from "./services/url"; // Supondo que o url seja o serviço para a API
-
+import url from "../services/url"; // Supondo que o url seja o serviço para a API
+import { useRouter } from "next/router";
 const Bloqueios = () => {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   const [urlInput, setUrlInput] = useState("");
   const [termoInput, setTermoInput] = useState("");
   const [periodoInput, setPeriodoInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter()
 
   // Função para adicionar um novo bloqueio manual
   const adicionarBloqueioManual = async () => {
@@ -54,7 +55,12 @@ const Bloqueios = () => {
       setIsSubmitting(false);
     }
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
   return (
     <>
       <section className="container-principal">
