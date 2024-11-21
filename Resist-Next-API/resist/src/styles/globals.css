@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 form-page {
   display: none;
 }
@@ -73,15 +70,15 @@ form-page {
 
 .navDesk-container {
   @apply hidden lg:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-3 h-screen gap-10;
-  .navIcons-container {
-    @apply flex flex-col h-full justify-between;
-    .navIcon-container {
-      @apply flex w-full h-fit flex-row justify-center;
-      .navIcon {
-        @apply size-10 p-2 hover:scale-110 duration-300 cursor-pointer;
-      }
-    }
-  }
+}
+.navIcons-container {
+  @apply flex flex-col h-full justify-between;
+}
+.navIcon-container {
+  @apply flex w-full h-fit flex-row justify-center;
+}
+.navIcon {
+  @apply size-10 p-2 hover:scale-110 duration-300 cursor-pointer;
 }
 
 .navMob-container {
@@ -136,7 +133,6 @@ form-page {
     @apply text-base text-start text-azul-cinza-escuro;
   }
   .lockdownStatic-container {
-    
     max-width: 315px;
     @apply flex flex-row lg:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-full  justify-self-center rounded-xl;
     .text {
