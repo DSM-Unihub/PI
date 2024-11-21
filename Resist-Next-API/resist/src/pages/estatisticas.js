@@ -13,7 +13,7 @@ export default function Estatisticas() {
     if (!token) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
   return (
     <>
       <section className="container-principal ">

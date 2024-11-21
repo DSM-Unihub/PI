@@ -1,3 +1,6 @@
+import Image from "next/image";
+
+
 export default function HeaderBar({usuario}) {
   return (
       <div className="header-container">
@@ -12,10 +15,10 @@ export default function HeaderBar({usuario}) {
           {/*Icons */}
           <div className="flex flex-row gap-5">
             <div className="headerIcon">
-              <img className="size-8" src="/icons/blog.svg" />
+              <Image alt="" className="size-8" src="/icons/blog.svg" />
             </div>
             <div className="headerIcon">
-              <img className="size-8" src="/icons/notificacao.svg" />
+              <Image alt="" className="size-8" src="/icons/notificacao.svg" />
             </div>
           </div>
           {/*Perfil */}
@@ -24,7 +27,7 @@ export default function HeaderBar({usuario}) {
               <p className="text-azul-text text-xl">{usuario.nome} Usuário Administrativo</p>
             </div>
             <div>
-              <img
+              <Image alt=""
                 className=" bg-white size-12 rounded-xl"
                 src={usuario.foto}
               />

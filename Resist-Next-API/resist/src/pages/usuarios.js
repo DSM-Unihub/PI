@@ -3,20 +3,24 @@ import HeaderBar from "../components/HeaderBar";
 import NavBar from "../components/NavBar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-const usuarios = () => {
+import Image from "next/image";
+
+const Usuarios = () => {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
-  const router = useRouter()
-  const users =[
+  const router = useRouter();
+  const users = [
     {
-        nome: "Daniel", foto: "./imgs/defaultUser.png" 
+      id: 1,
+      nome: "Daniel",
+      foto: "./imgs/defaultUser.png",
+    },
+  ];
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
     }
-]
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    router.push("/login");
-  }
-}, []);
+  }, [router]);
   return (
     <>
       <section className="container-principal">
@@ -33,9 +37,10 @@ useEffect(() => {
           </section>
           <section class=" grid grid-cols-2 px-5">
             {users.map((users) => (
-              <div class="bg-white grid grid-cols-2 p-5 justify-items-center w-full gap-3 rounded-xl">
+              <div key={users.id} class="bg-white grid grid-cols-2 p-5 justify-items-center w-full gap-3 rounded-xl">
                 <div class="flex flex-col justify-center">
-                  <img
+                  <Image
+                    alt=""
                     src={users.foto}
                     class="rounded-full border-4 size-28 border-cinza-border "
                   />
@@ -44,13 +49,13 @@ useEffect(() => {
                   <p class="text-azul-text text-lg">{users.nome}</p>
                   <div class="flex flex-col">
                     <div class="flex flex-row gap-2 flex-nowrap">
-                      <img src="/icons/cargo.svg" />
+                      <Image alt="" src="/icons/cargo.svg" />
                       <p class="text-azul-cinza-claro text-sm ">
                         {users.nomeGrupo}
                       </p>
                     </div>
                     <div class="flex flex-row gap-2 flex-nowrap">
-                      <img src="/icons/mail.svg" />
+                      <Image alt="" src="/icons/mail.svg" />
                       <p class="text-azul-cinza-claro text-sm">{users.email}</p>
                     </div>
                   </div>
@@ -63,20 +68,20 @@ useEffect(() => {
               href="/editUser"
               class="bg-azul-principal cursor-pointer hover:scale-105 duration-300 rounded-lg p-3"
             >
-              <img src="/icons/edit.svg" class="size-6" />
+              <Image alt="" src="/icons/edit.svg" class="size-6" />
             </a>
             <a
               href="/deletUser"
               class="bg-azul-principal cursor-pointer hover:scale-105 duration-300 rounded-lg p-3"
             >
-              <img src="/icons/delete.svg" class="size-6" />
+              <Image alt="" src="/icons/delete.svg" class="size-6" />
             </a>
             <a
               href="/newUser"
               class="bg-azul-principal rounded-lg cursor-pointer hover:scale-105 duration-300 p-3 flex flex-row gap-3 items-center"
             >
               <p class="text-white text-lg">Novo usuário</p>
-              <img src="/icons/plus-white.svg" class="size-6" />
+              <Image alt="" src="/icons/plus-white.svg" class="size-6" />
             </a>
           </section>
         </section>
@@ -85,4 +90,4 @@ useEffect(() => {
     </>
   );
 };
-export default usuarios;
+export default Usuarios;

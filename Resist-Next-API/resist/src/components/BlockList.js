@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import url from "../services/url";
 import axios from "axios";
+import Image from "next/image";
 
 const BlockList = () => {
   const [bloqueios, setBloqueios] = useState([]);
@@ -127,12 +128,12 @@ const BlockList = () => {
                         handleStatusChange(bloq);
                       }}
                     >
-                      <img className="size-6" src="/icons/edit.svg" />
+                      <Image alt="" className="size-6" src="/icons/edit.svg" />
                     </button>
                     <button className="rounded lg:px-2 lg:py-1  text-white bg-azul-buttom"
                       onClick={()=> handleDeleteIndexacao(bloq._id)}
                     >
-                      <img className="size-6  " src="/icons/delete.svg" />
+                      <Image alt="" className="size-6  " src="/icons/delete.svg" />
                     </button>
                   </div>
       

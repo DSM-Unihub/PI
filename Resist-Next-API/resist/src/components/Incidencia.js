@@ -2,6 +2,8 @@ import Chart from "chart.js/auto";
 import { useRef, useEffect, useState } from "react";
 import url from "../services/url";
 import axios from "axios";
+import Image from "next/image";
+
 const Incidencia = () => {
   const [labs, setLabs] = useState([])
   const chartRef = useRef({});

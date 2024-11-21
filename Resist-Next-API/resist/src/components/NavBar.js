@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+
 export default function NavBar() {
   const pathname = usePathname();
   const isActive = (route) => pathname === route;
@@ -13,7 +15,7 @@ export default function NavBar() {
           }`}
         >
           <Link href="/">
-            <img className="navIcon " src="/icons/home.svg" />
+            <Image alt="" className="navIcon " src="/icons/home.svg" />
           </Link>
         </div>
         <div
@@ -24,7 +26,7 @@ export default function NavBar() {
           }`}
         >
           <Link href="/estatisticas">
-            <img className="navIcon " src="/icons/Stats.svg" />
+            <Image alt="" className="navIcon " src="/icons/Stats.svg" />
           </Link>
         </div>
         <div
@@ -35,7 +37,7 @@ export default function NavBar() {
           }`}
         >
           <Link href="/bloqueios">
-            <img className="navIcon " src="/icons/Bloqueios.svg" />
+            <Image alt="" className="navIcon " src="/icons/Bloqueios.svg" />
           </Link>
         </div>
         <div
@@ -46,7 +48,7 @@ export default function NavBar() {
           }`}
         >
           <Link href="/usuarios">
-            <img className="navIcon " src="/icons/Usuarios.svg" />
+            <Image alt="" className="navIcon " src="/icons/Usuarios.svg" />
           </Link>
         </div>
         <div
@@ -57,7 +59,7 @@ export default function NavBar() {
           }`}
         >
           <Link href="/config">
-            <img className="navIcon " src="/icons/Configs.svg" />
+            <Image alt="" className="navIcon " src="/icons/Configs.svg" />
           </Link>
         </div>
       </section>
@@ -65,8 +67,8 @@ export default function NavBar() {
       <section className="navDesk-container">
         <div className="flex flex-col h-fit">
           <Link href="/">
-            <img className="size-10" src="/icons/lg-resist-w.svg" />
-            <img className="size-10  " src="/icons/tx-resist.svg" />
+            <Image alt="" className="size-10" src="/icons/lg-resist-w.svg" />
+            <Image alt="" className="size-10  " src="/icons/tx-resist.svg" />
           </Link>
         </div>
         <div className="navIcons-container">
@@ -77,7 +79,7 @@ export default function NavBar() {
               }`}
             >
               <Link href="/">
-                <img className="navIcon " src="/icons/home.svg" />
+                <Image alt="" className="navIcon " src="/icons/home.svg" />
               </Link>
             </div>
             <div
@@ -88,7 +90,7 @@ export default function NavBar() {
               }`}
             >
               <Link href="/estatisticas">
-                <img className="navIcon " src="/icons/Stats.svg" />
+                <Image alt="" className="navIcon " src="/icons/Stats.svg" />
               </Link>
             </div>
 
@@ -100,7 +102,7 @@ export default function NavBar() {
               }`}
             >
               <Link href="/bloqueios">
-                <img className="navIcon " src="/icons/Bloqueios.svg" />
+                <Image alt="" className="navIcon " src="/icons/Bloqueios.svg" />
               </Link>
             </div>
 
@@ -112,7 +114,7 @@ export default function NavBar() {
               }`}
             >
               <Link href="/usuarios">
-                <img className="navIcon " src="/icons/Usuarios.svg" />
+                <Image alt="" className="navIcon " src="/icons/Usuarios.svg" />
               </Link>
             </div>
           </div>
@@ -120,18 +122,18 @@ export default function NavBar() {
             
           <div className={`navIcon-container ${isActive('/ajuda') ? 'rounded-3xl bg-cinza-principal brightness duration-300 ' : ''}`}>
           <Link href="/ajuda">
-            <img className="navIcon " src="/icons/Ajudamenu.svg" />
+            <Image alt="" className="navIcon " src="/icons/Ajudamenu.svg" />
           </Link>
           </div>
           <div className={`navIcon-container ${isActive('/config') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
             <Link href="/config">
-              <img className="navIcon " src="/icons/Configs.svg" />
+              <Image alt="" className="navIcon " src="/icons/Configs.svg" />
             </Link>
           </div>
           
           <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
             <Link href="/login">
-              <img className="navIcon " src="/icons/Logout.svg" />
+              <Image alt="" className="navIcon " src="/icons/Logout.svg" />
             </Link>
           </div>
           </div>

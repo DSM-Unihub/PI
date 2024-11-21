@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import url from "../services/url";
 import Head from "next/head";
+import Image from "next/image";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +47,7 @@ export default function Login() {
       <section className="container-login">
         {/* Component for the login image */}
         <div className="login-image">
-          <img
+          <Image
             src="./icons/lg-resist-w.svg"
             className="resist-logo"
             alt="Login Illustration"
@@ -189,3 +191,4 @@ export default function Login() {
     </>
   );
 }
+

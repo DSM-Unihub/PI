@@ -19,7 +19,7 @@ export default function Home() {
     if (!token) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     setIsMounted(true);

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import url from "../services/url";
+import Image from "next/image";
+
 // Component for Recent Activity
 const RecentActivity = () => {
   const [atividades, setAtividades] = useState([])
@@ -51,10 +53,10 @@ function ActivityList({atividades}) {
   return (
     <div className="bg-white h-fit rounded-b-xl">
       {activityList.map((atividade) => (
-            <div className="flex flex-row justify-between p-1 items-center">
+            <div key={atividade.data} className="flex flex-row justify-between p-1 items-center">
             <div className="flex flex-row justify-start items-center gap-5">
               <div className="border-2 border-azul-principal rounded-full p-1 xl:p-3">
-                <img src="./icons/bloqueio-blue.svg" className="size-4" alt="Activity Icon" />
+                <Image src="./icons/bloqueio-blue.svg" className="size-4" alt="Activity Icon" />
               </div>
               <p className="text-sm text-azul-text">Novo Bloqueio {atividade.tipoInsercao} realizado </p>
             </div>

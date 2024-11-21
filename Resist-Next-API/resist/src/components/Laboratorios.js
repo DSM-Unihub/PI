@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Chart } from "chart.js";
+import Image from "next/image";
 
 const Laboratorios = (laboratorios) => {
   useEffect(() => {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 const ActiveDevices = () => {
   const data = [
     {
@@ -56,7 +57,7 @@ const ActiveDevices = () => {
                   <td>{dados.nome}</td>
                   <td >{dados.quantidade}</td>
                   <td>
-                    <img src={`./icons/status-green.svg`} />
+                    <Image alt="" src={`./icons/status-green.svg`} />
                   </td>
                 </tr>
               ))}

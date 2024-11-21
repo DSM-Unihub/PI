@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import url from "../services/url";
 import axios from "axios";
+import Image from "next/image";
+
 const EstatisticasMes = () => {
   const [bloqueios, setBloqueios] = useState([]);
   const [layout, setLayout] = useState("x");
@@ -131,7 +133,7 @@ const EstatisticasMes = () => {
                 </div>
                 <div className=" flex flex-row w-fit items-center">
                   <div className="flex flex-row justify-end">
-                    <img
+                    <Image
                       className="size-4"
                       src="icons/desktopmarker.svg"
                       alt="Desktop Marker"
@@ -143,7 +145,7 @@ const EstatisticasMes = () => {
                 </div>
                 <div className="flex flex-row items-center w-fit ">
                   <div className="flex flex-row justify-end">
-                    <img
+                    <Image
                       className="size-4"
                       src="/icons/mobilemarker.svg"
                       alt="Mobile Marker"
@@ -168,7 +170,7 @@ const EstatisticasMes = () => {
                     </p>
                   </div>
                   <div className="flex flex-row justify-center items-center">
-                    <img
+                    <Image
                       src="./icons/arrowW.svg"
                       className={`size-4 ${
                         item.porcentagemVariacaoMesAnterior < "0.00"

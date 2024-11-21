@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlockList from "../components/BlockList";
 import FooterContent from "../components/FooterContent";
 import HeaderBar from "../components/HeaderBar";
@@ -60,7 +60,7 @@ const Bloqueios = () => {
     if (!token) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
   return (
     <>
       <section className="container-principal">
