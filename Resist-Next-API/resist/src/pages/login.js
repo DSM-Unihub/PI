@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import url from "./services/url";
+import url from "../services/url";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -74,7 +74,7 @@ export default function Login() {
                 <input
                   label="E-mail"
                   type="email"
-                  className=" border rounded-lg "
+                  className=" border-2 rounded-lg p-2 "
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -84,6 +84,7 @@ export default function Login() {
                   label="Senha"
                   type="password"
                   name="password"
+                  className="border-2 rounded-lg p-2"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Insira sua senha"

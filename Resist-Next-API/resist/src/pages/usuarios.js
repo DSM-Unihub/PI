@@ -1,14 +1,22 @@
-import FooterContent from "./components/FooterContent";
-import HeaderBar from "./components/HeaderBar";
-import NavBar from "./components/NavBar";
-
+import FooterContent from "../components/FooterContent";
+import HeaderBar from "../components/HeaderBar";
+import NavBar from "../components/NavBar";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 const usuarios = () => {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
-const users =[
+  const router = useRouter()
+  const users =[
     {
         nome: "Daniel", foto: "./imgs/defaultUser.png" 
     }
 ]
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/login");
+  }
+}, []);
   return (
     <>
       <section className="container-principal">

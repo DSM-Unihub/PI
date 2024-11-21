@@ -1,14 +1,12 @@
-import { Inter } from "next/font/google";
-import HeaderBar from "./components/HeaderBar.js";
-import NavBar from "./components/NavBar.js";
-import Incidencia from "./components/Incidencia.js";
-import Head from "next/head.js";
-import Lockdown from "./components/Lockdown.js";
-import ActiveDevices from "./components/ActiveDevices.js";
+import HeaderBar from "@/components/HeaderBar.js";
+import NavBar from "../components/NavBar.js";
+import Incidencia from "../components/Incidencia.js";
+import Lockdown from "../components/Lockdown.js";
+import ActiveDevices from "../components/ActiveDevices.js";
 import Calendar from "react-calendar";
 import { useState, useEffect } from "react";
-import FooterContent from "./components/FooterContent.js";
-import RecentActivity from "./components/RecentActivity.js";
+import FooterContent from "../components/FooterContent.js";
+import RecentActivity from "../components/RecentActivity.js";
 import { useRouter } from "next/router";
 export default function Home() {
   const [value, onChange] = useState(new Date());
