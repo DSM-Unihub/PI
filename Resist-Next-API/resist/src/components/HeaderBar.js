@@ -15,10 +15,10 @@ export default function HeaderBar({usuario}) {
           {/*Icons */}
           <div className="flex flex-row gap-5">
             <div className="headerIcon">
-              <Image alt="" className="size-8" src="/icons/blog.svg" />
+              <img alt="" className="size-8" src="/icons/blog.svg" />
             </div>
             <div className="headerIcon">
-              <Image alt="" className="size-8" src="/icons/notificacao.svg" />
+              <img alt="" className="size-8" src="/icons/notificacao.svg" />
             </div>
           </div>
           {/*Perfil */}
@@ -27,7 +27,7 @@ export default function HeaderBar({usuario}) {
               <p className="text-azul-text text-xl">{usuario.nome} Usuário Administrativo</p>
             </div>
             <div>
-              <Image alt=""
+              <img alt=""
                 className=" bg-white size-12 rounded-xl"
                 src={usuario.foto}
               />

@@ -57,7 +57,7 @@ const ActiveDevices = () => {
                   <td>{dados.nome}</td>
                   <td >{dados.quantidade}</td>
                   <td>
-                    <Image alt="" src={`./icons/status-green.svg`} />
+                    <img alt="" src={`./icons/status-green.svg`} />
                   </td>
                 </tr>
               ))}

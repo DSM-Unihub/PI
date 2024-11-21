@@ -49,13 +49,13 @@ const Usuarios = () => {
                   <p class="text-azul-text text-lg">{users.nome}</p>
                   <div class="flex flex-col">
                     <div class="flex flex-row gap-2 flex-nowrap">
-                      <Image alt="" src="/icons/cargo.svg" />
+                      <img alt="" src="/icons/cargo.svg" />
                       <p class="text-azul-cinza-claro text-sm ">
                         {users.nomeGrupo}
                       </p>
                     </div>
                     <div class="flex flex-row gap-2 flex-nowrap">
-                      <Image alt="" src="/icons/mail.svg" />
+                      <img alt="" src="/icons/mail.svg" />
                       <p class="text-azul-cinza-claro text-sm">{users.email}</p>
                     </div>
                   </div>
@@ -68,20 +68,20 @@ const Usuarios = () => {
               href="/editUser"
               class="bg-azul-principal cursor-pointer hover:scale-105 duration-300 rounded-lg p-3"
             >
-              <Image alt="" src="/icons/edit.svg" class="size-6" />
+              <img alt="" src="/icons/edit.svg" class="size-6" />
             </a>
             <a
               href="/deletUser"
               class="bg-azul-principal cursor-pointer hover:scale-105 duration-300 rounded-lg p-3"
             >
-              <Image alt="" src="/icons/delete.svg" class="size-6" />
+              <img alt="" src="/icons/delete.svg" class="size-6" />
             </a>
             <a
               href="/newUser"
               class="bg-azul-principal rounded-lg cursor-pointer hover:scale-105 duration-300 p-3 flex flex-row gap-3 items-center"
             >
               <p class="text-white text-lg">Novo usuário</p>
-              <Image alt="" src="/icons/plus-white.svg" class="size-6" />
+              <img alt="" src="/icons/plus-white.svg" class="size-6" />
             </a>
           </section>
         </section>

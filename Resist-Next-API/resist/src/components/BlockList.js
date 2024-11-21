@@ -128,12 +128,12 @@ const BlockList = () => {
                         handleStatusChange(bloq);
                       }}
                     >
-                      <Image alt="" className="size-6" src="/icons/edit.svg" />
+                      <img alt="" className="size-6" src="/icons/edit.svg" />
                     </button>
                     <button className="rounded lg:px-2 lg:py-1  text-white bg-azul-buttom"
                       onClick={()=> handleDeleteIndexacao(bloq._id)}
                     >
-                      <Image alt="" className="size-6  " src="/icons/delete.svg" />
+                      <img alt="" className="size-6  " src="/icons/delete.svg" />
                     </button>
                   </div>
       

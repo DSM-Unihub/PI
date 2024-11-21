@@ -32,7 +32,7 @@ const Lockdown = () => {
         <h2 className="text-white p-2 text-base">Visão geral de bloqueios</h2>
         <div className="grid grid-cols-3">
           <div className="bg-white flex flex-row rounded-bl-xl p-3 xl:p-5 gap-2">
-            <Image alt="" src="./icons/Rectangle.svg" />
+            <img alt="" src="./icons/Rectangle.svg" />
             <p className="text-sm self-center text-azul-title xl:text-nowrap lg:text-wrap">
               <span className=" text-azul-title lg:text-xl text-3xl">{bloqueios.bloqueios}</span> bloq.
               totais
@@ -41,8 +41,8 @@ const Lockdown = () => {
             </p>
           </div>
           <div className="bg-white flex flex-row rounded-br-xl items-center gap-2 p-3 xl:p-5">
-            <Image alt="" src="./icons/Rectangle.svg" />
-            <Image alt="" className="lg:size-4 size-8" src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDV.svg'}`} />
+            <img alt="" src="./icons/Rectangle.svg" />
+            <img alt="" className="lg:size-4 size-8" src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDV.svg'}`} />
             <p className="text-sm self-center text-azul-title xl:text-nowrap">
               <span className="lg:text-xl text-3xl">{porcentagem}%</span>
               <br />
@@ -62,7 +62,7 @@ const Lockdown = () => {
       </div>
       <h3 className="title lg:hidden">Bloqueios totais</h3>
       <div className="lockdownStatic-container">
-        <Image src="./icons/rectangle.svg" alt="Lockdown Icon" />
+        <img src="./icons/rectangle.svg" alt="Lockdown Icon" />
         <p className="text-3xl font-bold text-azul-cinza-escuro">
           {bloqueios.bloqueios}
         </p>
@@ -71,12 +71,12 @@ const Lockdown = () => {
           <span className="text-laranja-s">+{porcentagem}%</span> este mês
         </p>
         <div className="lockdownArrow-container">
-          <Image  className={`size-8 ${porcentagem <= 0 ? 'rotate-180' : ''}`}  src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDC.svg'}`} alt="Arrow Up" />
-          <Image  className={`size-8`}  src={`${porcentagem <= 0 ? './icons/arrowDV.svg' : './icons/arrowDC.svg'}`} alt="Arrow Down" />
+          <img  className={`size-8 ${porcentagem <= 0 ? 'rotate-180' : ''}`}  src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDC.svg'}`} alt="Arrow Up" />
+          <img  className={`size-8`}  src={`${porcentagem <= 0 ? './icons/arrowDV.svg' : './icons/arrowDC.svg'}`} alt="Arrow Down" />
         </div>
       </div>
       <div className="lockdownStatic-container">
-        <Image  src="./icons/rectangle.svg" alt="Lockdown Icon" />
+        <img  src="./icons/rectangle.svg" alt="Lockdown Icon" />
         <p className="text-3xl font-bold text-azul-cinza-escuro">
           {mediaMovel}
         </p>
@@ -84,8 +84,8 @@ const Lockdown = () => {
           Media Móvel ultimos 3 meses <br />
         </p>
         <div className="lockdownArrow-container">
-        <Image className={`size-8 ${porcentagem <= 0 ? 'rotate-180' : ''}`}  src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDC.svg'}`} alt="Arrow Up" />
-          <Image  className={`size-8`}  src={`${porcentagem <= 0 ? './icons/arrowDV.svg' : './icons/arrowDC.svg'}`} alt="Arrow Down" />
+        <img className={`size-8 ${porcentagem <= 0 ? 'rotate-180' : ''}`}  src={`${porcentagem > 0 ? './icons/arrowUL.svg' : './icons/arrowDC.svg'}`} alt="Arrow Up" />
+          <img  className={`size-8`}  src={`${porcentagem <= 0 ? './icons/arrowDV.svg' : './icons/arrowDC.svg'}`} alt="Arrow Down" />
         </div>
       </div>
     </section>
