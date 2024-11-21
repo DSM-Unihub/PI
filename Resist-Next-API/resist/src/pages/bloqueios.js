@@ -61,11 +61,22 @@ const Bloqueios = () => {
     }
   };
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [router]);
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
+
+      try {
+        const response = await axios.get(`${url}/bloqueios`);
+        // Processar a resposta
+      } catch (error) {
+        console.error("Erro ao buscar bloqueios:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <section className="container-principal">
