@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import FooterContent from "../components/FooterContent.js";
 import RecentActivity from "../components/RecentActivity.js";
 import { useRouter } from "next/router";
+import Head from "next/head.js";
 export default function Home() {
   const [value, onChange] = useState(new Date());
   const [isMounted, setIsMounted] = useState(false);
@@ -26,7 +27,9 @@ export default function Home() {
   const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   return (
     <>
-  
+      <Head>
+        <title>Resist</title>
+      </Head>
       <section className="container-principal">
         {/* Left Navigation Bar */}
         <NavBar />

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import url from "../services/url";
+import Head from "next/head";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,6 +39,9 @@ export default function Login() {
 
   return (
     <>
+    <Head>
+    <title>login</title>
+    </Head>
       <section className="container-login">
         {/* Component for the login image */}
         <div className="login-image">
