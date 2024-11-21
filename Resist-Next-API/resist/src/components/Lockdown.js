@@ -62,7 +62,7 @@ const Lockdown = () => {
       </div>
       <h3 className="title lg:hidden">Bloqueios totais</h3>
       <div className="lockdownStatic-container">
-        <img src="./iconsRectangle.svg" alt="Lockdown Icon" />
+        <img src="./icons/Rectangle.svg" alt="Lockdown Icon" />
         <p className="text-3xl font-bold text-azul-cinza-escuro">
           {bloqueios.bloqueios}
         </p>
