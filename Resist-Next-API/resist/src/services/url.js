@@ -1,2 +1,2 @@
-const url = "https://resist-api-htay.onrender.com/api/bloqueios"
+const url = "https://resist-api-htay.onrender.com/api"
 export default url;
