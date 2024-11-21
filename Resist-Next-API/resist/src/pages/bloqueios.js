@@ -42,11 +42,7 @@ const Bloqueios = () => {
         setTermoInput("");
         setPeriodoInput("");
         alert("Bloqueio adicionado com sucesso!");
-        
-        // Atualizar a lista de bloqueios
-        if (typeof window !== 'undefined') {
-          window.location.reload();
-        }
+        window.location.reload();
       }
     } catch (error) {
       console.error("Erro ao adicionar o bloqueio:", error);
