@@ -47,7 +47,7 @@ export default function Login() {
       <section className="container-login">
         {/* Component for the login image */}
         <div className="login-image">
-          <Image
+          <img
             src="./icons/lg-resist-w.svg"
             className="resist-logo"
             alt="Login Illustration"

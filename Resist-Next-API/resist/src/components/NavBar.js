@@ -3,6 +3,13 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 export default function NavBar() {
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    setUsuario(null);
+    delete axios.defaults.headers.common['Authorization'];
+    router.push('/login');
+  };
   const pathname = usePathname();
   const isActive = (route) => pathname === route;
   return (
@@ -132,9 +139,9 @@ export default function NavBar() {
           </div>
           
           <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
-            <Link href="/login">
+            <button onClick={logout}>
               <img alt="" className="navIcon " src="/icons/Logout.svg" />
-            </Link>
+            </button>
           </div>
           </div>
         </div>
