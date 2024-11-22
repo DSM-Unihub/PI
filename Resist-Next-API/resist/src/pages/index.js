@@ -9,22 +9,29 @@ import FooterContent from "../components/FooterContent.js";
 import RecentActivity from "../components/RecentActivity.js";
 import { useRouter } from "next/router";
 import Head from "next/head.js";
+
 export default function Home() {
   const [value, onChange] = useState(new Date());
   const [isMounted, setIsMounted] = useState(false);
+  const [usuario, setUsuario] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/login");
+    } else {
+      const user = JSON.parse(localStorage.getItem("usuario"));
+      setUsuario(user);
     }
   }, [router]);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
+
+  if (!usuario) return <div>Carregando...</div>;
+
   return (
     <>
       <Head>
@@ -69,7 +76,7 @@ export default function Home() {
 }
 
 // Componente de Bem-Vindo
-function Welcome(usuario) {
+function Welcome({ usuario }) {
   return (
     <div className="welcomeArea">
       <p className="text-4xl text-white">Olá, {usuario.nome}</p>

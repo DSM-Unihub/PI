@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function NavBar() {
+  const router = useRouter();
+
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-    delete axios.defaults.headers.common['Authorization'];
-    router.push('/login');
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    delete axios.defaults.headers.common["Authorization"];
+    router.push("/login");
   };
   const pathname = usePathname();
   const isActive = (route) => pathname === route;
@@ -64,9 +68,14 @@ export default function NavBar() {
               : "brightness-50"
           }`}
         >
-          <Link href="/config">
+          <Link href="">
             <img alt="" className="navIcon " src="/icons/Configs.svg" />
           </Link>
+        </div>
+        <div className={`navIcon-container brightness-50`}>
+          <button onClick={logout}>
+            <img alt="" className="navIcon " src="/icons/Logout.svg" />
+          </button>
         </div>
       </section>
       {/* Web Nav Bar */}
@@ -125,23 +134,34 @@ export default function NavBar() {
             </div>
           </div>
           <div className="flex flex-col justify-center gap-5">
-            
-          <div className={`navIcon-container ${isActive('/ajuda') ? 'rounded-3xl bg-cinza-principal brightness duration-300 ' : ''}`}>
-          <Link href="/ajuda">
-            <img alt="" className="navIcon " src="/icons/Ajudamenu.svg" />
-          </Link>
-          </div>
-          <div className={`navIcon-container ${isActive('/config') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
-            <Link href="/config">
-              <img alt="" className="navIcon " src="/icons/Configs.svg" />
-            </Link>
-          </div>
-          
-          <div className={`navIcon-container`}>
-            <button onClick={logout}>
-              <img alt="" className="navIcon " src="/icons/Logout.svg" />
-            </button>
-          </div>
+            <div
+              className={`navIcon-container ${
+                isActive("/ajuda")
+                  ? "rounded-3xl bg-cinza-principal brightness duration-300 "
+                  : ""
+              }`}
+            >
+              <Link href="">
+                <img alt="" className="navIcon " src="/icons/Ajudamenu.svg" />
+              </Link>
+            </div>
+            <div
+              className={`navIcon-container ${
+                isActive("/config")
+                  ? "rounded-3xl bg-cinza-principal brightness duration-300"
+                  : ""
+              }`}
+            >
+              <Link href="">
+                <img alt="" className="navIcon " src="/icons/Configs.svg" />
+              </Link>
+            </div>
+
+            <div className={`navIcon-container`}>
+              <button onClick={logout}>
+                <img alt="" className="navIcon " src="/icons/Logout.svg" />
+              </button>
+            </div>
           </div>
         </div>
       </section>

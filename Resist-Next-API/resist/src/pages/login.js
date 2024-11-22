@@ -25,10 +25,12 @@ export default function Login() {
         senha: password,
       });
   
-      const { token } = response.data;
+      const { token, user } = response.data;
   
       // Armazena o token
       localStorage.setItem("token", token);
+      localStorage.setItem("usuario", JSON.stringify(user));  // Armazenando o objeto usuário
+
   
       // Redireciona o usuário
       router.push("/");

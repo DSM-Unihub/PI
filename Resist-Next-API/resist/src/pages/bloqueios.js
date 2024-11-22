@@ -6,18 +6,19 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import url from "../services/url"; // Supondo que o url seja o serviço para a API
 import { useRouter } from "next/router";
+import Head from "next/head";
 const Bloqueios = () => {
-  const usuario = { nome: "Daniel", foto: "./imgs/defaultUser.png" };
   const [urlInput, setUrlInput] = useState("");
   const [termoInput, setTermoInput] = useState("");
   const [periodoInput, setPeriodoInput] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+  const [usuario, setUsuario] = useState(null);
 
   // Função para adicionar um novo bloqueio manual
   const adicionarBloqueioManual = async () => {
-  const token = localStorage.getItem("token"); // Pegue o token armazenado
-      if (!urlInput) {
+    const token = localStorage.getItem("token"); // Pegue o token armazenado
+    if (!urlInput) {
       alert("A URL é obrigatória!");
       return;
     }
@@ -33,14 +34,14 @@ const Bloqueios = () => {
         tipoInsercao: "Manual",
         ipMaquina: "192.168.1.1",
         dataHora: new Date().toISOString(),
-        flag: true
+        flag: true,
       };
 
       const token = localStorage.getItem("token");
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       const response = await axios.post(`${url}/bloqueios`, novoBloqueio);
-      
+
       if (response.data.success) {
         setUrlInput("");
         setTermoInput("");
@@ -50,16 +51,30 @@ const Bloqueios = () => {
       }
     } catch (error) {
       console.error("Erro ao adicionar o bloqueio:", error);
-      alert(error.response?.data?.error || "Erro ao adicionar o bloqueio. Por favor, tente novamente.");
+      alert(
+        error.response?.data?.error ||
+          "Erro ao adicionar o bloqueio. Por favor, tente novamente."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    } else {
+      const user = JSON.parse(localStorage.getItem("usuario"));
+      setUsuario(user);
+    }
+  }, [router]);
+
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       if (token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }
 
       try {
@@ -72,8 +87,12 @@ const Bloqueios = () => {
 
     fetchData();
   }, []);
+  if (!usuario) return <div>Carregando...</div>;
   return (
     <>
+      <Head>
+        <title>Bloqueios</title>
+      </Head>
       <section className="container-principal">
         <NavBar />
         <section className="main-container">
@@ -91,7 +110,9 @@ const Bloqueios = () => {
               <BlockList />
               <div className="flex flex-col w-full col-span-1">
                 <div className="p-3 gap-5">
-                  <h3 className="text-azul-text font-bold text-lg">Bloqueio Manual</h3>
+                  <h3 className="text-azul-text font-bold text-lg">
+                    Bloqueio Manual
+                  </h3>
                 </div>
                 <div className="flex flex-col bg-white rounded-xl p-5 max-w-full h-full max-h-100 gap-5 justify-between">
                   <div className="flex flex-col gap-5">
@@ -123,7 +144,9 @@ const Bloqueios = () => {
                       onClick={adicionarBloqueioManual}
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Adicionando..." : "Adicionar Bloqueio Manual"}
+                      {isSubmitting
+                        ? "Adicionando..."
+                        : "Adicionar Bloqueio Manual"}
                     </button>
                   </div>
                 </div>
