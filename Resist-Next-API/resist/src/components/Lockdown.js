@@ -11,6 +11,8 @@ const Lockdown = () => {
   const [mediaMovel, setMediaMovel] = useState("");
   const fetchBloqueios = async () => {
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${url}/estatisticas-mes`);
       setBloqueios(response.data.mesAtual);
       setPorcentagem(response.data.porcentagemVariacaoMesAnterior);

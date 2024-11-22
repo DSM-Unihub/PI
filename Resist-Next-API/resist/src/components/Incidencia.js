@@ -11,6 +11,8 @@ const Incidencia = () => {
   // Função para buscar os dados dos bloqueios
   const fetchLabs = async () => {
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${url}/estatisticas-labs`);
       setLabs(response.data.estatisticasLaboratorios); // Atualiza o estado com os dados dos laboratórios
     } catch (error) {

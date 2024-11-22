@@ -10,6 +10,8 @@ const EstatisticasMes = () => {
 
   const fetchBloqueiosMes = async () => {
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${url}/bloqueios-mes`);
       setBloqueios(response.data);
     } catch (error) {
@@ -133,7 +135,7 @@ const EstatisticasMes = () => {
                 </div>
                 <div className=" flex flex-row w-fit items-center">
                   <div className="flex flex-row justify-end">
-                    <Image
+                    <img
                       className="size-4"
                       src="icons/desktopmarker.svg"
                       alt="Desktop Marker"
@@ -145,7 +147,7 @@ const EstatisticasMes = () => {
                 </div>
                 <div className="flex flex-row items-center w-fit ">
                   <div className="flex flex-row justify-end">
-                    <Image
+                    <img
                       className="size-4"
                       src="/icons/mobilemarker.svg"
                       alt="Mobile Marker"
@@ -170,7 +172,7 @@ const EstatisticasMes = () => {
                     </p>
                   </div>
                   <div className="flex flex-row justify-center items-center">
-                    <Image
+                    <img
                       src="./icons/arrowW.svg"
                       className={`size-4 ${
                         item.porcentagemVariacaoMesAnterior < "0.00"

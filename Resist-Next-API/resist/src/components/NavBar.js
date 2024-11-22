@@ -6,7 +6,6 @@ export default function NavBar() {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
-    setUsuario(null);
     delete axios.defaults.headers.common['Authorization'];
     router.push('/login');
   };
@@ -138,7 +137,7 @@ export default function NavBar() {
             </Link>
           </div>
           
-          <div className={`navIcon-container ${isActive('/logout') ? 'rounded-3xl bg-cinza-principal brightness duration-300' : ''}`}>
+          <div className={`navIcon-container`}>
             <button onClick={logout}>
               <img alt="" className="navIcon " src="/icons/Logout.svg" />
             </button>

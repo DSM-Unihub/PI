@@ -20,6 +20,8 @@ const BlockList = () => {
   // Função para buscar os bloqueios (agora sem filtro de flag)
   const fetchBloqueios = async () => {
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${url}/bloqueios`);
       setBloqueios(response.data);
     } catch (error) {
@@ -31,6 +33,8 @@ const BlockList = () => {
   const handleDeleteIndexacao = async (bloqueioId) => {
     if(window.confirm("Tem certeza que deseja excluir este bloqueio?")) {
       try {
+        const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         const response = await axios.delete(`${url}/bloqueios/${bloqueioId}`);
         if(response.status === 204) {
           alert("Indexação excluída com sucesso!");
@@ -48,8 +52,9 @@ const BlockList = () => {
   // Função para confirmar e executar a troca de status
   const handleToggleConfirm = async () => {
     if (!selectedBloqueio) return;
-
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.put(
         `${url}/bloqueios/${selectedBloqueio._id}`,
         {

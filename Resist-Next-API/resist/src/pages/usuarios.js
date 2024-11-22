@@ -39,7 +39,7 @@ const Usuarios = () => {
             {users.map((users) => (
               <div key={users.id} class="bg-white grid grid-cols-2 p-5 justify-items-center w-full gap-3 rounded-xl">
                 <div class="flex flex-col justify-center">
-                  <Image
+                  <img
                     alt=""
                     src={users.foto}
                     class="rounded-full border-4 size-28 border-cinza-border "

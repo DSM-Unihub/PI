@@ -8,6 +8,8 @@ const RecentActivity = () => {
   const [atividades, setAtividades] = useState([])
   const fetchAtividades = async () =>{
     try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${url}/ultimas-atividades`);
       setAtividades(response.data);
     } catch (error) {

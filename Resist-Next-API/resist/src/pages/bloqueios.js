@@ -17,12 +17,7 @@ const Bloqueios = () => {
   // Função para adicionar um novo bloqueio manual
   const adicionarBloqueioManual = async () => {
   const token = localStorage.getItem("token"); // Pegue o token armazenado
-  if (!token) {
-    alert("Você precisa estar autenticado!");
-    return;
-  }
-
-    if (!urlInput) {
+      if (!urlInput) {
       alert("A URL é obrigatória!");
       return;
     }

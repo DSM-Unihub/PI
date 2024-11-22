@@ -56,12 +56,12 @@ form-page {
 
 .container-login {
   @apply w-full gap-8 md:gap-0 h-screen flex flex-col md:flex-row md:items-center bg-gradient-to-b from-cinza-gradiente-inicio to-cinza-gradiente-final;
-  .login-image {
-    @apply w-full md:w-2/5 lg:w-full h-72 md:h-full Background clip-curve p-5;
-    .resist-logo {
-      @apply md:hidden flex size-7;
-    }
-  }
+}
+.login-image {
+  @apply w-full md:w-2/5 lg:w-full h-72 md:h-full Background clip-curve p-5;
+}
+.resist-logo {
+  @apply md:hidden flex size-7;
 }
 
 .login-form-container {
@@ -84,19 +84,19 @@ form-page {
 .navMob-container {
   @apply flex lg:hidden flex-row left-1/2 -translate-x-1/2 fixed justify-center bg-white bottom-0 z-30 p-3 w-fit gap-2 rounded-t-3xl;
 
-  .navIcon-container {
-    @apply p-3 w-max h-fit flex flex-col items-center;
-  }
-  .navIcon {
-    @apply size-8 duration-300 cursor-pointer;
-  }
+}
+.navIcon-container {
+  @apply p-3 w-max h-fit flex flex-col items-center;
+}
+.navIcon {
+  @apply size-8 duration-300 cursor-pointer;
 }
 
 .main-container {
   @apply flex flex-col w-full lg:overflow-hidden;
-  .header-container {
-    @apply gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32;
-  }
+}
+.header-container {
+  @apply gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32;
 }
 
 .headerBar {
@@ -129,18 +129,18 @@ form-page {
 
 .component-container {
   @apply flex flex-col items-start p-5 lg:p-0;
-  .title {
-    @apply text-base text-start text-azul-cinza-escuro;
+}
+.title {
+  @apply text-base text-start text-azul-cinza-escuro;
+}
+.lockdownStatic-container {
+  max-width: 315px;
+  @apply flex flex-row lg:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-full  justify-self-center rounded-xl;
+  .text {
+    @apply text-azul-MBT text-sm text-wrap;
   }
-  .lockdownStatic-container {
-    max-width: 315px;
-    @apply flex flex-row lg:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-full  justify-self-center rounded-xl;
-    .text {
-      @apply text-azul-MBT text-sm text-wrap;
-    }
-    .lockdownArrow-container {
-      @apply bg-white flex flex-col h-full justify-center items-center w-fit p-3 rounded-e-lg;
-    }
+  .lockdownArrow-container {
+    @apply bg-white flex flex-col h-full justify-center items-center w-fit p-3 rounded-e-lg;
   }
 }
 

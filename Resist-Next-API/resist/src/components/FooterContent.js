@@ -1,11 +1,9 @@
-const FooterContent =() =>{
-    return(
-        <div className="flex flex-col lg:hidden h-20 text-center">
-            <footer>
-                <p>2024 Resist Unihub. Todos os direitos reservados.</p>
-            </footer>
-        </div>
-    )
-}
+const FooterContent = () => {
+  return (
+    <footer className="flex flex-col bg-gradient-to-tr from-cinza-secundario to-cinza-principal pb-24 lg:hidden  text-center">
+      <p className="text-sm text-azul-title font-bold mt-5">2024 Resist® Unihub. Todos os direitos reservados.</p>
+    </footer>
+  );
+};
 
 export default FooterContent;
