@@ -19,7 +19,7 @@ export default function Estatisticas() {
     }
   }, [router]);
 
-  if (!usuario) return <div>Carregando...</div>;
+  if (!usuario) return router.push("/login");
   return (
     <>
     <Head>

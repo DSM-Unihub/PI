@@ -38,7 +38,7 @@ const Usuarios = () => {
     fetchUsuarios();
   });
   
-  if (!usuario) return <div>Carregando...</div>;
+  if (!usuario) return router.push("/login");
   return (
     <>
     <Head>

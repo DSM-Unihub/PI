@@ -30,7 +30,7 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  if (!usuario) return <div>Carregando...</div>;
+  if (!usuario) return router.push("/login");
 
   return (
     <>
