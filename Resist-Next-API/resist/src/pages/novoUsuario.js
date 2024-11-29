@@ -7,9 +7,10 @@ import url from "@/services/url";
 import { useRouter } from "next/router";
 import Head from "next/head";
 const NewUSer = () => {
+  const [newUser, setNewUser] = useState({});
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
-  const [newUser, setNewUser] = useState({});
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -19,9 +20,20 @@ const NewUSer = () => {
       const user = JSON.parse(localStorage.getItem("usuario"));
       setUsuario(user);
     }
+    setIsMounted(true);
   }, [router]);
 
-  if (!usuario) return router.push("/login");
+  // Mostrar uma tela de carregamento enquanto verifica o usuário
+  if (!isMounted) {
+    return <p>Carregando...</p>;
+  }
+
+  // Redirecionar se o usuário não estiver autenticado
+  if (!usuario) {
+    router.push("/login");
+    return null; // Evita renderizar o restante do componente
+  }
+
   return (
     <>
       <Head>

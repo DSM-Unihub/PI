@@ -10,6 +10,7 @@ const Usuarios = () => {
   const router = useRouter();
   const [users, setUsers] = useState([]);
   const [usuario, setUsuario] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   
   
@@ -25,6 +26,12 @@ const Usuarios = () => {
   };
   
   useEffect(() => {
+    fetchUsuarios();
+  });
+  
+
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/login");
@@ -32,13 +39,20 @@ const Usuarios = () => {
       const user = JSON.parse(localStorage.getItem("usuario"));
       setUsuario(user);
     }
+    setIsMounted(true);
   }, [router]);
-  
-  useEffect(() => {
-    fetchUsuarios();
-  });
-  
-  if (!usuario) return router.push("/login");
+
+  // Mostrar uma tela de carregamento enquanto verifica o usuário
+  if (!isMounted) {
+    return <p>Carregando...</p>;
+  }
+
+  // Redirecionar se o usuário não estiver autenticado
+  if (!usuario) {
+    router.push("/login");
+    return null; // Evita renderizar o restante do componente
+  }
+
   return (
     <>
     <Head>
@@ -56,11 +70,11 @@ const Usuarios = () => {
               </p>
             </div>
           </section>
-          <section className="flex flex-col md:flex-row flex-wrap mt-5 px-5 max-w-md">
+          <section className="flex flex-col md:flex-row mt-5 px-5 flex-wrap gap-5">
             {users.map((user) => (
               <div
                 key={user._id}
-                className="bg-white grid grid-cols-2 p-1 md:p-3 justify-items-center w-full gap-1 md:gap-2 rounded-xl"
+                className="bg-white grid grid-cols-2 p-1 md:p-3 justify-items-center w-full gap-1 md:gap-2 rounded-xl max-w-md"
               >
               <div className="flex flex-col justify-center">
                   <img

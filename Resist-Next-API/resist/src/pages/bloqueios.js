@@ -14,6 +14,7 @@ const Bloqueios = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Função para adicionar um novo bloqueio manual
   const adicionarBloqueioManual = async () => {
@@ -60,15 +61,6 @@ const Bloqueios = () => {
     }
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    } else {
-      const user = JSON.parse(localStorage.getItem("usuario"));
-      setUsuario(user);
-    }
-  }, [router]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +79,30 @@ const Bloqueios = () => {
 
     fetchData();
   }, []);
-  if (!usuario) return router.push("/login");
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    } else {
+      const user = JSON.parse(localStorage.getItem("usuario"));
+      setUsuario(user);
+    }
+    setIsMounted(true);
+  }, [router]);
+
+  // Mostrar uma tela de carregamento enquanto verifica o usuário
+  if (!isMounted) {
+    return <p>Carregando...</p>;
+  }
+
+  // Redirecionar se o usuário não estiver autenticado
+  if (!usuario) {
+    router.push("/login");
+    return null; // Evita renderizar o restante do componente
+  }
+
   return (
     <>
       <Head>

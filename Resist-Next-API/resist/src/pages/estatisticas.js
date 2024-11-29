@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router.js";
+import Head from "next/head.js";
 import NavBar from "../components/NavBar.js";
 import HeaderBar from "../components/HeaderBar.js";
 import EstatisticasMes from "../components/EstatisticasMes.js";
 import FooterContent from "../components/FooterContent.js";
-import { useRouter } from "next/router.js";
-import Head from "next/head.js";
+
 export default function Estatisticas() {
-  const router = useRouter()
+  const router = useRouter();
   const [usuario, setUsuario] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,21 +19,32 @@ export default function Estatisticas() {
       const user = JSON.parse(localStorage.getItem("usuario"));
       setUsuario(user);
     }
+    setIsMounted(true);
   }, [router]);
 
-  if (!usuario) return router.push("/login");
+  // Mostrar uma tela de carregamento enquanto verifica o usuário
+  if (!isMounted) {
+    return <p>Carregando...</p>;
+  }
+
+  // Redirecionar se o usuário não estiver autenticado
+  if (!usuario) {
+    router.push("/login");
+    return null; // Evita renderizar o restante do componente
+  }
+
   return (
     <>
-    <Head>
-    <title>Estatisticas</title>
-    </Head>
-      <section className="container-principal ">
-        {/* Left Navigation Bar */}
-          <NavBar />
-        {/* Main Content Area */}
-        <section className="main-container ">
-           <HeaderBar usuario={usuario} />
-          {/* Dashboard Principal */}
+      <Head>
+        <title>Estatísticas</title>
+      </Head>
+      <section className="container-principal">
+        {/* Barra de navegação */}
+        <NavBar />
+        {/* Área principal */}
+        <section className="main-container">
+          <HeaderBar usuario={usuario} />
+          {/* Conteúdo principal */}
           <section className="flex flex-col px-4 gap-1">
             <div className="bg-gradient-to-r from-laranja-s h-fit to-laranja-e p-5 rounded-xl max-w-xl">
               <h2 className="lg:text-2xl text-4xl text-white">Estatísticas</h2>

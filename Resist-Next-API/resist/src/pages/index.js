@@ -1,14 +1,14 @@
-import HeaderBar from "@/components/HeaderBar.js";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import Head from "next/head.js";
 import NavBar from "../components/NavBar.js";
+import HeaderBar from "@/components/HeaderBar.js";
 import Incidencia from "../components/Incidencia.js";
 import Lockdown from "../components/Lockdown.js";
 import ActiveDevices from "../components/ActiveDevices.js";
 import Calendar from "react-calendar";
-import { useState, useEffect } from "react";
 import FooterContent from "../components/FooterContent.js";
 import RecentActivity from "../components/RecentActivity.js";
-import { useRouter } from "next/router";
-import Head from "next/head.js";
 
 export default function Home() {
   const [value, onChange] = useState(new Date());
@@ -16,6 +16,7 @@ export default function Home() {
   const [usuario, setUsuario] = useState(null);
   const router = useRouter();
 
+  // Verificar autenticação e carregar usuário
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -24,13 +25,19 @@ export default function Home() {
       const user = JSON.parse(localStorage.getItem("usuario"));
       setUsuario(user);
     }
+    setIsMounted(true); // Marcar como montado
   }, [router]);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // Mostrar um carregamento enquanto verifica autenticação
+  if (!isMounted) {
+    return <p>Carregando...</p>;
+  }
 
-  if (!usuario) return router.push("/login");
+  // Redirecionar caso o usuário não esteja autenticado
+  if (!usuario) {
+    router.push("/login");
+    return null;
+  }
 
   return (
     <>
@@ -38,28 +45,19 @@ export default function Home() {
         <title>Resist</title>
       </Head>
       <section className="container-principal">
-        {/* Left Navigation Bar */}
         <NavBar />
-        {/* Main Content Area */}
         <section className="main-container">
+          {/* Passa o usuário para o HeaderBar */}
           <HeaderBar usuario={usuario} />
           <section className="home-container ">
-            {/* Left Dashboard Section */}
             <div className="dashLeft-container">
-              {/* Welcome Section for Desktop */}
               <Welcome usuario={usuario} />
-
-              {/* Recent Activity Section */}
               <RecentActivity />
-
-              {/* Total Lockdowns Section */}
               <Lockdown />
             </div>
-
-            {/* Right Dashboard Section */}
             <div className="dashRight-container">
               <Incidencia />
-              <div className="flex  flex-col lg:flex-row gap-2 mt-4 ">
+              <div className="flex flex-col lg:flex-row gap-2 mt-4 ">
                 <ActiveDevices />
                 <div className="flex flex-col self-start text-azul-title text-lg p-5 lg:p-0 ">
                   <h2 className="title">Histórico por data</h2>
