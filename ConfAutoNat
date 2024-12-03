@@ -1,0 +1,88 @@
+1. Crie o Script net.sh
+Crie o arquivo do script em um local apropriado, como /usr/local/bin/net.sh:
+
+bash
+Copiar código
+sudo nano /usr/local/bin/net.sh
+Adicione o seguinte conteúdo ao script:
+
+bash
+Copiar código
+#!/bin/bash
+
+# Carregar o módulo do kernel para NAT
+sudo modprobe iptable_nat
+
+# Ativar o encaminhamento de pacotes IPv4
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+
+# Configurar o mascaramento NAT
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+Substitua enp0s3 pelo nome correto da interface de rede em seu sistema, caso necessário. Use o comando ip addr para verificar o nome da interface.
+
+Salve e feche o arquivo (CTRL + O, depois CTRL + X).
+
+2. Torne o Script Executável
+Dê permissão de execução ao script:
+
+bash
+Copiar código
+sudo chmod +x /usr/local/bin/net.sh
+3. Crie um Serviço systemd
+Crie o arquivo de serviço no diretório /etc/systemd/system/:
+
+bash
+Copiar código
+sudo nano /etc/systemd/system/net_inicial.service
+Adicione o seguinte conteúdo:
+
+ini
+Copiar código
+[Unit]
+Description=Configuração de NAT ao Inicializar
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/net.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+Salve e feche o arquivo.
+
+4. Recarregue e Ative o Serviço
+Recarregue os arquivos do systemd para reconhecer o novo serviço:
+
+bash
+Copiar código
+sudo systemctl daemon-reload
+Ative o serviço para rodar automaticamente na inicialização:
+
+bash
+Copiar código
+sudo systemctl enable net_inicial.service
+5. Teste o Serviço
+Inicie o serviço manualmente para testar se funciona corretamente:
+
+bash
+Copiar código
+sudo systemctl start net_inicial.service
+Verifique o status do serviço para garantir que não há erros:
+
+bash
+Copiar código
+sudo systemctl status net_inicial.service
+6. Valide Após Reiniciar
+Reinicie o sistema para confirmar que o script é executado na inicialização:
+
+bash
+Copiar código
+sudo reboot
+Notas
+Permissões do sudo no Script: O systemd já executa o script como root por meio do User=root, então o uso de sudo dentro do script é opcional. Você pode simplificar removendo sudo dos comandos no script.
+Persistência das Regras do iptables: Regras configuradas no iptables são temporárias. Para torná-las persistentes após reinicializações, considere instalar o pacote iptables-persistent:
+bash
+Copiar código
+sudo apt install iptables-persistent
+Isso salvará e restaurará as regras automaticamente.
