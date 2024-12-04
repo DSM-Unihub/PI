@@ -86,3 +86,41 @@ bash
 Copiar código
 sudo apt install iptables-persistent
 Isso salvará e restaurará as regras automaticamente.
+
+
+
+##########################################################################################
+
+
+#!/bin/bash
+
+# Caminho para o arquivo a ser monitorado
+file_to_watch="/etc/squid/bloqueados.txt"
+
+# Inicializa o tamanho do arquivo
+if [ ! -f "$file_to_watch" ]; then
+    echo "Erro: Arquivo $file_to_watch não encontrado."
+    exit 1
+fi
+
+last_size=$(stat -c%s "$file_to_watch")
+
+while true; do
+    # Usa inotifywait para monitorar modificações no arquivo
+    inotifywait -e modify "$file_to_watch" > /dev/null 2>&1
+
+    # Obtém o tamanho atual do arquivo
+    new_size=$(stat -c%s "$file_to_watch")
+
+    if [ "$new_size" -gt "$last_size" ]; then
+        echo "Linha adicionada. Reiniciando o Squid..."
+        sudo systemctl restart squid
+    elif [ "$new_size" -lt "$last_size" ]; then
+        echo "Linha removida. Reiniciando o Squid..."
+        sudo systemctl restart squid
+    fi
+
+    # Atualiza o tamanho do arquivo para a próxima verificação
+    last_size=$new_size
+done
+
