@@ -41,11 +41,37 @@ class TratamentoDados:
             if re.search(r'\.(com|net|org|edu|gov|io|co)', part):
                 return part.replace(":443", "")
         return None
+    
+    def extract_site(self, line):
+        # Divide a linha em partes
+        parts = line.strip().split()
+        
+        # Verifica se a linha contém informações suficientes
+        if len(parts) < 3:
+            return None  # Retorna None se não houver informações suficientes
+        
+        # A URL é a última parte da linha
+        url_433 = parts[-1]  # Pega a última parte que deve ser a URL
+        dominio = url_433.split(":")[0]  # Remove a porta, se existir
+        
+        return dominio
+        
+    def extract_site_for_arm(self, line):
+    #"""
+    #Extrai o domínio principal da linha de log.
+    #Exemplo: transforma '03/12/2024 21:53:58:926 192.168.12.2 amazon.com.br:443' em 'amazon.com.br'
+    #"""
+        match = re.search(r'(\b[a-z0-9.-]+\.com(\.[a-z]{2,3})?\b)', line, re.IGNORECASE)
+        if match:
+            return match.group(1)  # Retorna o domínio encontrado
+        return None  # Retorna None se nenhum domínio válido for encontrado
+
 
     @staticmethod
     def extract_date_from_log_line(log_line):
         try:
-            match = re.search(r'(\d{4}/\d{2}/\d{2})', log_line)
+            # Ajuste a expressão regular para o formato DD/MM/YYYY
+            match = re.search(r'(\d{2}/\d{2}/\d{4})', log_line)
             return match.group(1) if match else None
         except Exception:
             return None

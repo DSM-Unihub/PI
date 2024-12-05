@@ -1,0 +1,11 @@
+[Unit]
+Description=Meu Script de Internet
+After=network.target
+
+[Service]
+ExecStart=/bin/bash -c "/usr/local/bin/net.sh && /etc/squid/files/monitor_file.sh"
+Restart=alwals
+User=root
+
+[Install]
+WantedBy=multi-user.target
