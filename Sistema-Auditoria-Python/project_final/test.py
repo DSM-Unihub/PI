@@ -3,14 +3,17 @@ import threading
 from tratamentoDados import TratamentoDados
 from indexacoes import Indexacoes, Acessos
 import requests
-import re
+import re  # Adicionada a importação do módulo 're' para expressões regulares
 import os
+import os
+#from dotenv import load_dotenv  # Importa o dotenv para carregar variáveis do arquivo .env
 from pymongo import MongoClient
-from datetime import datetime
 
+# Carrega as variáveis de ambiente do arquivo .env
+#load_dotenv()
 
-# Obtém a string de conexão do MongoDB
-mongoDBURI = "sua url do mongodb :)"
+# Obtém a string de conexão do MongoDB do arquivo .env
+mongoDBURI = "<<mongodb>>"
 
 # Configuração MongoDB Atlas
 print("Tentando conectar ao MongoDB Atlas...")
@@ -19,7 +22,7 @@ try:
     print("Conexão ao MongoDB Atlas bem-sucedida!")
 except Exception as e:
     print(f"Erro ao conectar ao MongoDB Atlas: {e}")
-    client = None
+    client = None  # Evita usar a variável client se a conexão falhar
 
 # Verifica se a conexão foi bem-sucedida antes de continuar
 if client:
@@ -34,25 +37,6 @@ if client:
     semaforo = threading.Semaphore(15)
 
     class MonitorLog:
-        
-        # Adicione esta função para converter a data e hora
-        def format_datetime(self, data, hora):
-            # Combina a data e a hora em uma única string
-            datetime_str = f"{data} {hora}"
-            
-            # print(f"data: {data}")
-            # print(f"hora: {hora}")
-            # Tenta analisar a string com milissegundos
-            try:
-                dt = datetime.strptime(datetime_str, "%Y/%m/%d %H:%M:%S:%f")
-                # Se a conversão for bem-sucedida, formate a saída com milissegundos
-                return dt.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+00:00"  # Mantém os 3 primeiros dígitos dos milissegundos
-            except ValueError:
-                # Se falhar, tenta analisar sem milissegundos
-                dt = datetime.strptime(datetime_str, "%Y/%m/%d %H:%M:%S")
-                # Retorna a data no formato ISO 8601 sem milissegundos
-                return dt.strftime("%Y-%m-%dT%H:%M:%S") + "+00:00"
-        
         def __init__(self, squid_log_file_path, position_file_path):
             self.squid_log_file_path = squid_log_file_path
             self.position_file_path = position_file_path
@@ -94,7 +78,7 @@ if client:
                 print("Iniciando processamento da linha de log.")
                 
                 # Verifica se a linha termina com .com:443 ou contém um domínio válido com .com ou extensões similares
-                if not re.search(r'\.[a-z](\.[a-z]{2,3})?(:\d+)?', line.strip(), re.IGNORECASE):
+                if not re.search(r'\.com(\.[a-z]{2,3})?(:\d+)?', line.strip(), re.IGNORECASE):
                     print(f"Linha ignorada, não segue o padrão esperado: {line.strip()}")
                     return  # Ignora a linha e sai da função
 
@@ -104,23 +88,32 @@ if client:
                     dado.url = url if url.startswith("http") else f"http://{url}"
                     dado.url = dado.url.replace(":433", "")
                     dado.url = dado.url.replace(":http://", "")
-                    dado.url = dado.url.replace("http://", "").replace("https://", "") 
-                    site = dado.url
-                    print(f"O site é {site}")# Remove o protocolo
-                    
+                    dado.url = dado.url.replace(":https://", "")
                     dado.ip_maquina = dado.extract_ip_from_log_line(line)
                     dado.data = dado.extract_date_from_log_line(line)
                     dado.hora = dado.extract_time_from_log_line(line)
-                    # print(f"dado.data:{dado.data}")
-                    dado.data_hora = self.format_datetime(dado.data, dado.hora)
+                    dado.data_hora = f"{dado.data}:{dado.hora}"
                     print(f"Dados extraídos -> URL: {dado.url}, IP: {dado.ip_maquina}, Data/Hora: {dado.data_hora}")
 
                     # Verifica se a URL já foi processada
                     if dado.url not in self.processed_lines:
                         if not idx.is_site_indexed(dado.url):
-                            
                             print(f"URL não indexada previamente. Iniciando indexação de {dado.url}")
                             html = dado.extract_html(dado.url) or ""
+                            termo = "e"  # O termo que você está verificando no HTML
+                        
+                            flag = dado.verificar_flag_no_html(html, "e")
+                            print(f"Verificação de palavra-chave 'e' no HTML: {'Encontrado' if flag else 'Não encontrado'}")
+
+                            if flag:
+                                termobd = termo
+                                print(f"Adicionando {dado.url} ao arquivo bloqueados.txt e enviando notificação.")
+                                with open("C:/Users/bruno/Desktop/pastas_pi/bloqueados.txt", 'a') as bloqueados_file:
+                                    # Remove prefixo http/https ao salvar
+                                    url_sem_http = dado.url.replace("http://", "").replace("https://", "")
+                                    bloqueados_file.write(f"{url_sem_http}\n")
+                            else:
+                                termobd = ""
                             
                             clean_html = dado.remove_html_tags(html)
                             print("HTML limpo de tags para armazenamento local.")
@@ -130,7 +123,7 @@ if client:
                             nome_arquivo = dado.url.replace("http://", "").replace("https://", "").replace("/", "_").replace(":", "_").replace(".", "_")
                             
                             # Lugar para salvar os HTMLs
-                            diretorio_html = r"C:/Users/fatec-dsm4/Desktop/htmls"
+                            diretorio_html = r"/home/server/Desktop/htmls"
                             caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}.txt")
                             
                             # Se não tiver a pasta, ele cria
@@ -142,19 +135,16 @@ if client:
                                 f.write(clean_html)
                                 
                             print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ caminho:{caminho_html}")
-                            #print(f"EXTRAIDOOOOOOOOOOOOOOOOOOOOOOOO:{dado.extract_site(line.strip())}")
-                            dado.append_site_to_arm_file(self.position_file_path, dado.extract_site(line.strip()))
-                            self.processed_lines.add(dado.extract_site(line.strip()))  # Marca a URL como processada
+                            dado.append_site_to_arm_file(self.position_file_path, line.strip())
+                            self.processed_lines.add(dado.url)  # Marca a URL como processada
                             print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
 
-                            # Converte a string de data/hora para um objeto datetime
-                            data_hora_obj = datetime.strptime(dado.data_hora, "%Y-%m-%dT%H:%M:%S+00:00")
-                            
                             idx.indexar_site({
                                 "PathLocal": caminho_html,
+                                "flag": flag,
                                 "urlWeb": dado.url,
-                                "dataHora": data_hora_obj,  # Envia como objeto datetime
-                                "flag": "false",
+                                "termo": termobd,
+                                "dataHora": dado.data_hora,
                                 "ipMaquina": dado.ip_maquina,
                                 "tipoInsercao": "Automatico",
                             })
@@ -167,7 +157,7 @@ if client:
                             if indexed_site:
                                 flag = indexed_site.get('flag', None)  # Obter a flag do site indexado
                             else:
-                                flag = "false"  # Se não encontrar, assume flag como false
+                                flag = None  # Se não encontrar, assume flag como None
 
                             
                             acc.registrar_acesso({
@@ -184,9 +174,9 @@ if client:
 
     def check_required_files():
         required_files = [
-            "C:/Users/fatec-dsm4/Desktop/access.txt",  # Caminho correto para o arquivo de log
-            "C:/Users/fatec-dsm4/Desktop/arm.txt",
-            "C:/Users/fatec-dsm4/Desktop/bloqueados.txt"
+            "C:/Users/bruno/Desktop/pastas_pi/access.txt",  # Caminho correto para o arquivo de log no Linux
+            "C:/Users/bruno/Desktop/pastas_pi/arm.txt",
+            "C:/Users/bruno/Desktop/pastas_pi/bloqueados.txt"
         ]
         
         for file_path in required_files:
@@ -197,8 +187,8 @@ if client:
 
     def main():
         check_required_files()
-        squid_log_file_path = "C:/Users/fatec-dsm4/Desktop/access.txt"
-        position_file_path = "C:/Users/fatec-dsm4/Desktop/arm.txt"
+        squid_log_file_path = "C:/Users/bruno/Desktop/pastas_pi/access.txt"
+        position_file_path = "C:/Users/bruno/Desktop/pastas_pi/arm.txt"
         
         print("Inicializando monitor de log...")
         monitor = MonitorLog(squid_log_file_path, position_file_path)
@@ -208,5 +198,17 @@ if client:
         print("Iniciando o script principal...")
         main()
 
+        
+        
 else:
     print("Encerrando o programa devido a erro na conexão com o banco de dados.")
+
+
+# Configuração MongoDB Atlas
+#print("Tentando conectar ao MongoDB Atlas...")
+#try:
+#    client = MongoClient(">>>>sua string de conexao aqui<<<<")
+#except Exception as e:
+#    print(f"Erro ao conectar ao MongoDB Atlas: {e}")
+#
+#db = client['resist']
