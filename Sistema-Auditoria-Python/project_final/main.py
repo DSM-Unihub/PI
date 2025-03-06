@@ -7,10 +7,12 @@ import re
 import os
 from pymongo import MongoClient
 from datetime import datetime
+from bloqueio import Bloqueio
 
 
 # Obtém a string de conexão do MongoDB
-mongoDBURI = "sua url do mongodb :)"
+mongoDBURI = "mongodb://localhost:27017/"
+bloqueio = Bloqueio("C:/Users/fatec-dsm4/Desktop/arm.txt", "C:/Users/fatec-dsm4/Desktop/htmls")
 
 # Configuração MongoDB Atlas
 print("Tentando conectar ao MongoDB Atlas...")
@@ -159,7 +161,7 @@ if client:
                                 "tipoInsercao": "Automatico",
                             })
                             print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
-                        
+                            bloqueio.bloquear_sites()
                         else:
                             print(f"URL {dado.url} já indexada. Salvando como acesso.")
                             indexed_site = idx.buscar_site_por_url(dado.url)  # Função para buscar o site pelo URL

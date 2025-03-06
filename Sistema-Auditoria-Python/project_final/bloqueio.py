@@ -6,7 +6,7 @@ class Bloqueio:
     def __init__(self, arm_file_path, html_directory):
         self.arm_file_path = arm_file_path
         self.html_directory = html_directory
-        self.termo = "camicado"  # Palavra-chave a ser verificada
+        self.termo = "site"  # Palavra-chave a ser verificada
 
     def ler_arm_file(self):
         """Lê o arquivo arm.txt e retorna uma lista de URLs."""
@@ -38,7 +38,7 @@ class Bloqueio:
         if ':' in dominio:
             dominio = dominio.split(':')[0]
 
-        with open("C:/Users/bruno/Desktop/pastas_pi/bloqueados.txt", 'a') as bloqueados_file:
+        with open("C:/Users/fatec-dsm4/Desktop/bloqueados.txt", 'a') as bloqueados_file:
             bloqueados_file.write(f"{dominio}\n")  # Escreve apenas o domínio
 
     def bloquear_sites(self):
@@ -73,8 +73,8 @@ class Bloqueio:
             print(f"O arquivo HTML para {url} não existe.")
 
 def main():
-    arm_file_path = "C:/Users/bruno/Desktop/pastas_pi/arm.txt"
-    html_directory = "C:/Users/bruno/Desktop/htmls"  # Ajuste o caminho para o diretório HTML
+    arm_file_path = "C:/Users/fatec-dsm4/Desktop/arm.txt"
+    html_directory = "C:/Users/fatec-dsm4/Desktop/htmls"  # Ajuste o caminho para o diretório HTML
     bloqueio = Bloqueio(arm_file_path, html_directory)
     bloqueio.bloquear_sites()
 

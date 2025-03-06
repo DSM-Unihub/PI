@@ -63,12 +63,15 @@ class TratamentoDados:
                 return part.replace(":443", "")
         return None
     
+    def remove_port_433(url):
+        return url.replace(":433", "")
+    
     def extract_site(self, line):
         """Usa o regex pattern compilado"""
         parts = line.strip().split()
         for part in parts:
             if self.url_pattern.search(part):
-                return part.replace(":443", "")
+                return TratamentoDados.remove_port_433(part)
         return None
 
     def extract_site_for_arm(self, line):
@@ -123,8 +126,8 @@ class TratamentoDados:
         except IOError as e:
             print("Erro ao escrever no arquivo:", e)
 
-    @staticmethod
-    def extract_html(url):
+    def extract_html(self, url):
+        """Usa o parser já inicializado"""
         print(f"\n=== Iniciando extração de HTML para {url} ===")
         
         if not url.startswith("http://") and not url.startswith("https://"):
@@ -134,18 +137,18 @@ class TratamentoDados:
         print("→ Iniciando Playwright...")
         with sync_playwright() as p:
             print("✓ Playwright iniciado")
-            browser = p.chromium.launch()
+            browser = p.chromium.launch(headless=False)  # Set headless to False
             print("✓ Navegador lançado")
             page = browser.new_page()
             print("✓ Nova página criada")
             
             try:
                 print("→ Navegando para a URL...")
-                page.goto(url)
+                page.goto(url, timeout=60000)  # Increased timeout
                 print("✓ Navegação inicial completa")
                 
                 print("→ Aguardando carregamento da página...")
-                page.wait_for_load_state('networkidle')
+                page.wait_for_load_state('load')  # Wait for the page to fully load
                 print("✓ Página totalmente carregada")
                 
                 print("→ Extraindo conteúdo HTML...")
