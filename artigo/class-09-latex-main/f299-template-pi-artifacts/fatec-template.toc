@@ -1,0 +1,19 @@
+\babel@toc {brazilian}{}\relax 
+\babel@toc {brazilian}{}\relax 
+\babel@toc {brazilian}{}\relax 
+\babel@toc {english}{}\relax 
+\babel@toc {brazilian}{}\relax 
+\setlength {\parskip }{\z@ plus\p@ }\listsfontsize 
+\contentsline {section}{Diário de Bordo}{3}{section*.2}%
+\contentsline {section}{Diagrama de Caso de Uso}{3}{section*.5}%
+\contentsline {section}{Diagrama de Classe}{5}{section*.7}%
+\contentsline {section}{Diagrama de Objetos}{6}{section*.9}%
+\contentsline {section}{Diagrama do Modelo Conceitual}{6}{section*.12}%
+\contentsline {section}{Canvas}{20}{section*.16}%
+\contentsline {section}{Diagrama de redes}{21}{section*.18}%
+\contentsline {section}{UI de Alta Fidelidade}{22}{section*.20}%
+\contentsline {section}{Dashboard}{22}{section*.21}%
+\contentsline {section}{Estatísticas}{23}{section*.23}%
+\contentsline {section}{Bloqueios}{24}{section*.25}%
+\contentsline {section}{Usuários}{24}{section*.27}%
+\contentsline {section}{Scrum e Kanban}{25}{section*.29}%
