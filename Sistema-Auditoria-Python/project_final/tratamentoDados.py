@@ -88,8 +88,8 @@ class TratamentoDados:
     @staticmethod
     def extract_date_from_log_line(log_line):
         try:
-            # Ajuste a expressão regular para o formato DD/MM/YYYY
-            match = re.search(r'(\d{4}/\d{2}/\d{2})', log_line)
+            # Updated regex to match DD/MM/YYYY format
+            match = re.search(r'(\d{2}/\d{2}/\d{4})', log_line)
             return match.group(1) if match else None
         except Exception:
             return None
@@ -97,7 +97,8 @@ class TratamentoDados:
     @staticmethod
     def extract_time_from_log_line(log_line):
         try:
-            match = re.search(r'(\d{2}:\d{2}:\d{2})', log_line)
+            # Updated regex to match HH:MM:SS:mmm format
+            match = re.search(r'(\d{2}:\d{2}:\d{2}:\d{3})', log_line)
             return match.group(1) if match else None
         except Exception:
             return None

@@ -42,18 +42,23 @@ if client:
             # Combina a data e a hora em uma única string
             datetime_str = f"{data} {hora}"
             
-            # print(f"data: {data}")
-            # print(f"hora: {hora}")
-            # Tenta analisar a string com milissegundos
+            # Tenta analisar a string com milissegundos (formato específico para 3 dígitos)
             try:
-                dt = datetime.strptime(datetime_str, "%Y/%m/%d %H:%M:%S:%f")
-                # Se a conversão for bem-sucedida, formate a saída com milissegundos
-                return dt.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+00:00"  # Mantém os 3 primeiros dígitos dos milissegundos
-            except ValueError:
-                # Se falhar, tenta analisar sem milissegundos
-                dt = datetime.strptime(datetime_str, "%Y/%m/%d %H:%M:%S")
-                # Retorna a data no formato ISO 8601 sem milissegundos
-                return dt.strftime("%Y-%m-%dT%H:%M:%S") + "+00:00"
+                # Split the time to handle the milliseconds separately
+                date_part, time_part = datetime_str.split(' ')
+                time_parts = time_part.split(':')
+                if len(time_parts) == 4:  # If we have milliseconds
+                    # Reconstruct the string with milliseconds in the correct format
+                    new_datetime_str = f"{date_part} {time_parts[0]}:{time_parts[1]}:{time_parts[2]}.{time_parts[3]}"
+                    dt = datetime.strptime(new_datetime_str, "%m/%d/%Y %H:%M:%S.%f")
+                else:
+                    dt = datetime.strptime(datetime_str, "%m/%d/%Y %H:%M:%S")
+                
+                # Format the output
+                return dt.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+00:00"
+            except ValueError as e:
+                print(f"Error parsing datetime: {e}")
+                return None
         
         def __init__(self, squid_log_file_path, position_file_path):
             self.squid_log_file_path = squid_log_file_path
@@ -114,6 +119,10 @@ if client:
                     dado.data = dado.extract_date_from_log_line(line)
                     dado.hora = dado.extract_time_from_log_line(line)
                     # print(f"dado.data:{dado.data}")
+                    if dado.data is None or dado.hora is None:
+                        print(f"Erro: data ou hora inválida na linha: {line.strip()}")
+                        return  # Ignora o processamento da linha
+                    
                     dado.data_hora = self.format_datetime(dado.data, dado.hora)
                     print(f"Dados extraídos -> URL: {dado.url}, IP: {dado.ip_maquina}, Data/Hora: {dado.data_hora}")
 
@@ -150,7 +159,7 @@ if client:
                             print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
 
                             # Converte a string de data/hora para um objeto datetime
-                            data_hora_obj = datetime.strptime(dado.data_hora, "%Y-%m-%dT%H:%M:%S+00:00")
+                            data_hora_obj = datetime.strptime(dado.data_hora.split('.')[0], "%Y-%m-%dT%H:%M:%S")
                             
                             idx.indexar_site({
                                 "PathLocal": caminho_html,
