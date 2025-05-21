@@ -116,3 +116,9 @@ tail -f /var/log/squid/access.log
 
 Script para dar Restart no Squid automaticamente
 ./monitor_file.sh
+
+Para Verificar se tem algo rodando na porta 8080:
+sudo lsof -i :8080
+Para matar o mitm que está rodando
+pkill -f mitm
+
