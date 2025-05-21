@@ -90,7 +90,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       console.log('preparando data')
       const loginData = prepareLoginData();
       
-      const response = await axios.post('http://192.168.0.109:4000/api/login', loginData);
+      const response = await axios.post('http://10.67.57.143:4000/api/login', loginData);
 
       
       if (response.status==200) {

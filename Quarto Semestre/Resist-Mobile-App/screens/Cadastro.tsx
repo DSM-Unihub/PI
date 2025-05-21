@@ -111,7 +111,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
       const RegisterData = prepareRegisterData()
       console.log('datapreparada')
-      const response = await axios.post('http://192.168.0.109:4000/api/user', RegisterData)
+      const response = await axios.post('http://10.67.57.143:4000/api/user', RegisterData)
       // Aqui você adicionaria a lógica de cadastro real.
       
       if(response.status==201){

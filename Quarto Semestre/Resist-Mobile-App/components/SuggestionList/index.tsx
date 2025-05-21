@@ -6,7 +6,7 @@ import { useNavigation } from "expo-router";
 import axios from "axios";
 
 interface Suggestion {
-    id: string;
+    _id: string;
     dataHora: string;
     url: string;
     situacao: boolean;
@@ -26,11 +26,11 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://192.168.0.109:4000/api/user/sugestoes/${userId}`);
+                const response = await axios.get(`http://10.67.57.143:4000/api/user/sugestoes/${userId}`);
                 setData(response.data);
             } catch (err) {
                 setError('Erro ao carregar os dados');
-                console.log(err + `http://192.168.0.109:4000/api/user/sugestoes/${userId}`)
+                console.log(err + `http://10.67.57.143:4000/api/user/sugestoes/${userId}`)
             } finally {
                 setLoading(false);
             }

@@ -9,6 +9,7 @@ import { CustomButton } from '@/components/CustomButton';
 import { CustomTextInput } from '@/components/CustomTextInput';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRoute } from '@react-navigation/native';
 
 type RootStackParamList = {
   Login: undefined;
@@ -28,34 +29,34 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
   const [url, setUrl] = useState('');
   const [foto, setFoto] = useState('');
   const [motivo, setMotivo] = useState('');
+  const route = useRoute();
+  const { userId } = route.params as { userId: string };
 
   const handleSendSuggestion = async () => {
     if (!url || !foto || !motivo) {
       Alert.alert('Erro', 'Preencha todos os campos.');
       return;
     }
-
     setIsLoading(true);
 
     try {
-      const idUser = await AsyncStorage.getItem('userId');
-      if (!idUser) {
+      if (!userId) {
         Alert.alert('Erro', 'Usuário não identificado.');
         setIsLoading(false);
         return;
       }
 
       const data = {
-        idUser: idUser,
+        idUser: userId,
         dataHora: new Date().toISOString(),
         url: url,
         motivo: motivo,
         tipo: 'Pendente',
-        situacao: status === 'bloqueado', // true se bloqueado, false se desbloqueado
+        situacao: status === 'bloqueado',
         foto: foto,
       };
 
-      await axios.post('http://seu-endpoint.com/sugestoes', data);
+      await axios.post('http://10.67.57.143:4000/api/sugestao', data);
 
       Alert.alert('Sucesso', 'Sugestão enviada com sucesso!');
       setUrl('');

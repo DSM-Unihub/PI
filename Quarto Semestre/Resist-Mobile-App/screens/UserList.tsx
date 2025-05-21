@@ -33,7 +33,7 @@ type RootStackParamList = {
         <View style={styles.container}>
             <CustomText title="Minhas sugestões:"/>
             <SuggestionList userId={userId} />
-            <FabButton/>
+            <FabButton userId={userId}/>
         </View>
         </View>
     );
