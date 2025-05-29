@@ -10,7 +10,6 @@ export const s = StyleSheet.create({
       width:'100%',
       alignSelf:'center',
       bottom:'14%',
-    position: 'absolute', 
     },
     primaryButton: {
       backgroundColor: '#0056FF',

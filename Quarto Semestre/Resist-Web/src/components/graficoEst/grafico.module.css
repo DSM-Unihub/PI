@@ -1,0 +1,141 @@
+.stylep{
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(43, 67, 141, 1);
+}
+.styleps{
+  width: 70px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(43, 67, 141, 1);
+}
+.divLinha{
+  justify-content: flex-end;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  
+  gap: 30px;
+}
+.circle{
+  background-color:#3064FF;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+}
+.quadrado{
+  /* gap: 5px; */
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+  width: 65px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background-color: #F86B6B;
+  border-radius: 5px;
+}
+.numbers{
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  gap: 5px;
+}
+.icon2{
+  color:#ffffff ;
+  width: 18px;
+}
+.datasGraf{
+  /* margin-top: 10px; */
+  height: 100%;
+  gap: 10px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-end;
+}
+.cardTipoBloc{
+height: 100%;
+  margin-top: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: row; /* Mudamos para row para alinhar os filhos em linha */
+  align-items: center; /* Alinha verticalmente */
+  gap: 20px; /* Espaço entre a imagem e o conteúdo */
+  padding: 35px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+
+
+
+
+.divTodoTip{
+  display: flex;
+  gap: 30px;
+}
+.divTodoTip p{
+  font-size: 14px;
+  font-weight: 500;
+  color:rgba(43, 67, 141, 0.75);
+
+} 
+.divUmtipo{
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.divTip{
+  background-color: rgba(56, 102, 242, 1);
+  border-radius: 7px;
+  width: 25px;
+  height: 25px;
+}
+.for{
+  
+  overflow-y: scroll;
+  width: 100%;
+  height: 300px;
+  /* Scroll invisível */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.for::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Opera */
+}
+.forTipo{
+  margin-top: 20px;
+  max-height: 200px;
+  width: 100%;
+
+  border-bottom: solid 2px rgba(92, 108, 162, 0.3);
+}
+/* .divLinha{
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-bottom: 10px;
+} */
+
+.forContainerTipo{
+  min-height: 70px;
+  max-height: 100%;
+  width: 11px;
+  border-radius: 4px;
+  background-color: rgba(56, 102, 242, 1);
+}
+.icon{
+  width: 50px;
+  color: rgba(47, 94, 238, 1);
+}
+.data{
+  display: flex;
+  /* align-items: end; */
+  justify-content: flex-end;
+  /* padding-bottom: 10px; */
+}

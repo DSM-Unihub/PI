@@ -1,43 +1,43 @@
-import React from "react";
-import { FlatList, View, StyleSheet } from "react-native";
-import SuggestionList from "@/components/SuggestionList";
-import FabButton from "@/components/FabButton";
-import Header from "@/components/Header";
-import CustomText from "@/components/CustomText";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useRoute } from '@react-navigation/native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import CustomText from '@/components/CustomText';
+import SuggestionList from '@/components/SuggestionList';
+import FabButton from '@/components/FabButton';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Header from '@/components/Header';
 
 type RootStackParamList = {
-    Login: undefined;
-    List: undefined;
-    Register: undefined;
-    Form: undefined
-  };
-  
-  type UserListScreenProps = {
-    navigation: NativeStackNavigationProp<RootStackParamList, 'List'>;
-  }
-  
+    Camera: {userId: string};
+    Form: { userId: string };
+};
 
-  export default function UserList({ navigation }: UserListScreenProps) {
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+export default function UserList() {
     const route = useRoute();
-    const { userId } = route.params;
-
-    console.log('User ID:', userId);
+    const navigation = useNavigation<NavigationProp>();
+    const { userId } = route.params as { userId: string };
 
     return (
+      <View style={styles.generalcontainer}>
         
-    <View style={styles.generalcontainer}>
-        
-        <Header />
-        <View style={styles.container}>
+          <Header />
+          <View style={styles.container}>
             <CustomText title="Minhas sugestões:"/>
-            <SuggestionList userId={userId} />
+            <SuggestionList userId={userId} navigation={navigation} />
+            <FabButton 
+                userId={userId} 
+                icon="camera" 
+                position="top" 
+                onPress={() => navigation.navigate('Camera', {userId})} 
+                navigation={navigation}
+            />
             <FabButton userId={userId}/>
-        </View>
+            </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     

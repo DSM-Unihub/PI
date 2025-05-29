@@ -1,0 +1,135 @@
+.body{
+  background: linear-gradient(135deg, #F1EFFC 0%, #CCD5F0 100%);
+  min-height: 100vh; 
+  width: 100%;
+  margin: 0; 
+  padding: 0; 
+  display: flex;
+  align-items: flex-start;
+}
+.conteudoCentral{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.conteudo{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  width: 100%;
+  align-items: center;
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  /* padding: 20px; */
+  max-width: 2500px;
+}
+.cem{
+  width: 100%;
+}
+.homeContainer {
+  margin-top: 100px;
+  display: flex;
+  gap:20px;
+ justify-content: space-between;
+}
+.dashLeftContainer {
+  display: flex;
+      align-content: space-between;
+      flex-wrap: wrap;
+  /* grid-auto-flow: row; */
+  /* padding-left: 0; */
+  /* padding-right: 0;   */
+  gap: 20px; /* gap-10 = 40px */
+}
+
+@media (min-width: 1024px) {
+  .dashLeftContainer{
+
+    gap: 20px; /* gap-1 = 4px */
+  }
+}
+.tituloContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.25rem; /* 20px */
+  gap: 1rem;
+  color: var(--azul-title); /* Substitua com o valor exato se necessário */
+}
+
+@media (min-width: 1024px) {
+  .tituloContainer {
+    padding: 0;
+  }
+}
+
+/* Responsividade para o calendário */
+.tituloContainer :global(.react-calendar) {
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  font-size: 1rem;
+}
+
+/* Ajustes para o conteúdo interno do calendário */
+.tituloContainer :global(.react-calendar__tile) {
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
+}
+
+.tituloContainer :global(.react-calendar__navigation button) {
+  font-size: 1.1rem;
+  padding: 0.5rem;
+}
+.dashRightContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .dashRightContainer {
+    display: flex;
+    grid-auto-flow: row;
+         /* lg:bottom-8 → 32px */
+    padding-inline-end: 0.25rem; /* lg:pe-1 → 4px */
+  }
+}
+
+
+
+ @media (max-width: 1534px) {
+    .conteudo{
+  padding: 20px;
+}
+  }
+  .wrapper {
+    background: linear-gradient(to bottom, #0070f3, transparent);
+    padding: 2px; /* largura da borda */
+    border-radius: 10px;
+    width: 600px;
+    /* margin: 1rem auto; */
+  }
+  
+  .card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #56648F;
+  }
+
+  .card h4 {
+    /* font-size: 22px;
+    font-weight: bold; */
+    color: #56648F;
+  }

@@ -62,32 +62,45 @@ const Incidencia = () => {
 
   return (
     <>
-      <div className="component-container xl:p-2 ">
-        <h1 className="title">
-          Nível de incidência por laboratório
-        </h1>
+      <div
+  style={{
+    minHeight: '250px',
+    backgroundColor: '#fff',
+    border: '1px solid #e0e0e0',
+    borderRadius: '1rem',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+  }}
+  className="component-container xl:p-4 p-3"
+>
+  <h1 className="title text-xl font-semibold text-azul-title mb-4">
+    Nível de incidência por laboratório
+  </h1>
 
-        <div className="overflow-x-auto relative flex w-full">
-          <div className="flex flex-row lg:flex lg:flex-row lg:flex-wrap lg:justify-between gap-3 py-2">
-            {labs.map((lab) => (
-              <div
-                key={lab.laboratorio}
-                className="bg-azul-principal rounded-xl flex-shrink-0 w-fit"
-              >
-                <p className="text-white text-base p-2 text-center">
-                  {lab.laboratorio}
-                </p>
-                <div className="bg-white flex flex-row justify-center items-center h-fit w-full rounded-b-xl p-1 relative">
-                  <canvas id={`${lab.laboratorio}`} className="w-full max-h-28 lg:max-h-30 xl:max-h-42"></canvas>
-                  <p className="text-azul-text text-xl absolute z-10">
-                    {lab.porcentagem}%
-                  </p>
-                </div>
-              </div>
-            ))}
+  <div className="overflow-x-auto relative flex w-full">
+    <div className="flex flex-row flex-wrap gap-4 py-2 justify-start lg:justify-between">
+      {labs.map((lab) => (
+        <div
+          key={lab.laboratorio}
+          className="bg-azul-principal rounded-xl flex-shrink-0 w-fit shadow-md"
+        >
+          <p className="text-white text-base p-3 text-center font-medium">
+            {lab.laboratorio}
+          </p>
+          <div className="bg-white flex flex-row justify-center items-center h-fit w-full rounded-b-xl p-2 relative">
+            <canvas
+              id={`${lab.laboratorio}`}
+              className="w-full max-h-28 lg:max-h-32 xl:max-h-44"
+            ></canvas>
+            <p className="text-azul-text text-xl absolute z-10 font-bold">
+              {lab.porcentagem}%
+            </p>
           </div>
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
+
     </>
   );
 };

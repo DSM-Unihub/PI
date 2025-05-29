@@ -22,6 +22,16 @@ export const s = StyleSheet.create({
         bottom:80,
         zIndex:10
     },
+    touchableOpacityLeft:{
+        position:'absolute',
+        width:50,
+        height:50,
+        alignItems:'center',
+        justifyContent:'center',
+        right:100,
+        bottom:60,
+        zIndex:10
+    },
     floatingButton:{
         resizeMode:'contain',
         width:60,

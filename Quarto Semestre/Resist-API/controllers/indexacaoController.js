@@ -118,7 +118,7 @@ const updateBlock = async (req, res) => {
 };
 
 // Controlador para remover um bloqueio
- const deleteBlock = async (req, res) => {
+const deleteBlock = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -136,6 +136,31 @@ const updateBlock = async (req, res) => {
   }
 };
 
+const getIndexacaoByUrl = async (req, res) => {
+  try {
+    const { url } = req.params;
+
+    // Validação da URL
+    if (!url) {
+      return res.status(400).json({ error: "URL é obrigatória." });
+    }
+
+    const indexacao = await indexacaoService.getIndexacaoByUrl(url);
+    
+    res.status(200).json({
+      success: true,
+      data: indexacao
+    });
+  } catch (error) {
+    console.error("Erro ao buscar indexação por URL:", error);
+    res.status(error.message.includes("não encontrada") ? 404 : 500)
+      .json({ 
+        success: false,
+        error: error.message || "Erro ao buscar indexação por URL" 
+      });
+  }
+};
+
 export default {
   getEstatisticasLabs,
   getEstatisticasBloqueios,
@@ -145,4 +170,5 @@ export default {
   createBlock,
   updateBlock,
   deleteBlock,
+  getIndexacaoByUrl,
 };

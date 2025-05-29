@@ -4,10 +4,12 @@ import axios from "axios";
 import url from "../services/url";
 import Head from "next/head";
 import Image from "next/image";
+import ValidationBox from "@/components/boxValidation/index.js";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showValidationBox, setShowValidationBox] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event, email, password) => {
@@ -23,17 +25,19 @@ export default function Login() {
       const response = await axios.post(`${url}/login`, {
         email,
         senha: password,
+
       });
-  
+      
+      setShowValidationBox(true); 
       const { token, user } = response.data;
   
       // Armazena o token
       localStorage.setItem("token", token);
       localStorage.setItem("usuario", JSON.stringify(user));  // Armazenando o objeto usuário
 
-  
-      // Redireciona o usuário
-      router.push("/");
+      
+      // // Redireciona o usuário
+      // router.push("/");
     } catch (error) {
       console.error("Erro no login:", error.response?.data || error.message);
       alert("Erro ao fazer login. Verifique suas credenciais.");
@@ -68,7 +72,7 @@ export default function Login() {
                 Insira seus dados para acessar a sua conta.
               </p>
             </div>
-
+           
             {/* Component for desktop login form */}
             <div className="hidden bg-white rounded-xl md:grid grid-flow-row p-8 gap-5">
               <p className="text-azul-text font-normal text-xl">
@@ -141,7 +145,7 @@ export default function Login() {
                 Cadastre-se
               </a>
             </div>
-
+            {showValidationBox && <ValidationBox />}
             {/* Component for mobile login form */}
             <div className="flex md:hidden flex-col p-5">
               <form

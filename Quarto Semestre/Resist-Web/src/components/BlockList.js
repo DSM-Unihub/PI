@@ -86,7 +86,7 @@ const BlockList = () => {
 
   return (
     <div className="flex flex-col overflow-x-auto col-span-2">
-      <div className="flex flex-row justify-between pb-1 ">
+      <div className="p-3 gap-5">
         <h3 className="text-azul-text text-lg font-bold">
           Editar bloqueios de URL
         </h3>

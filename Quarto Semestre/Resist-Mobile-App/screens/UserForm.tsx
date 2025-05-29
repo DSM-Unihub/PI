@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Alert } from 'react-native';
+
+import ipurl from '@/services/url'
+import { View, Text, StyleSheet, Image, Alert, ScrollView } from 'react-native';
 import CustomRadio from '@/components/CustomRadio';
 import CustomText from '@/components/CustomText';
 import InputText from '@/components/InputText';
@@ -25,16 +27,25 @@ type UserFormScreenProps = {
 
 export default function UserForm({ navigation }: UserFormScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<'bloqueado' | 'desbloqueado'>('bloqueado');
+  const [status, setStatus] = useState<'bloqueado' | 'desbloqueado'>('desbloqueado');
   const [url, setUrl] = useState('');
   const [foto, setFoto] = useState('');
   const [motivo, setMotivo] = useState('');
   const route = useRoute();
   const { userId } = route.params as { userId: string };
 
+  // Pegando o parâmetro 'scannedUrl' passado via navegação
+  const scannedUrl = (route.params as any)?.scannedUrl;
+
+  useEffect(()=>{
+    if (scannedUrl){
+      setUrl(scannedUrl);
+    }
+  }, [scannedUrl])
+
   const handleSendSuggestion = async () => {
-    if (!url || !foto || !motivo) {
-      Alert.alert('Erro', 'Preencha todos os campos.');
+    if (!url || !motivo) {
+      Alert.alert('Erro', 'Preencha todos os campos obrigatórios.');
       return;
     }
     setIsLoading(true);
@@ -51,12 +62,12 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
         dataHora: new Date().toISOString(),
         url: url,
         motivo: motivo,
-        tipo: 'Pendente',
-        situacao: status === 'bloqueado',
-        foto: foto,
+        tipo: status === 'bloqueado',
+        situacao: 'Pendente',
+        foto: foto || '',
       };
 
-      await axios.post('http://10.67.57.143:4000/api/sugestao', data);
+      await axios.post(`${ipurl}/sugestao`, data);
 
       Alert.alert('Sucesso', 'Sugestão enviada com sucesso!');
       setUrl('');
@@ -74,7 +85,13 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
   return (
     <View style={styles.generalcontainer}>
       <Header />
+
       <View style={styles.container}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
         <CustomText title="Nova Sugestão:" />
         <InputText hint="URL do site" value={url} onChangeText={setUrl} />
 
@@ -103,10 +120,10 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
           onChangeText={setMotivo}
         />
 
-        <CustomText title="Possui alguma prova do ocorrido? Anexe aqui:" />
+        <CustomText title="Possui alguma prova do ocorrido? (Opcional)" />
         <CustomTextInput
           style={styles.url}
-          hint="URL da imagem"
+          placeholder="exemplo.png"
           value={foto}
           onChangeText={setFoto}
           keyboardType="url"
@@ -126,7 +143,9 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
           onPress={handleSendSuggestion}
           disabled={isLoading}
         />
+        </ScrollView>
       </View>
+      
     </View>
   );
 }
@@ -181,4 +200,8 @@ const styles = StyleSheet.create({
     textAlign: 'auto',
     fontSize: 14,
   },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  }
 });

@@ -1,4 +1,5 @@
 import { FlatList, Image, ImageBackground, Text, View, TouchableOpacity } from "react-native";
+import ipurl from '@/services/url'
 import React, { useEffect, useState } from "react";
 import { s } from "./style";
 import Header from "../Header";
@@ -26,11 +27,11 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://10.67.57.143:4000/api/user/sugestoes/${userId}`);
+                const response = await axios.get(`${ipurl}/user/sugestoes/${userId}`);
                 setData(response.data);
             } catch (err) {
                 setError('Erro ao carregar os dados');
-                console.log(err + `http://10.67.57.143:4000/api/user/sugestoes/${userId}`)
+                console.log(err + `${ipurl}/user/sugestoes/${userId}`)
             } finally {
                 setLoading(false);
             }

@@ -19,6 +19,7 @@ router.put("/user/:id", Auth, userController.updateUser);
 // Rota para remover um usuário
 router.delete("/user/:id", Auth, userController.deleteUser);
 
+
 router.post('/login', authController.login);
 
 

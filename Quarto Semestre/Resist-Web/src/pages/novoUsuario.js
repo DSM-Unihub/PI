@@ -1,6 +1,6 @@
 import FooterContent from "../components/FooterContent";
-import HeaderBar from "../components/HeaderBar";
-import NavBar from "../components/NavBar";
+import HeaderBar from "../components/headerBar/HeaderBar";
+import NavBar from "../components/navBar/NavBar";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import url from "@/services/url";

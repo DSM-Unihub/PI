@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ipurl from '@/services/url'
 import {
   View,
   Text,
@@ -7,6 +8,7 @@ import {
   Alert
 } from 'react-native';
 import { CustomTextInput } from '@/components/CustomTextInput';
+import { ScrollView } from 'react-native';
 import { Title } from '@/components/Title';
 import { CustomButton } from '@/components/CustomButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -90,7 +92,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       console.log('preparando data')
       const loginData = prepareLoginData();
       
-      const response = await axios.post('http://10.67.57.143:4000/api/login', loginData);
+      const response = await axios.post(`${ipurl}/login`, loginData);
 
       
       if (response.status==200) {
@@ -116,8 +118,13 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   };
 
   return (
-    <View style={styles.topPart}>
-      <TopSection />
+  <View style={styles.topPart}>
+    <TopSection />
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.container}>
         <Title>Bem vindo!</Title>
         <Text style={styles.footerText}>
@@ -173,8 +180,10 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           />
         )}
       </View>
-    </View>
-  );
+    </ScrollView>
+  </View>
+);
+
 }
 
 const styles = StyleSheet.create({

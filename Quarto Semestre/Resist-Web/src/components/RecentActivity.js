@@ -53,7 +53,9 @@ function ActivityList({atividades}) {
   const activityList = atividades
   const [icon, setIcon] = useState("")
   return (
-    <div className="bg-white h-fit rounded-b-xl">
+    <div style={{  backgroundColor: '#ffffff',
+  height: 'fit-content',
+  width: '600px'}} >
       {activityList.map((atividade) => (
             <div key={atividade.data} className="flex flex-row justify-between p-1 items-center">
             <div className="flex flex-row justify-start items-center gap-5">

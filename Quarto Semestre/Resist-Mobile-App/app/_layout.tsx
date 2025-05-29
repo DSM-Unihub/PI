@@ -16,6 +16,7 @@ import UserForm from '@/screens/UserForm';
 import AuthTabs from '@/screens/AuthTabs';
 import DetailsSCREEN from '@/screens/Details';
 import DetailsScreen from '@/screens/Details';
+import CameraScreen from '@/screens/Camera';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -74,6 +75,11 @@ export default function RootLayout() {
         <Stack.Screen 
           name="Form" 
           component={UserForm} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Camera" 
+          component={CameraScreen} 
           options={{ headerShown: false }}
         />
         <Stack.Screen 

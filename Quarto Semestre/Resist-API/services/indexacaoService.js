@@ -1,5 +1,6 @@
 import Indexacao from "../models/Indexacao.js";
-
+import Sugestao from "../models/sugestao.js";
+import atualizarArquivoBloqueados from "../utils/arquivoBloqueados.js";
 class indexacaoService{
   async getBloqueiosPorMesesAno() {
     try {
@@ -286,11 +287,32 @@ async createBlock(data) {
 
 async updateBlock(id, data) {
   try {
-    // Encontra o bloqueio pelo ID e atualiza os dados
-    const bloqueioAtualizado = await Indexacao.findByIdAndUpdate(id, data, { new: true });
-    if (!bloqueioAtualizado) {
+    const bloqueioAntigo = await Indexacao.findById(id);
+    if (!bloqueioAntigo) {
       throw new Error("Bloqueio não encontrado");
     }
+
+    const bloqueioAtualizado = await Indexacao.findByIdAndUpdate(id, data, { new: true });
+    if (!bloqueioAtualizado) {
+      throw new Error("Erro ao atualizar bloqueio");
+    }
+
+    // Verifica se a flag foi alterada
+    if (bloqueioAntigo.flag !== bloqueioAtualizado.flag) {
+      // Atualiza sugestão com a mesma URL
+      await Sugestao.updateMany(
+        { url: bloqueioAtualizado.urlWeb },
+        { $set: { situacao: bloqueioAtualizado.flag } }
+      );
+
+      // Atualiza o arquivo de bloqueados
+      await atualizarArquivoBloqueados(
+        bloqueioAtualizado.urlWeb,
+        bloqueioAtualizado.flag
+      );
+    }
+
+    console.log(`Indexação com id ${id} atualizada.`);
     return bloqueioAtualizado;
   } catch (error) {
     console.error("Erro ao atualizar bloqueio:", error);
@@ -309,6 +331,21 @@ async deleteBlock(id) {
   } catch (error) {
     console.error("Erro ao excluir bloqueio:", error);
     throw new Error("Erro ao excluir bloqueio");
+  }
+}
+
+async getIndexacaoByUrl(url) {
+  try {
+    if (!url) {
+      throw new Error("URL é obrigatória");
+    }
+
+    const indexacao = await Indexacao.findOne({ urlWeb: url });
+    return indexacao; // Retorna null se não encontrar, em vez de lançar erro
+    
+  } catch (error) {
+    console.error("Erro ao buscar indexação por URL:", error);
+    throw new Error(error.message || "Erro ao buscar indexação por URL");
   }
 }
 

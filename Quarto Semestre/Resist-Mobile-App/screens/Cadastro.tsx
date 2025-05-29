@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import ipurl from '@/services/url'
 import {
   View,
   Text,
   StyleSheet,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from 'react-native';
 import { CustomTextInput } from '@/components/CustomTextInput';
 import { Title } from '@/components/Title';
@@ -111,7 +113,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
       const RegisterData = prepareRegisterData()
       console.log('datapreparada')
-      const response = await axios.post('http://10.67.57.143:4000/api/user', RegisterData)
+      const response = await axios.post(`${ipurl}/user`, RegisterData)
       // Aqui você adicionaria a lógica de cadastro real.
       
       if(response.status==201){
@@ -141,6 +143,11 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
     <View style={styles.topPart}>
       <TopSection height={180} />
 
+    <ScrollView
+      contentContainerStyle={styles.scrollContainer}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.container}>
         <Title>Cadastro</Title>
         <Text style={styles.footerText}>
@@ -208,7 +215,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
             style={styles.loader}
           />
         )}
-      </View>
+      </View></ScrollView>
     </View>
   );
 }
@@ -242,5 +249,9 @@ const styles = StyleSheet.create({
   },
   topSection:{
     height:10,
-  }
+  },
+  scrollContainer: {
+  flexGrow: 1,
+  justifyContent: 'center',
+}
 });

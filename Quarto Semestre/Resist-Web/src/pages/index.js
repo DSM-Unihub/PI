@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Head from "next/head.js";
-import NavBar from "../components/NavBar.js";
-import HeaderBar from "@/components/HeaderBar.js";
+import NavBar from "../components/navBar/NavBar.js";
+import HeaderBar from "@/components/headerBar/HeaderBar.js";
 import Incidencia from "../components/Incidencia.js";
 import Lockdown from "../components/Lockdown.js";
 import ActiveDevices from "../components/ActiveDevices.js";
@@ -10,7 +10,8 @@ import Calendar from "react-calendar";
 import FooterContent from "../components/FooterContent.js";
 import RecentActivity from "../components/RecentActivity.js";
 import CardInfo from "@/components/card/card.js";
-
+import styles from './index.module.css'
+import { Height } from "@mui/icons-material";
 export default function Home() {
   const [value, onChange] = useState(new Date());
   const [isMounted, setIsMounted] = useState(false);
@@ -45,32 +46,43 @@ export default function Home() {
       <Head>
         <title>Resist</title>
       </Head>
-      <section className="container-principal">
+      <section className={styles.body}>
         <NavBar />
-        <section className="main-container">
-          {/* Passa o usuário para o HeaderBar */}
-          <HeaderBar usuario={usuario} />
-          <section className="home-container ">
-            <div className="dashLeft-container">
-              <CardInfo titulo={`Olá, ${usuario?.nome}`} subtitulo={"Bem-vindo de volta ao seu dashboard."} />
-              {/* <Welcome usuario={usuario} /> */}
-              <RecentActivity />
-              <Lockdown />
-            </div>
-            <div className="dashRight-container">
-              <Incidencia />
-              <div className="flex flex-col lg:flex-row gap-2 mt-4 ">
-                <ActiveDevices />
-                <div className="flex flex-col self-start text-azul-title text-lg p-5 lg:p-0 ">
-                  <h2 className="title">Histórico por data</h2>
-                  {isMounted && <Calendar onChange={onChange} value={value} />}
+        <section className={styles.conteudoCentral}>
+          <section className={styles.conteudo}>
+            <section className={styles.cem}>
+
+            
+              <section className={styles.homeContainer}>
+                <div style={{ maxWidth: '600px' }} className={styles.dashLeftContainer}>
+                    <section >
+                <div className={styles.wrapper}>
+                  <div className={styles.card}>
+                    <p className="">Olá {usuario?.nome}</p>
+                    <h4 className="">Bem-vindo de volta ao seu dashboard.</h4>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </section>
+                  {/* <Welcome usuario={usuario} /> */}
+                  <RecentActivity />
+                  <Lockdown />
+                </div>
+                <div className={styles.dashRightContainer}>
+                  <Incidencia />
+                  <div className="flex flex-col lg:flex-row gap-2 mt-4 ">
+
+                    <div className={styles.tituloContainer}>
+                      <h2 className="title">Histórico por data</h2>
+                      {isMounted && <Calendar onChange={onChange} value={value} />}
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </section>
           </section>
         </section>
       </section>
-      <FooterContent />
+
     </>
   );
 }

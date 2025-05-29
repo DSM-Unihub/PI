@@ -16,6 +16,8 @@ router.get("/bloqueios-mes", Auth, indexacaoController.getBloqueiosPorMes)
 
 router.get("/bloqueios", Auth, indexacaoController.getAllBlocks);
 
+router.get("/bloqueios/url/:url", Auth, indexacaoController.getIndexacaoByUrl);
+
 router.post("/bloqueios", Auth, indexacaoController.createBlock);
 
 router.put("/bloqueios/:id", Auth, indexacaoController.updateBlock);
