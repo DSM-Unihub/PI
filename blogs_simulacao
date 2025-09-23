@@ -1,0 +1,17 @@
+# Simulação de Blog para Projeto de IA
+
+## Visão Geral
+
+As páginas de blog criadas (Esportes, Culinária e Política) são mockups desenvolvidos especificamente para servir como um ambiente de demonstração para um projeto de Inteligência Artificial. Elas não constituem um website funcional, mas sim uma interface controlada para simular a operação da IA em um cenário realista.
+
+## Objetivo
+
+O propósito principal destas páginas é fornecer um front-end onde a IA do projeto possa ser testada e exibida em ação. A simulação focará em analisar as interações dos usuários, especialmente na seção de comentários.
+
+Os exemplos de conversas, incluindo aquelas com conteúdo ofensivo, foram inseridos intencionalmente para demonstrar a capacidade do modelo de IA em:
+
+* **Detectar e analisar** diferentes tipos de linguagem.
+* **Identificar** conteúdo potencialmente tóxico ou inadequado.
+* **Simular** uma resposta de moderação em tempo real.
+
+Em suma, estas páginas são o palco para a IA do projeto mostrar seu funcionamento prático.
