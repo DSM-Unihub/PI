@@ -38,7 +38,3 @@ bash
 npm run dev -lan
 ✅ Verificação
 A API estará rodando no endereço configurado (ex: http://localhost:4000 ou http://192.168.12.1:4000).
-
-O Web estará acessível via navegador no endereço exibido no terminal.
-
-O Mobile exibirá um QR Code no terminal — escaneie-o com o app do Expo para abrir o projeto no celular.
