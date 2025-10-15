@@ -6,10 +6,14 @@ import os
 from urllib.parse import urlparse
 from datetime import datetime
 from playwright.sync_api import sync_playwright
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
 
 
 class TratamentoDados:
-    def __init__(self, db, html_dir="/home/mauricio/Desktop/html_dumps"):
+    def __init__(self, db, html_dir=None):
         self.url = None
         self.data_hora = None
         self.ip_maquina = None
@@ -19,7 +23,7 @@ class TratamentoDados:
         self.parser = 'html.parser'
 
         # Diretório de HTMLs
-        self.html_dir = html_dir
+        self.html_dir = html_dir or os.getenv('HTML_DUMPS_DIR', '/home/mauricio/Desktop/html_dumps')
         if not os.path.exists(self.html_dir):
             os.makedirs(self.html_dir)
 

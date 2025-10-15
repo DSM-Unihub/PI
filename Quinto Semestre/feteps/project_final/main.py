@@ -9,11 +9,18 @@ import os
 from pymongo import MongoClient
 from datetime import datetime
 from bloqueio import Bloqueio
+from dotenv import load_dotenv
 
+# Load environment variables from .env
+load_dotenv()
 
 # Obtém a string de conexão do MongoDB
-mongoDBURI = "mongodb://localhost:27017/"
-bloqueio = Bloqueio("/root/arm.txt", "/home/mauricio/Desktop/html_dumps")
+mongoDBURI = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+bloqueio = Bloqueio(
+    arm_file_path=os.getenv('ARM_FILE_PATH', '/root/arm.txt'),
+    html_directory=os.getenv('HTML_DUMPS_DIR', '/home/mauricio/Desktop/html_dumps'),
+    bloqueados_file_path=os.getenv('BLOQUEADOS_FILE_PATH', '/root/bloqueados.txt')
+)
 
 # Configuração MongoDB Atlas
 print("Tentando conectar ao MongoDB Atlas...")
@@ -61,9 +68,9 @@ if client:
                 print(f"Error parsing datetime: {e}")
                 return None
         
-        def __init__(self, squid_log_file_path, position_file_path):
-            self.squid_log_file_path = squid_log_file_path
-            self.position_file_path = position_file_path
+        def __init__(self, squid_log_file_path=None, position_file_path=None):
+            self.squid_log_file_path = squid_log_file_path or os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
+            self.position_file_path = position_file_path or os.getenv('ARM_FILE_PATH', '/root/arm.txt')
             self.processed_lines = set()
             self.read_processed_urls()  # Carrega as URLs processadas ao iniciar
             print("MonitorLog inicializado com sucesso.")
@@ -160,7 +167,7 @@ if client:
                             diretorio_html = r"/home/mauricio/Desktop/html_dumps"
                             
                             #pra linux
-                            caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}")
+                            caminho_html = os.path.normpath(os.path.join(diretorio_html, f"{nome_arquivo}"))
                             #pra windows
                             # caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}").replace('\\','/')
                             #ATENÇÃO! remover o .replace da linha acima no linux, e fazer o mesmo em bloqueio
@@ -217,11 +224,10 @@ if client:
 
     def check_required_files():
         required_files = [
-            "/root/logs.txt",  # Caminho correto para o arquivo de log
-            "/root/arm.txt",
-            "/root/bloqueados.txt"
+            os.getenv('LOGS_FILE_PATH', '/root/logs.txt'),
+            os.getenv('ARM_FILE_PATH', '/root/arm.txt'),
+            os.getenv('BLOQUEADOS_FILE_PATH', '/root/bloqueados.txt')
         ]
-        
         for file_path in required_files:
             if not os.path.exists(file_path):
                 with open(file_path, 'w') as f:
@@ -230,9 +236,8 @@ if client:
 
     def main():
         check_required_files()
-        squid_log_file_path = "/root/logs.txt"
-        position_file_path = "/root/arm.txt"
-        
+        squid_log_file_path = os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
+        position_file_path = os.getenv('ARM_FILE_PATH', '/root/arm.txt')
         print("Inicializando monitor de log...")
         monitor = MonitorLog(squid_log_file_path, position_file_path)
         monitor.tail_file()
@@ -240,7 +245,6 @@ if client:
     if __name__ == "__main__":
         print("Iniciando o script principal...")
         main()
-
 else:
     print("Encerrando o programa devido a erro na conexão com o banco de dados.")
 
