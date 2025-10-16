@@ -2,12 +2,23 @@ import re
 import os
 from datetime import datetime
 import requests
+import hmac
+import json
+import hashlib
+import time
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Bloqueio:
-    def __init__(self, arm_file_path, html_directory):
+    def __init__(self, arm_file_path, html_directory, bloqueados_file_path=os.getenv('BLOQUEADOS_FILE_PATH')):
         self.arm_file_path = arm_file_path
         self.html_directory = html_directory
-        self.termo = "corrida"  # Palavra-chave a ser verificada
+        self.bloqueados_file_path = bloqueados_file_path
+        self.secret_key = os.getenv('API_SECRET_KEY')
+        
 
     def ler_arm_file(self):
         """Lê o arquivo arm.txt e retorna uma lista de URLs."""
@@ -79,10 +90,41 @@ class Bloqueio:
         """
         url = "http://127.0.0.1:5000/verificar"
         payload = {"texto": frase}
+        json_data = json.dumps(payload)
+        timestamp = str(int(time.time()))
+
+             # Criar token de autenticação
+        message = f"{timestamp}:{json_data}"
+        auth_token = hmac.new(
+            self.secret_key.encode(),
+            message.encode(),
+            hashlib.sha256
+        ).hexdigest()
+        
+             # Criar token de autenticação
+        message = f"{timestamp}:{json_data}"
+        auth_token = hmac.new(
+            self.secret_key.encode(),
+            message.encode(),
+            hashlib.sha256
+        ).hexdigest()
+
+        
+        # Headers com autenticação
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth_token,
+            'X-Timestamp': timestamp
+        }
 
         print("ola")
         try:
-            response = requests.post(url, json=payload, timeout=10)
+            response = requests.post(url, json=payload, headers=headers, timeout=10)
+            
+            if response.status_code == 401:
+                print("[ERRO] Falha na autenticação com o endpoint")
+                return []
+            
             response.raise_for_status()  # dispara erro se não for 200
             return response.json()  # deve ser a lista de {label, score}
         except requests.exceptions.RequestException as e:
