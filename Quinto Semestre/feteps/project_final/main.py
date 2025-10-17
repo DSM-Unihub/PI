@@ -164,12 +164,12 @@ if client:
                             hash_nome = hashlib.md5(dado.url.encode()).hexdigest()
                             nome_arquivo = f"{hash_nome}.txt"
                             # Lugar para salvar os HTMLs
-                            diretorio_html = r"/home/mauricio/Desktop/html_dumps"
+                            diretorio_html = os.getenv('HTML_DUMPS_DIR')
                             
                             #pra linux
-                            caminho_html = os.path.normpath(os.path.join(diretorio_html, f"{nome_arquivo}"))
+                            # caminho_html = os.path.normpath(os.path.join(diretorio_html, f"{nome_arquivo}"))
                             #pra windows
-                            # caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}").replace('\\','/')
+                            caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}").replace('\\','/')
                             #ATENÇÃO! remover o .replace da linha acima no linux, e fazer o mesmo em bloqueio
                             
                             # Se não tiver a pasta, ele cria

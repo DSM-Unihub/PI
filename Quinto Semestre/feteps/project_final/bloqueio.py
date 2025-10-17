@@ -137,9 +137,9 @@ class Bloqueio:
         Retorna um dicionário com status e detalhes.
         """
         # pra linux
-        caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt") 
+        # caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt") 
         # pra windows
-        # caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt").replace('\\','/')
+        caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt").replace('\\','/')
         print
         if os.path.exists(caminho_html):
             url = self.extrair_url_do_arquivo(caminho_html)
@@ -174,10 +174,10 @@ class Bloqueio:
     def url_ja_bloqueada(self, url):
         """Verifica se a URL já existe no arquivo bloqueados.txt"""
         try:
-            if not os.path.exists("/root/bloqueados.txt"):
+            if not os.path.exists(self.bloqueados_file_path):
                 return False
                 
-            with open("/root/bloqueados.txt", 'r') as bloqueados_file:
+            with open(self.bloqueados_file_path, 'r') as bloqueados_file:
                 urls_bloqueadas = [line.strip() for line in bloqueados_file.readlines()]
                 return url in urls_bloqueadas
         except Exception as e:
@@ -196,7 +196,7 @@ class Bloqueio:
             print(f"URL {url_bloqueio} já está na lista de bloqueados. Ignorando.")
             return
 
-        with open("/root/bloqueados.txt", 'a') as bloqueados_file:
+        with open(self.bloqueados_file_path, 'a') as bloqueados_file:
             bloqueados_file.write(f"{url_bloqueio}\n")
         print(f"URL {url_bloqueio} adicionada ao arquivo de bloqueados.")
 
@@ -231,9 +231,11 @@ class Bloqueio:
             print(f"O arquivo HTML para {url} não existe.")
 
 def main():
-    arm_file_path = "/root/arm.txt"
-    html_directory = "/home/mauricio/Desktop/html_dumps"
-    bloqueio = Bloqueio(arm_file_path, html_directory)
+    bloqueio = Bloqueio(
+        arm_file_path=os.getenv('ARM_FILE_PATH'),
+        html_directory=os.getenv('HTML_DUMPS_DIR'),
+        bloqueados_file_path=os.getenv('BLOQUEADOS_FILE_PATH')
+    )
     bloqueio.bloquear_sites()
 
 if __name__ == "__main__":
