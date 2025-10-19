@@ -6,6 +6,8 @@ import hmac
 import json
 import hashlib
 import time
+# no topo de bloqueio.py
+from crypto_utils import decrypt_from_file
 
 from dotenv import load_dotenv
 
@@ -28,20 +30,19 @@ class Bloqueio:
     def extrair_url_do_arquivo(self, caminho_arquivo):
         """Extrai a URL do site a partir do conteúdo do arquivo, removendo as tags <urlDoSite>."""
         try:
-            with open(caminho_arquivo, 'r', encoding='utf-8') as f:
-                conteudo = f.read()
-
-                tag_inicio = '<urlDoSite>'
-                tag_fim = '</urlDoSite>'
-
-                inicio = conteudo.find(tag_inicio)
-                fim = conteudo.find(tag_fim)
-
-                if inicio != -1 and fim != -1:
-                    url = conteudo[inicio + len(tag_inicio):fim]
-                    return url.strip()
+            data = decrypt_from_file(caminho_arquivo)
+            conteudo = data.decode("utf-8", errors="replace")
+            tag_inicio = '<urlDoSite>'
+            tag_fim = '</urlDoSite>'
+            inicio = conteudo.find(tag_inicio)
+            fim = conteudo.find(tag_fim)
+            if inicio != -1 and fim != -1:
+                url = conteudo[inicio + len(tag_inicio):fim]
+                return url.strip()
+             # fallback: se não achar a tag, tenta extrair por regex ou retorna todo o conteúdo do início
+            return None
         except Exception as e:
-            print(f"Erro ao extrair URL do arquivo: {e}")
+            print(f"Erro ao extrair URL do arquivo (descriptografia falhou?): {e}")
         
         return None 
     import re
@@ -139,7 +140,8 @@ class Bloqueio:
         # pra linux
         # caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt") 
         # pra windows
-        caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt").replace('\\','/')
+        # caminho_html = os.path.join(self.html_directory, f"{hash_nome}.txt").replace('\\','/')
+        caminho_html = os.path.join(self.html_directory, f"{hash_nome}.enc").replace('\\','/')
         print
         if os.path.exists(caminho_html):
             url = self.extrair_url_do_arquivo(caminho_html)
@@ -148,25 +150,31 @@ class Bloqueio:
             if not url:
                 return {"bloquear": False, "motivo": "Nao existe", "frase": None}
                 
-            with open(caminho_html, 'r', encoding='utf-8') as f:
-                conteudo = f.read()
-                frases = self.segmentar_texto(conteudo)
+            try:
+                conteudo_bytes = decrypt_from_file(caminho_html)
+                conteudo = conteudo_bytes.decode("utf-8", errors="replace")
+            except Exception as e:
+                print(f"Erro ao descriptografar o arquivo {caminho_html}: {e}")
+                return {"bloquear": False, "motivo": "Descriptografia falhou", "frase": None}
+            
+            frases = self.segmentar_texto(conteudo)
                 
-                for frase in frases:
-                    print("frase", frase)
-                    resultados = self.enviar_para_modelo(frase)  # lista de dicts
+            for frase in frases:
+                print("frase", frase)
+                resultados = self.enviar_para_modelo(frase)  # lista de dicts
+                if not resultados:
+                    continue
+                melhor = max(resultados, key=lambda r: r["score"])
                     
-                    melhor = max(resultados, key=lambda r: r["score"])
-                    
-                    if melhor["label"] != "Appropriate" and melhor["score"] > 0.5:
-                        return {
-                            "bloquear": True,
-                            "motivo": melhor["label"],
-                            "score": melhor["score"],
-                            "frase": frase.strip()
-                        }
+                if melhor["label"] != "Appropriate" and melhor["score"] > 0.5:
+                    return {
+                        "motivo": melhor["label"],
+                        "bloquear": True,
+                        "score": melhor["score"],
+                        "frase": frase.strip()
+                    }
         else:
-            print("Achei esse arquivo não ó", caminho_html)
+            print("Arquivo não encontrado", caminho_html)
          # se não encontrou nada tóxico
         return {"bloquear": False, "motivo": None, "frase": None}
 
@@ -204,7 +212,7 @@ class Bloqueio:
         """Bloqueia sites somente se a flag 'bloquear' for True."""
         # if nome_arquivo in os.listdir(self.html_directory):
         print("~~~~iniciando teste de bloqueio")
-        if nome_arquivo.endswith('.txt'):
+        if nome_arquivo.endswith('.txt') or nome_arquivo.endswith('.enc'):
             print("é txt!")
             hash_nome = nome_arquivo[:-4]
             resultado = self.verificar_html(hash_nome)  # retorna dict

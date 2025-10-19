@@ -10,6 +10,7 @@ from pymongo import MongoClient
 from datetime import datetime
 from bloqueio import Bloqueio
 from dotenv import load_dotenv
+from crypto_utils import filename_from_url, encrypt_and_atomic_write
 
 # Load environment variables from .env
 load_dotenv()
@@ -161,8 +162,8 @@ if client:
                             print(f"\n\n~~~~~~~~~~~~\n{clean_html}\n\n~~~~~~~~~~\n\n")
 
                             # Tirando os caracteres que podem causar problemas no nome do arquivo
-                            hash_nome = hashlib.md5(dado.url.encode()).hexdigest()
-                            nome_arquivo = f"{hash_nome}.txt"
+                            # hash_nome = hashlib.md5(dado.url.encode()).hexdigest()
+                            nome_arquivo = filename_from_url(dado.url, unique_len=16)
                             # Lugar para salvar os HTMLs
                             diretorio_html = os.getenv('HTML_DUMPS_DIR')
                             
@@ -176,12 +177,17 @@ if client:
                             if not os.path.exists(diretorio_html):
                                 os.makedirs(diretorio_html)
                             
+                            payload_bytes = f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}".encode('utf-8')
+                            encrypt_and_atomic_write(caminho_html, payload_bytes)
+                            
+                            print(f"Arquivo criptografado salvo em: {caminho_html}")
+                            
                             # Escreve o HTML no arquivo
-                            with open(caminho_html, 'w', encoding='utf-8') as f:
-                                f.write(f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}")
+                            # with open(caminho_html, 'w', encoding='utf-8') as f:
+                            #     f.write(f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}")
                                 
                             print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ caminho:{caminho_html}")
-                            #print(f"EXTRAIDOOOOOOOOOOOOOOOOOOOOOOOO:{dado.extract_site(line.strip())}")
+                           
                             dado.append_site_to_arm_file(self.position_file_path, dado.extract_site(line.strip()))
                             self.processed_lines.add(dado.extract_site(line.strip()))  # Marca a URL como processada
                             print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
