@@ -71,8 +71,8 @@ const createBlock = async (req, res) => {
       dataHora: new Date(),
       flag: true
     };
-
-    const bloqueioCriado = await indexacaoService.createBlock(dadosBloqueio);
+    // Pass the user ID from the token to the service
+    const bloqueioCriado = await indexacaoService.createBlock(dadosBloqueio, req.user.id);
     
     res.status(201).json({
       success: true,
@@ -105,7 +105,8 @@ const updateBlock = async (req, res) => {
     if (motivo) dadosAtualizados.motivo = motivo;
     if (periodo) dadosAtualizados.periodo = periodo;
 
-    const bloqueioAtualizado = await indexacaoService.updateBlock(id, dadosAtualizados);
+    // Pass the user ID from the token to the service
+    const bloqueioAtualizado = await indexacaoService.updateBlock(id, dadosAtualizados, req.user.id);
 
     res.status(200).json({
       success: true,
@@ -127,7 +128,8 @@ const deleteBlock = async (req, res) => {
       return res.status(400).json({ error: "ID do bloqueio é obrigatório." });
     }
 
-    await indexacaoService.deleteBlock(id);
+    // Pass the user ID from the token to the service
+    await indexacaoService.deleteBlock(id, req.user.id);
 
     res.status(204).send();
   } catch (error) {

@@ -1,6 +1,7 @@
 import Indexacao from "../models/Indexacao.js";
 import Sugestao from "../models/sugestao.js";
 import atualizarArquivoBloqueados from "../utils/arquivoBloqueados.js";
+import logService from "./logService.js";
 class indexacaoService{
   async getBloqueiosPorMesesAno() {
     try {
@@ -251,7 +252,7 @@ class indexacaoService{
   }
 }
 
-async createBlock(data) {
+async createBlock(data, idUser) {
   try {
     // Validação dos dados necessários
     if (!data.url) {
@@ -278,6 +279,14 @@ async createBlock(data) {
       throw new Error("Falha ao salvar o bloqueio");
     }
 
+    // Log the creation action
+    await logService.createLog(
+      idUser,
+      'CRIAR_BLOQUEIO',
+      bloqueioSalvo.url,
+      `Administrador criou um novo bloqueio.`
+    );
+
     return bloqueioSalvo;
   } catch (error) {
     console.error("Erro ao criar bloqueio:", error);
@@ -285,7 +294,7 @@ async createBlock(data) {
   }
 }
 
-async updateBlock(id, data) {
+async updateBlock(id, data, idUser) {
   try {
     const bloqueioAntigo = await Indexacao.findById(id);
     if (!bloqueioAntigo) {
@@ -312,6 +321,14 @@ async updateBlock(id, data) {
       );
     }
 
+    // Log the update action
+    await logService.createLog(
+      idUser,
+      'ATUALIZAR_BLOQUEIO',
+      bloqueioAtualizado.url,
+      `Bloqueio ID ${id} atualizado. Nova flag: ${bloqueioAtualizado.flag}.`
+    );
+
     console.log(`Indexação com id ${id} atualizada.`);
     return bloqueioAtualizado;
   } catch (error) {
@@ -320,13 +337,22 @@ async updateBlock(id, data) {
   }
 }
 
-async deleteBlock(id) {
+async deleteBlock(id, idUser) {
   try {
     // Encontra o bloqueio pelo ID e remove-o
     const bloqueioExcluido = await Indexacao.findByIdAndDelete(id);
     if (!bloqueioExcluido) {
       throw new Error("Bloqueio não encontrado");
     }
+
+    // Log the deletion action
+    await logService.createLog(
+      idUser,
+      'DELETAR_BLOQUEIO',
+      bloqueioExcluido.url,
+      `Bloqueio ID ${id} foi excluído.`
+    );
+
     return bloqueioExcluido;
   } catch (error) {
     console.error("Erro ao excluir bloqueio:", error);
