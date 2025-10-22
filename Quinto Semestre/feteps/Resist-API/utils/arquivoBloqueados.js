@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 
-const BLOQUEADOS_PATH = "/root/bloqueados.txt";
+const BLOQUEADOS_PATH = process.env.BLOQUEADOS_PATH || "./bloqueados.txt";
 
 async function atualizarArquivoBloqueados(url, bloquear) {
   try {

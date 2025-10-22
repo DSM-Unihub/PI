@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import multer from 'multer';
 import crypto from 'crypto';
 import path from 'path';
+import logService from "../services/logService.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -88,14 +89,17 @@ const getOneSugestao = async (req,res)=>{
         }
         
         const sugestao = await sugestaoService.update(
-  req.params.id,
-  req.body.idUser,
-  req.body.url,
-  req.body.motivo,
-  req.body.tipo,
-  req.body.situacao,
-  req.file ? req.file.path.replace(/\\/g, "/") : undefined
-);
+          req.params.id,
+          req.body.idUser,
+          req.body.url,
+          req.body.motivo,
+          req.body.tipo,
+          req.body.situacao,
+          req.file ? req.file.path.replace(/\\/g, "/") : undefined
+        );
+
+
+      
 
         res.status(200).json(sugestao);
       } catch(error) {
