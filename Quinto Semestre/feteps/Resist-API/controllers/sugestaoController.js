@@ -95,7 +95,8 @@ const getOneSugestao = async (req,res)=>{
           req.body.motivo,
           req.body.tipo,
           req.body.situacao,
-          req.file ? req.file.path.replace(/\\/g, "/") : undefined
+          req.file ? req.file.path.replace(/\\/g, "/") : undefined,
+          req.user.id
         );
 
 

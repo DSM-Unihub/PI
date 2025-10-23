@@ -3,6 +3,7 @@ import User from '../models/user.js'
 import Indexacao from '../models/Indexacao.js';
 import atualizarArquivoBloqueados from '../utils/arquivoBloqueados.js';
 import indexacaoService from './indexacaoService.js';
+import logService from './logService.js';
 
 class SugestaoService {
 
@@ -10,7 +11,6 @@ class SugestaoService {
     try{
       if(!data.url || !data.idUser){
         throw new Error("Campos obrigatórios não preenchidos");
-        return null
       }
       const sugestaoDatas= {
         idUser: data.idUser,
@@ -64,7 +64,7 @@ async getOne(id) {
 }
 
 
-  async update(id, idUser, url, motivo, tipo, situacao, foto) {
+  async update(id, idUser, url, motivo, tipo, situacao, foto, idAdmin) {
     try {
       const sugestaoAntiga = await Sugestao.findById(id);
       if (!sugestaoAntiga) {
@@ -110,6 +110,20 @@ async getOne(id) {
             sugestaoAtualizada.tipo // tipo é true/false
           );
 
+          if(sugestaoAtualizada.tipo === true){
+            await logService.createLog(
+              idAdmin,
+              sugestaoAtualizada.url,
+              'Aprovacao_bloqueio_URL',
+            )
+          } else {
+            await logService.createLog(
+              idAdmin,
+              sugestaoAtualizada.url,
+              'Aprovacao_desbloqueio_URL',
+            )
+          }
+
           console.log("Sugestão aceita: Indexação e arquivo bloqueados atualizados com sucesso.");
         } catch (error) {
           console.error("Erro ao processar indexação:", error);
@@ -117,6 +131,20 @@ async getOne(id) {
         }
       } else if (sugestaoAtualizada.situacao === 'Recusado') {
         console.log("Sugestão recusada: Nenhuma ação tomada na indexação nem no arquivo.");
+
+        if(sugestaoAtualizada.tipo === true){
+          await logService.createLog(
+            idAdmin,
+            sugestaoAtualizada.url,
+            'Recusa_bloqueio_URL',
+          )
+        } else {
+          await logService.createLog(
+            idAdmin,
+            sugestaoAtualizada.url,
+            'Recusa_desbloqueio_URL',
+          )
+        }
       }
 
       return sugestaoAtualizada;

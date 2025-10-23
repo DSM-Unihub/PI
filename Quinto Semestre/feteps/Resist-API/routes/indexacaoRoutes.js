@@ -4,7 +4,6 @@ import Auth, { authorizeRoles } from '../middleware/Auth.js'
 
 const router = express.Router();
 
-
 // Rota para obter estatísticas de bloqueios por mês e por laboratório
 router.get("/estatisticas-labs", Auth, authorizeRoles(1), indexacaoController.getEstatisticasLabs);
 
@@ -23,4 +22,5 @@ router.post("/bloqueios", Auth, authorizeRoles(1), indexacaoController.createBlo
 router.put("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.updateBlock);
 
 router.delete("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.deleteBlock);
+
 export default router;
