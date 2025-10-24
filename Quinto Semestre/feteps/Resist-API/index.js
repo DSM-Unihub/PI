@@ -4,6 +4,7 @@ import "./config/db-connection.js";
 import indexacaoRoutes from "./routes/indexacaoRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import sugestaoRoutes from "./routes/sugestaoRoutes.js";
+import logRoutes from "./routes/logRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,7 +21,7 @@ const __dirname = path.dirname(__filename);
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 
-app.use("/api", indexacaoRoutes, userRoutes,sugestaoRoutes);
+app.use("/api", indexacaoRoutes, userRoutes,sugestaoRoutes, logRoutes);
 
 app.use((err, req, res, next) => {
   console.error("Erro não tratado:", err);

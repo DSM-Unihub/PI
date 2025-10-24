@@ -16,7 +16,7 @@ class AuthService {
 
     // Gerar um token JWT
     const token = jwt.sign(
-      { id: user._id, email: user.email, permissoes: user.permissoes },
+      { id: user._id, email: user.email, permissoes: Number(user.permissoes || 0) },
       process.env.JWT_SECRET, // Armazene sua chave secreta no .env
       { expiresIn: '1h' }
     );

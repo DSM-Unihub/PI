@@ -1,26 +1,26 @@
 import express from "express";
 import indexacaoController from "../controllers/indexacaoController.js";
-import Auth from '../middleware/Auth.js'
+import Auth, { authorizeRoles } from '../middleware/Auth.js'
 
 const router = express.Router();
 
-
 // Rota para obter estatísticas de bloqueios por mês e por laboratório
-router.get("/estatisticas-labs", Auth, indexacaoController.getEstatisticasLabs);
+router.get("/estatisticas-labs", Auth, authorizeRoles(1), indexacaoController.getEstatisticasLabs);
 
-router.get("/estatisticas-mes", Auth, indexacaoController.getEstatisticasBloqueios);
+router.get("/estatisticas-mes", Auth, authorizeRoles(1), indexacaoController.getEstatisticasBloqueios);
 
-router.get("/ultimas-atividades", Auth, indexacaoController.getUltimasAtividades);
+router.get("/ultimas-atividades", Auth, authorizeRoles(1), indexacaoController.getUltimasAtividades);
 
-router.get("/bloqueios-mes", Auth, indexacaoController.getBloqueiosPorMes)
+router.get("/bloqueios-mes", Auth, authorizeRoles(1), indexacaoController.getBloqueiosPorMes)
 
-router.get("/bloqueios", Auth, indexacaoController.getAllBlocks);
+router.get("/bloqueios", Auth, authorizeRoles(1), indexacaoController.getAllBlocks);
 
-router.get("/bloqueios/url/:url", Auth, indexacaoController.getIndexacaoByUrl);
+router.get("/bloqueios/url/:url", Auth, authorizeRoles(1), indexacaoController.getIndexacaoByUrl);
 
-router.post("/bloqueios", Auth, indexacaoController.createBlock);
+router.post("/bloqueios", Auth, authorizeRoles(1), indexacaoController.createBlock);
 
-router.put("/bloqueios/:id", Auth, indexacaoController.updateBlock);
+router.put("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.updateBlock);
 
-router.delete("/bloqueios/:id", Auth, indexacaoController.deleteBlock);
+router.delete("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.deleteBlock);
+
 export default router;

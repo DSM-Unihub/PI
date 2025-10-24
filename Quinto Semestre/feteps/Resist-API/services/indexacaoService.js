@@ -279,19 +279,37 @@ async createBlock(data, idUser) {
       throw new Error("Falha ao salvar o bloqueio");
     }
 
+    await atualizarArquivoBloqueados(
+        novoBloqueio.urlWeb,
+        novoBloqueio.flag
+      );
+
     // Log the creation action
+   if (novoBloqueio.flag === false){
     await logService.createLog(
       idUser,
-      'CRIAR_BLOQUEIO',
-      bloqueioSalvo.url,
-      `Administrador criou um novo bloqueio.`
+      'update_bloqueio_desbloqueado',
+      novoBloqueio.url,
     );
+    }
+
+    else{
+      await logService.createLog(
+        idUser,
+        'update_bloqueio_bloqueado',
+        novoBloqueio.url,
+      );
+    }
+
+    
 
     return bloqueioSalvo;
   } catch (error) {
     console.error("Erro ao criar bloqueio:", error);
     throw new Error(error.message || "Erro ao criar bloqueio");
   }
+
+  
 }
 
 async updateBlock(id, data, idUser) {
@@ -320,14 +338,22 @@ async updateBlock(id, data, idUser) {
         bloqueioAtualizado.flag
       );
     }
-
-    // Log the update action
+    
+    if (bloqueioAtualizado.flag === false){
     await logService.createLog(
       idUser,
-      'ATUALIZAR_BLOQUEIO',
+      'update_bloqueio_desbloqueado',
       bloqueioAtualizado.url,
-      `Bloqueio ID ${id} atualizado. Nova flag: ${bloqueioAtualizado.flag}.`
     );
+    }
+
+    else{
+      await logService.createLog(
+        idUser,
+        'update_bloqueio_bloqueado',
+        bloqueioAtualizado.url,
+      );
+    }
 
     console.log(`Indexação com id ${id} atualizada.`);
     return bloqueioAtualizado;
@@ -350,7 +376,6 @@ async deleteBlock(id, idUser) {
       idUser,
       'DELETAR_BLOQUEIO',
       bloqueioExcluido.url,
-      `Bloqueio ID ${id} foi excluído.`
     );
 
     return bloqueioExcluido;
