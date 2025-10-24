@@ -1,68 +1,99 @@
-/* General Body Style */
+/* General Body & Layout Styles */
+html {
+    height: 100%;
+}
 body {
-    background-color: #f4f4f4;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    min-height: 100%; /* Garante que o body ocupe no mínimo a altura total da tela */
+    display: flex;
+    flex-direction: column;
 }
 
-.card {
-    margin-top: 20px;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Header & Banner */
+.banner {
+    padding: 1.5rem 0;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.banner h5 {
+    position: relative;
+    z-index: 1;
 }
 
-.comment-section {
-    margin-top: 30px;
+/* Main Content Area */
+main {
+    padding: 2rem 0;
+    flex-grow: 1; /* ESSENCIAL: Faz o conteúdo principal crescer para preencher o espaço vago, empurrando o rodapé para baixo */
 }
 
-.comment {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+/* Article Styles */
+article {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+}
+article p {
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
-.comment:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+/* Sidebar Styles */
+aside .widget {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
-
-
-/* --- Sports Page Theme --- */
-.theme-sports .navbar {
-    background-color: #0d6efd;
+aside .widget h5 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
-.theme-sports .article-title {
+aside .widget ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+aside .widget ul li a {
+    text-decoration: none;
     color: #0d6efd;
-}
-.theme-sports .btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+    display: block;
+    padding: 0.25rem 0;
 }
 
-/* --- Culinary Page Theme --- */
-.theme-culinary .navbar {
-    background-color: #fd7e14;
-}
-.theme-culinary .article-title {
-    color: #28a745;
-}
-.theme-culinary .btn-primary {
-    background-color: #fd7e14;
-    border-color: #fd7e14;
-}
-
-/* --- Politics Page Theme --- */
-.theme-politics .navbar {
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: white;
     background-color: #343a40;
-}
-.theme-politics .article-title {
-    color: #b22222;
-}
-.theme-politics .btn-primary {
-    background-color: #343a40;
-    border-color: #343a40;
+    /* A margem não é mais necessária aqui */
 }
 
-/* Navbar text color for all themes */
-.navbar-brand, .nav-link {
-    color: #fff !important;
-}
+/* Banner Images */
+.banner-sports { background-image: url('https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); }
+.banner-culinary { background-image: url('https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); }
+.banner-politics { background-image: url('https://images.pexels.com/photos/5905041/pexels-photo-5905041.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); }
+
+/* --- Color Themes --- */
+.theme-sports .navbar { background-color: #0d6efd; }
+.theme-sports .article-title { color: #0d6efd; }
+
+.theme-culinary .navbar { background-color: #fd7e14; }
+.theme-culinary .article-title { color: #28a745; }
+
+.theme-politics .navbar { background-color: #343a40; }
+.theme-politics .article-title { color: #b22222; }
+
+.navbar-brand, .nav-link { color: #fff !important; }
