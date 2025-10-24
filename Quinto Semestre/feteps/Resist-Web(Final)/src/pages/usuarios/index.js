@@ -87,7 +87,7 @@ const Usuarios = () => {
                       <div className={styles.detailRow}>
                         <img alt="Cargo" src="/icons/cargo.svg" className={styles.iconSm} />
                         <p className={styles.detailText}>
-                          {user.permissoes.join(", ")}
+                          {user.permissoes}
                         </p>
                       </div>
                       <div className={styles.detailRow}>

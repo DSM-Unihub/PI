@@ -67,12 +67,10 @@ const Bloqueios = () => {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      }
-
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       try {
         const response = await axios.get(`${url}/bloqueios`);
+        console.log(response.data)
         // Processar a resposta
       } catch (error) {
         console.error("Erro ao buscar bloqueios:", error);

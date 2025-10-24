@@ -13,9 +13,9 @@ router.get("/ultimas-atividades", Auth, authorizeRoles(1), indexacaoController.g
 
 router.get("/bloqueios-mes", Auth, authorizeRoles(1), indexacaoController.getBloqueiosPorMes)
 
-router.get("/bloqueios", authorizeRoles(1), Auth, indexacaoController.getAllBlocks);
+router.get("/bloqueios", Auth, authorizeRoles(1), indexacaoController.getAllBlocks);
 
-router.get("/bloqueios/url/:url", authorizeRoles(1), Auth, indexacaoController.getIndexacaoByUrl);
+router.get("/bloqueios/url/:url", Auth, authorizeRoles(1), indexacaoController.getIndexacaoByUrl);
 
 router.post("/bloqueios", Auth, authorizeRoles(1), indexacaoController.createBlock);
 

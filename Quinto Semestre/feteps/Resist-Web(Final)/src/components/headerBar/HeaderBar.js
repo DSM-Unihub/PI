@@ -30,7 +30,7 @@ export default function HeaderBar({ usuario }) {
           <p>
             {usuario?.nome || "Usuário"}  
           </p>
-          <p>{usuario?.permissoes.join(", ")}</p>
+          <p>{usuario?.permissoes}</p>
         </div>
         <div className={styles.divimgPerson}>
           <img
