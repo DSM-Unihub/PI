@@ -24,7 +24,7 @@ export const s = StyleSheet.create({
     },
     frontImage: {
       position: 'absolute',
-      top:24,
+      top:40,
       left:30,
       width: width * 0.1,
       height: HEIGHT * 0.3,

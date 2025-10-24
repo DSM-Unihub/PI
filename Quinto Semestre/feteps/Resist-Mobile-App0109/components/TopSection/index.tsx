@@ -17,7 +17,7 @@ export default function TopSection({ height = 300 }: Props) {
         resizeMode="cover"
       />
       <Image
-        source={require('@/assets/images/icon-white.png')}
+        source={require('@/assets/images/icon.png')}
         style={s.frontImage}
         resizeMode="contain"
       />
