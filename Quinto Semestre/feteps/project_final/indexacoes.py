@@ -1,3 +1,6 @@
+import requests
+import os
+
 class Indexacoes:
     def __init__(self, db):
         self.db = db
@@ -16,14 +19,41 @@ class Indexacoes:
     
     
     def indexar_site(self, dados_site):
+        # URL do endpoint da API para criar um bloqueio
+        api_url = os.getenv('/API_URL', 'http://localhost:4000/api/bloqueios')
+        api_token = os.getenv('API_TOKEN')
+
+        if not api_token:
+            print("Erro: API_TOKEN não definido no ambiente.")
+            return
+
+        headers = {
+            'Authorization': f'Bearer {api_token}',
+            'Content-Type': 'application/json'
+        }
+
+        # O campo 'url' é obrigatório pela API, o resto é opcional
+        payload = {
+            "url": dados_site.get("PathLocal"), # Usando PathLocal como 'url' para a API
+            "urlWeb": dados_site.get("urlWeb"),
+            "motivo": "Indexado Automaticamente",
+            "tipoInsercao": dados_site.get("tipoInsercao", "Automatico"),
+            "ipMaquina": dados_site.get("ipMaquina"),
+            "flag": dados_site.get("flag", False) # API espera booleano
+        }
+
         try:
             self.db['indexacoes'].update_one(
                 {"urlWeb": dados_site['urlWeb']},
                 {"$set": dados_site},
                 upsert=True
             )
+            response = requests.post(api_url, headers=headers, json=payload)
+            response.raise_for_status()  # Lança exceção para respostas de erro (4xx ou 5xx)
+            print(f"Site {dados_site['urlWeb']} indexado com sucesso via API.")
         except Exception as e:
             print(f"Erro ao indexar site: {e}")
+            print(f"Erro ao indexar site via API: {e}")
         
         
 

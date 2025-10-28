@@ -99,9 +99,9 @@ if client:
                             continue
                         
                         print(f"Nova linha de log detectada: {line.strip()}")
-                        if line.strip() not in self.processed_lines:
-                            threading.Thread(target=self.process_line, args=(line,)).start()
-                            self.processed_lines.add(line.strip())
+                        # if line.strip() not in self.processed_lines:
+                        threading.Thread(target=self.process_line, args=(line,)).start()
+                        self.processed_lines.add(line.strip())
             except Exception as e:
                 print(f"Erro ao monitorar o arquivo de log: {e}")
 
@@ -240,13 +240,45 @@ if client:
                     pass
                 print(f"Arquivo criado: {file_path}")
 
+
+    def login_and_get_token():
+        """Logs into the API and sets the auth token as an environment variable."""
+        api_base_url = os.getenv('API_URL', 'http://localhost:4000/api')
+        login_url = f"{api_base_url}/login"
+        email = os.getenv('SYSTEM_EMAIL')
+        password = os.getenv('SYSTEM_PASSWORD')
+
+        if not email or not password:
+            print("Erro: SYSTEM_EMAIL e SYSTEM_PASSWORD devem ser definidos no ambiente.")
+            return False
+
+        try:
+            print("Tentando fazer login na API para obter o token...")
+            response = requests.post(login_url, json={"email": email, "senha": password})
+            response.raise_for_status()  # Lança exceção para status de erro (4xx/5xx)
+            
+            token = response.json().get('token')
+            if token:
+                os.environ['API_TOKEN'] = token
+                print("Login bem-sucedido. Token de autenticação obtido e configurado.")
+                return True
+            else:
+                print("Erro: Token não encontrado na resposta da API.")
+                return False
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao fazer login na API: {e}")
+            return False
+
     def main():
         check_required_files()
-        squid_log_file_path = os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
-        position_file_path = os.getenv('ARM_FILE_PATH', '/root/arm.txt')
-        print("Inicializando monitor de log...")
-        monitor = MonitorLog(squid_log_file_path, position_file_path)
-        monitor.tail_file()
+        if login_and_get_token():
+            squid_log_file_path = os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
+            position_file_path = os.getenv('ARM_FILE_PATH', '/root/arm.txt')
+            print("Inicializando monitor de log...")
+            monitor = MonitorLog(squid_log_file_path, position_file_path)
+            monitor.tail_file()
+        else:
+            print("Encerrando o programa devido a falha no login da API.")
 
     if __name__ == "__main__":
         print("Iniciando o script principal...")

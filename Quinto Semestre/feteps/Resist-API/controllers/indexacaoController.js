@@ -69,7 +69,7 @@ const createBlock = async (req, res) => {
       ipMaquina: ipMaquina || "192.168.1.1",
       urlWeb: urlWeb || url,
       dataHora: new Date(),
-      flag: flag !== undefined ? flag : true,
+      flag: flag !== undefined ? (String(flag).toLowerCase() === 'true') : true,
     };
     // Pass the user ID from the token to the service
     const bloqueioCriado = await indexacaoService.createBlock(dadosBloqueio, req.user.id);

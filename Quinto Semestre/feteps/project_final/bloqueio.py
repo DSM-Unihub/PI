@@ -223,7 +223,7 @@ class Bloqueio:
                     print(f"Bloqueando {url} - Motivo: {resultado.get('motivo')} | Score: {resultado.get('score')}")
                     self.criar_registro_bloqueado(url)
                 else:
-                    print("Não tenho pq bloquear essa página blz")
+                    print("Não tenho pq bloquear essa página")
                         
     def imprimir_conteudo_html(self, url):
         """Imprime o conteúdo do arquivo HTML correspondente à URL."""
