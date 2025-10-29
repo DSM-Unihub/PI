@@ -5,7 +5,8 @@ export default function Document() {
     <Html lang="pt-br">
       <Head>
         <meta charSet="UTF-8" />
-        <link rel="icon" href="/favicon.ico" />
+       <link rel="icon" type="image/svg+xml" href="/resistLogoNew.svg" />
+
       </Head>
       <body>
         <Main />

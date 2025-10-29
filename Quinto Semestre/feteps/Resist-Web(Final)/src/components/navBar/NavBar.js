@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import styles from "./nav.module.css";
-import { ArrowLeftEndOnRectangleIcon, Cog8ToothIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { ArchiveBoxIcon, ArrowLeftEndOnRectangleIcon, BookOpenIcon, ClipboardDocumentListIcon, ClipboardIcon, ClockIcon, Cog8ToothIcon, DocumentTextIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
   export default function NavBar() {
   const router = useRouter();
@@ -84,8 +84,7 @@ import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@h
       <section className={styles.navDesk}>
         <div className={styles.imgResist}>
           <Link href="/">
-            <img alt="" className="size-10" src="/icons/lg-resist-w.svg" />
-            <img alt="" className="size-10  " src="/icons/tx-resist.svg" />
+            <img alt="" className="size-10" src="/icons/resistLogoNew.svg" />
           </Link>
         </div>
         
@@ -128,6 +127,11 @@ import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@h
             <div className={isActive("/sugestao") ? styles.navIconSelected : styles.navIcon}>
               <Link href="/sugestao">
                 <LightBulbIcon className={isActive("/sugestao") ? styles.iconSelect : styles.icon}/>
+              </Link>
+          </div>
+           <div className={isActive("/historico") ? styles.navIconSelected : styles.navIcon}>
+              <Link href="/historico">
+                <DocumentTextIcon className={isActive("/historico") ? styles.iconSelect : styles.icon}/>
               </Link>
           </div>
 

@@ -115,19 +115,16 @@ const Bloqueios = () => {
 
             <HeaderBar usuario={usuario} />
 
-            <CardInfo titulo={"Bloqueios"} subtitulo={"Acesso aos dados de bloqueio manuais e automáticos."} />
+            <CardInfo titulo={"Bloqueios"} subtitulo={"Acesso aos dados de bloqueio manuais e automáticos."} tipo={"Desktop"} sitPessoa={"Bloqueio Automático"} dia={9} mes={"Out"} ano={2025} view={true} />
 
             <section className={styles.section}>
               <div style={{ flex: 3, maxHeight: "100%", minWidth: "70%" }}>
                 <BlockList />
               </div>
               <div style={{ flex: 1, height: "100%", minWidth: "26.5%" }}>
-                <div className={styles.tabelaHeader}>
-                  <h3 >
-                    Bloqueio Manual
-                  </h3>
-                </div>
+                
                 <div className={styles.container}>
+                  
                   <div className={styles.formGroup}>
                     <input
                       type="text"

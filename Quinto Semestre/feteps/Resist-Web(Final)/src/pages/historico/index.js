@@ -7,6 +7,7 @@ import axios from "axios";
 import url from "../../services/url"; // Supondo que o url seja o serviço para a API
 import { useRouter } from "next/router";
 import Head from "next/head";
+import ListHistorico from "@/components/listHistorico/listHistorico";
 import ListSujestao from "../../components/listaSugestao/ListaSugestao";
 import CardInfo from "@/components/card/card";
 import styles from './sugestao.module.css'
@@ -71,8 +72,8 @@ const Bloqueios = () => {
           <section className={styles.conteudo}>
             <section className={styles.cem}>
             <HeaderBar usuario={usuario} />
-            <CardInfo titulo={"Sugestões"} subtitulo={"Acesso e resposta a sugestões feitas por alunos pelo aplicativo móvel."}tipo={"Pendente"} sitPessoa={"Bloqueio"} dia={9} mes={"Out"} ano={2025} view={true} />
-            < ListSujestao />
+            <CardInfo titulo={"Histórico"} subtitulo={"Encontre aqui as ações de bloqueio e desbloqueio feitas pelos usuários."} tipo={"Desktop"} sitPessoa={"Caio E. Bronescheki..."} dia={9} mes={"Out"} ano={2025} view={true} />
+            < ListHistorico />
             </section>
           </section>
         </section>

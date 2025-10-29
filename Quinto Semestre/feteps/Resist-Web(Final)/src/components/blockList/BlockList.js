@@ -87,11 +87,7 @@ const BlockList = () => {
 
   return (
     <div className={styles.tabelaContainer} >
-      <div className={styles.tabelaHeader}>
-        <h3 className="">
-          Editar bloqueios de URL
-        </h3>
-      </div>
+    
       <div className={styles.tabelaWrapper}>
         <table className={styles.tabela}>
           <thead >
