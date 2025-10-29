@@ -222,9 +222,15 @@ class Bloqueio:
                 if url:
                     print(f"Bloqueando {url} - Motivo: {resultado.get('motivo')} | Score: {resultado.get('score')}")
                     self.criar_registro_bloqueado(url)
+                    return "bloqueado"
                 else:
                     print("Não tenho pq bloquear essa página")
-                        
+                    return "naobloqueado"
+            
+            else:
+                print("Conteúdo apropriado, não bloqueado.")
+                return "naobloqueado"
+            
     def imprimir_conteudo_html(self, url):
         """Imprime o conteúdo do arquivo HTML correspondente à URL."""
         import hashlib
