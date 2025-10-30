@@ -35,14 +35,17 @@ class Indexacoes:
         try:
             response = requests.get(f"{api_get_by_url}/{urlWeb}", headers=headers)
             response.raise_for_status() 
-            id_indexacao = response.json().get('_id')
+            # print(f"Resposta da busca de indexação: {response.json()}")
+            data = response.json().get('data')
+            id_indexacao = data.get('_id')
+            print(f"ID da indexação encontrada: {id_indexacao}")
 
             payload = {
                 "url": dados_atualizados.get("PathLocal"), # Usando PathLocal como 'url' para a API
                 # "motivo": "Indexado Automaticamente",
-                "flag": dados_atualizados.get("flag", response.get("flag")) # API espera booleano
+                "flag": dados_atualizados.get("flag", False) # API espera booleano
             }
-            
+            # print(response.json())
             try:
                 response_put = requests.put(f"{api_put_url}/{id_indexacao}", headers=headers, json=payload)
                 response_put.raise_for_status()
