@@ -30,24 +30,23 @@ class Indexacoes:
             'Authorization': f'Bearer {api_token}',
             'Content-Type': 'application/json'
         }
-        payload = {
-            "url": dados_atualizados.get("PathLocal"), # Usando PathLocal como 'url' para a API
-            "urlWeb": dados_atualizados.get("urlWeb"),
-            "motivo": "Indexado Automaticamente",
-            "tipoInsercao": dados_atualizados.get("tipoInsercao", "Automatico"),
-            "ipMaquina": dados_atualizados.get("ipMaquina"),
-            "flag": dados_atualizados.get("flag", False) # API espera booleano
-        }
+        
 
         try:
-            response = requests.get(api_get_by_url, headers=headers)
+            response = requests.get(f"{api_get_by_url}/{urlWeb}", headers=headers)
             response.raise_for_status() 
             id_indexacao = response.json().get('_id')
 
+            payload = {
+                "url": dados_atualizados.get("PathLocal"), # Usando PathLocal como 'url' para a API
+                # "motivo": "Indexado Automaticamente",
+                "flag": dados_atualizados.get("flag", response.get("flag")) # API espera booleano
+            }
+            
             try:
                 response_put = requests.put(f"{api_put_url}/{id_indexacao}", headers=headers, json=payload)
                 response_put.raise_for_status()
-                print(f"Site {dados_atualizados['urlWeb']} indexado com sucesso via API.")
+                print(f"Site {dados_atualizados['urlWeb']} atualizado com sucesso via API.")
             except:
                 print("ID não encontrado para atualização.")
                 return

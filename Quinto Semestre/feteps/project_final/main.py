@@ -34,7 +34,7 @@ except Exception as e:
 
 # Verifica se a conexão foi bem-sucedida antes de continuar
 if client:
-    db = client['resist']
+    db = client['PI']
 
     # Inicializa as classes de tratamento, indexação e acessos
     dado = TratamentoDados(db)
@@ -199,7 +199,12 @@ if client:
                     print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
                     result = bloqueio.bloquear_sites(nome_arquivo)
 
-                    if not idx.is_site_indexed(dado.url):
+                    print(dado.url.strip())
+                    print(idx.is_site_indexed(dado.url.strip()))
+                    print(idx.is_site_indexed("cooktest60.vercel.app"))
+                    print(idx.buscar_site_por_url(dado.url.strip()))
+                    print(idx.buscar_site_por_url("cooktest60.vercel.app"))
+                    if idx.is_site_indexed(dado.url.strip())==False:
                         idx.indexar_site({
                             "PathLocal": caminho_html,
                             "urlWeb": dado.url,
@@ -210,9 +215,19 @@ if client:
                         })
                         print("o nome do arquivo é ", nome_arquivo)
                     else:
-                        print(f"URL {dado.url} já indexada. Salvando como acesso.")
+                        print(f"URL {dado.url} já indexada. Re-verificando e salvando como acesso.")
                         indexed_site = idx.buscar_site_por_url(dado.url)  # Função para buscar o site pelo URL
-                                
+                        
+                        idx.atualizar_indexacao(
+                            urlWeb=dado.url.strip(),
+                            dados_atualizados={
+                                "PathLocal": caminho_html,
+                                # "motivo": "?"
+                                "urlWeb": dado.url,
+                            }
+                        )
+
+                        indexed_site = idx.buscar_site_por_url(dado.url)  # Trocar por uma resposta do atualizar indexacao, que vai trazer a flag.
                         if indexed_site:
                             flag = indexed_site.get('flag', None)  # Obter a flag do site indexado
                         else:
