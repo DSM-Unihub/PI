@@ -59,9 +59,7 @@ const ListSujestao = () => {
 
   return (
     <div className={styles.tabelaContainer}>
-      <div className={styles.tabelaHeader}>
-        <h3>Sugestões de bloqueio e desbloqueio recebidas</h3>
-      </div>
+     
 
       <div className={styles.tabelaWrapper}>
         <table className={styles.tabela}>

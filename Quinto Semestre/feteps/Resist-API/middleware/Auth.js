@@ -15,4 +15,14 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+const authorizeRoles = (minLevel = 0) => (req, res, next) =>{
+  if (!req.user) return res.status(401).json({ message: 'Usuário não autenticado' });
+  const nivel = Number(req.user.permissoes ?? 0);
+  if (Number.isNaN(nivel) || nivel < minLevel){
+    return res.status(403).json({ message: 'Acesso negado -' });
+  }
+  next();
+};
+
 export default authMiddleware;
+export { authorizeRoles };

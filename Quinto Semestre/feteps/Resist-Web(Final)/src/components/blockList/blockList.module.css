@@ -66,6 +66,17 @@
   cursor: pointer;
   transition: background-color 0.2s;
 }
+.tabelaRow:nth-child(even) {
+  background-color: #f7f9ff; /* azul claro */
+}
+
+.tabelaRow:nth-child(odd) {
+  background-color: #ffffff; /* branco */
+}
+
+.tabelaRow:hover {
+  background-color: #e6eeff; /* destaque ao passar o mouse */
+}
 
 .tabelaRow:hover {
   background-color: #f7f7f7;

@@ -36,3 +36,47 @@
     font-weight: bold; */
     color: #56648F;
   }
+.Filterwrapper {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap; /* permite quebrar linha */
+  gap: 10px;
+  padding: 2px;
+  border-radius: 10px;
+  max-width: 1175px;
+  justify-content: space-between;
+}
+
+.FilterCard {
+  display: flex;
+  flex: 1 1 300px; /* cresce e encolhe conforme o espaço */
+  gap: 10px;
+  flex-wrap: wrap; /* garante que os filtros internos também possam quebrar */
+}
+
+.Filtercard {
+  background-color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1; /* distribui igualmente o espaço entre os filtros */
+  min-width: 130px; /* tamanho mínimo antes de quebrar */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.Filtercard p {
+  width: 100%;
+    text-align: center;
+  margin: 0;
+  color: #56648F;
+  font-weight: 500;
+  
+}
+
+.Filtercard:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}

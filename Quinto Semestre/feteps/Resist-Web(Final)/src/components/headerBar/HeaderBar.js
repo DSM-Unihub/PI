@@ -13,14 +13,7 @@ export default function HeaderBar({ usuario }) {
         />
         {/* Icons */}
         
-<div className={styles.headerIcons}>
-  <div className={styles.headerIcon}>
-            <img alt="" className="size-6" src="/icons/blog.svg" />
-          </div>
-          <div className={styles.headerIcon}>
-            <img alt="" className="size-6" src="/icons/notificacao.svg" />
-          </div>
-        </div>
+
 </div>
           
         
@@ -30,7 +23,7 @@ export default function HeaderBar({ usuario }) {
           <p>
             {usuario?.nome || "Usuário"}  
           </p>
-          <p>{usuario?.permissoes.join(", ")}</p>
+          <p>{usuario?.permissoes}</p>
         </div>
         <div className={styles.divimgPerson}>
           <img

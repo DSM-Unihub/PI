@@ -71,7 +71,7 @@ const Bloqueios = () => {
           <section className={styles.conteudo}>
             <section className={styles.cem}>
             <HeaderBar usuario={usuario} />
-            <CardInfo titulo={"Sugestões"} subtitulo={"Acesso e resposta a sugestões feitas por alunos pelo aplicativo móvel."} />
+            <CardInfo titulo={"Sugestões"} subtitulo={"Acesso e resposta a sugestões feitas por alunos pelo aplicativo móvel."}tipo={"Pendente"} sitPessoa={"Bloqueio"} dia={9} mes={"Out"} ano={2025} view={true} />
             < ListSujestao />
             </section>
           </section>

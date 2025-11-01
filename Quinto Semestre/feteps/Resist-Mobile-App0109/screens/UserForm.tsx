@@ -117,10 +117,15 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
       }
       // --- END DEBUG --- //
 
+      const token = await AsyncStorage.getItem('@resist_token');
+      const headers: any = {
+        'Content-Type': 'multipart/form-data',
+      };
+
+      if (token) headers.Authorization = `Bearer ${token}`
+
       await axios.post(`${ipurl}/sugestao`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Align with working test app
-        },
+        headers,
         timeout: 30000, // Add a timeout of 30 seconds
       });
 

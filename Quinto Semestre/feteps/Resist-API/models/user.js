@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
     telefone:{type: String},
     foto:{type: String},
     instituicao: {instituicaoSchema},
-    permissoes: [{type: String}],
+    // permissoes: [{type: String}],
+    permissoes: {type: Number, default: 0} // 0: usuario aluno (sugestoes apenas), 1: moderador, 2: admin
 })
 
 const User = mongoose.model('funcionario', userSchema)

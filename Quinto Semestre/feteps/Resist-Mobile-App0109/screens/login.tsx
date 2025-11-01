@@ -18,6 +18,7 @@ import SwitchTabs from '@/components/switchTabs';
 import AuthTabs from '@/components/AuthTabs';
 import axios from 'axios';
 import { fonts } from '@/constants/Fonts';
+import { saveToken } from '@/services/auth'; // nova importação
 
 type RootStackParamList = {
   Login: undefined;
@@ -93,19 +94,23 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
       console.log('preparando data')
       const loginData = prepareLoginData();
-      
       const response = await axios.post(`${ipurl}/login`, loginData);
 
       
       if (response.status==200) {
+        const token = response.data?.token;
         const userId = response.data.user.id;
-        console.log(userId)
+        if(token){
+          await saveToken(token); // Salva o token usando a função importada
+        }
         navigation.navigate('List', { userId });
+      } else {
+        Alert.alert('Erro', 'Não foi possível fazer login. Tente novamente.');
       }
       //Ponto de melhoria: aqui seria bom fazer com que ele retornasse o porque não está logando. se for 401 Unauthorized, por algum motivo ele está pulando direto para o catch de erro, mesmo se você fizer um else if verificando essa possibilidade em response.status
       
       
-      console.log(response.status)
+      // console.log(response.status)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log('Axios error message:', error.message);

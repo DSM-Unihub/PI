@@ -54,7 +54,7 @@ const getBloqueiosPorMes = async (req, res) => {
 // Controlador para criar um bloqueio
 const createBlock = async (req, res) => {
   try {
-    const { url, motivo, periodo, tipoInsercao, ipMaquina, urlWeb } = req.body;
+    const { url, motivo, periodo, tipoInsercao, ipMaquina, urlWeb, flag } = req.body;
 
     // Validação básica
     if (!url) {
@@ -69,7 +69,7 @@ const createBlock = async (req, res) => {
       ipMaquina: ipMaquina || "192.168.1.1",
       urlWeb: urlWeb || url,
       dataHora: new Date(),
-      flag: true
+      flag: flag !== undefined ? (String(flag).toLowerCase() === 'true') : true,
     };
     // Pass the user ID from the token to the service
     const bloqueioCriado = await indexacaoService.createBlock(dadosBloqueio, req.user.id);

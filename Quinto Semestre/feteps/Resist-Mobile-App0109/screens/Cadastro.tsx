@@ -35,7 +35,7 @@ interface RegisterData{
   senha: string,
   confirmaSenha: string
   telefone: string,
-  permissoes : string[]
+  permissoes : number
 }
 
 export default function RegisterScreen({ navigation }: RegisterScreenProps) {
@@ -102,7 +102,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
       email:email.trim().toLowerCase(),
       senha:senha,
       telefone:'00000000',
-      permissoes: ["aluno"]
+      permissoes: 0
     }
   }
 
@@ -115,6 +115,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 
       const RegisterData = prepareRegisterData()
       console.log('datapreparada')
+      console.log(RegisterData)
       const response = await axios.post(`${ipurl}/user`, RegisterData)
       // Aqui você adicionaria a lógica de cadastro real.
       
@@ -131,10 +132,10 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         
         Alert.alert('Erro', response.data.message || 'Não foi possível fazer login. Tente novamente.');
         
-        console.log(response.status)
+        console.log(response.status, response.data.message)
         
       }} catch (error) {
-        console.log(error)
+        console.log(error,)
       Alert.alert('Erro', 'Não foi possível realizar o cadastro.');
     } finally {
       setIsLoading(false);

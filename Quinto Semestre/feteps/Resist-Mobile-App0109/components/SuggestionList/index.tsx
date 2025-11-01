@@ -6,6 +6,8 @@ import Header from "../Header";
 import { useNavigation } from "expo-router";
 import axios from "axios";
 import Colors from "@/constants/Colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getToken } from "@/services/auth";
 
 interface Suggestion {
     _id: string;
@@ -34,7 +36,9 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${ipurl}/user/sugestoes/${userId}`);
+                const token = await getToken();
+                const config = token ? {headers: { Authorization: `Bearer ${token}`}}:{};
+                const response = await axios.get(`${ipurl}/user/sugestoes/${userId}`, config);
                 setData(response.data);
             } catch (err) {
                 setError('Erro ao carregar os dados');

@@ -34,7 +34,7 @@ except Exception as e:
 
 # Verifica se a conexão foi bem-sucedida antes de continuar
 if client:
-    db = client['resist']
+    db = client['PI']
 
     # Inicializa as classes de tratamento, indexação e acessos
     dado = TratamentoDados(db)
@@ -99,9 +99,9 @@ if client:
                             continue
                         
                         print(f"Nova linha de log detectada: {line.strip()}")
-                        if line.strip() not in self.processed_lines:
-                            threading.Thread(target=self.process_line, args=(line,)).start()
-                            self.processed_lines.add(line.strip())
+                        # if line.strip() not in self.processed_lines:
+                        threading.Thread(target=self.process_line, args=(line,)).start()
+                        self.processed_lines.add(line.strip())
             except Exception as e:
                 print(f"Erro ao monitorar o arquivo de log: {e}")
 
@@ -151,80 +151,98 @@ if client:
                     print(f"Dados extraídos -> URL: {dado.url}, IP: {dado.ip_maquina}, Data/Hora: {dado.data_hora}")
 
                     # Verifica se a URL já foi processada
-                    if dado.url not in self.processed_lines:
-                        if not idx.is_site_indexed(dado.url):
+                    # if dado.url not in self.processed_lines:
+                        # if not idx.is_site_indexed(dado.url):
                             
-                            print(f"URL não indexada previamente. Iniciando indexação de {dado.url}")
-                            html = dado.extract_html(dado.url) or ""
+                    print(f"URL não indexada previamente. Iniciando indexação de {dado.url}")
+                    html = dado.extract_html(dado.url) or ""
                             
-                            clean_html = dado.remove_html_tags(html)
-                            print("HTML limpo de tags para armazenamento local.")
-                            print(f"\n\n~~~~~~~~~~~~\n{clean_html}\n\n~~~~~~~~~~\n\n")
+                    clean_html = dado.remove_html_tags(html)
+                    print("HTML limpo de tags para armazenamento local.")
+                    print(f"\n\n~~~~~~~~~~~~\n{clean_html}\n\n~~~~~~~~~~\n\n")
 
                             # Tirando os caracteres que podem causar problemas no nome do arquivo
                             # hash_nome = hashlib.md5(dado.url.encode()).hexdigest()
-                            nome_arquivo = filename_from_url(dado.url, unique_len=16)
+                    nome_arquivo = filename_from_url(dado.url, unique_len=16)
                             # Lugar para salvar os HTMLs
-                            diretorio_html = os.getenv('HTML_DUMPS_DIR')
+                    diretorio_html = os.getenv('HTML_DUMPS_DIR')
                             
                             #pra linux
                             # caminho_html = os.path.normpath(os.path.join(diretorio_html, f"{nome_arquivo}"))
                             #pra windows
-                            caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}").replace('\\','/')
+                    caminho_html = os.path.join(diretorio_html, f"{nome_arquivo}").replace('\\','/')
                             #ATENÇÃO! remover o .replace da linha acima no linux, e fazer o mesmo em bloqueio
                             
                             # Se não tiver a pasta, ele cria
-                            if not os.path.exists(diretorio_html):
-                                os.makedirs(diretorio_html)
+                    if not os.path.exists(diretorio_html):
+                        os.makedirs(diretorio_html)
                             
-                            payload_bytes = f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}".encode('utf-8')
-                            encrypt_and_atomic_write(caminho_html, payload_bytes)
+                    payload_bytes = f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}".encode('utf-8')
+                    encrypt_and_atomic_write(caminho_html, payload_bytes)
                             
-                            print(f"Arquivo criptografado salvo em: {caminho_html}")
+                    print(f"Arquivo criptografado salvo em: {caminho_html}")
                             
                             # Escreve o HTML no arquivo
                             # with open(caminho_html, 'w', encoding='utf-8') as f:
                             #     f.write(f"<urlDoSite>{dado.url}</urlDoSite>\n{clean_html}")
                                 
-                            print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ caminho:{caminho_html}")
+                    print(f"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ caminho:{caminho_html}")
                            
-                            dado.append_site_to_arm_file(self.position_file_path, dado.extract_site(line.strip()))
-                            self.processed_lines.add(dado.extract_site(line.strip()))  # Marca a URL como processada
-                            print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
+                    dado.append_site_to_arm_file(self.position_file_path, dado.extract_site(line.strip()))
+                    self.processed_lines.add(dado.extract_site(line.strip()))  # Marca a URL como processada
+                    print(f"URL adicionada ao arquivo de controle: {self.position_file_path}")
 
                             # Converte a string de data/hora para um objeto datetime
-                            data_hora_obj = datetime.strptime(dado.data_hora.split('.')[0], "%d-%m-%YT%H:%M:%S")
+                    data_hora_obj = datetime.strptime(dado.data_hora.split('.')[0], "%d-%m-%YT%H:%M:%S")
                             
-                            idx.indexar_site({
-                                "PathLocal": caminho_html,
-                                "urlWeb": dado.url,
-                                "dataHora": data_hora_obj,  # Envia como objeto datetime
-                                "flag": "false",
-                                "ipMaquina": dado.ip_maquina,
-                                "tipoInsercao": "Automatico",
-                            })
-                            print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
-                            bloqueio.bloquear_sites(nome_arquivo)
-                            print("o nome do arquivo é ", nome_arquivo)
-                        else:
-                            print(f"URL {dado.url} já indexada. Salvando como acesso.")
-                            indexed_site = idx.buscar_site_por_url(dado.url)  # Função para buscar o site pelo URL
                             
-                            if indexed_site:
-                                flag = indexed_site.get('flag', None)  # Obter a flag do site indexado
-                            else:
-                                flag = "false"  # Se não encontrar, assume flag como false
+                    print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
+                    result = bloqueio.bloquear_sites(nome_arquivo)
 
-                            
-                            acc.registrar_acesso({
-                                "ipMaquina": dado.ip_maquina,
-                                "urlWeb": dado.url,
-                                "dataHora": dado.data_hora,
-                                "flag":flag
-                            })
-                            print(f"Acesso salvo com sucesso no MongoDB para a URL {dado.url}")
+                    print(dado.url.strip())
+                    print(idx.is_site_indexed(dado.url.strip()))
+                    print(idx.is_site_indexed("cooktest60.vercel.app"))
+                    print(idx.buscar_site_por_url(dado.url.strip()))
+                    print(idx.buscar_site_por_url("cooktest60.vercel.app"))
+                    if idx.is_site_indexed(dado.url.strip())==False:
+                        idx.indexar_site({
+                            "PathLocal": caminho_html,
+                            "urlWeb": dado.url,
+                            "dataHora": data_hora_obj,  # Envia como objeto datetime
+                            "flag": True if result == "bloqueado" else False,
+                            "ipMaquina": dado.ip_maquina,
+                            "tipoInsercao": "Automatico",
+                        })
+                        print("o nome do arquivo é ", nome_arquivo)
                     else:
-                        print(f"URL {dado.url} já processada anteriormente. Ignorando.")
+                        print(f"URL {dado.url} já indexada. Re-verificando e salvando como acesso.")
+                        indexed_site = idx.buscar_site_por_url(dado.url)  # Função para buscar o site pelo URL
+                        
+                        idx.atualizar_indexacao(
+                            urlWeb=dado.url.strip(),
+                            dados_atualizados={
+                                "PathLocal": caminho_html,
+                                # "motivo": "?"
+                                "urlWeb": dado.url,
+                            }
+                        )
+
+                        indexed_site = idx.buscar_site_por_url(dado.url)  # Trocar por uma resposta do atualizar indexacao, que vai trazer a flag.
+                        if indexed_site:
+                            flag = indexed_site.get('flag', None)  # Obter a flag do site indexado
+                        else:
+                            flag = "false"  # Se não encontrar, assume flag como false
+
+                                
+                        acc.registrar_acesso({
+                            "ipMaquina": dado.ip_maquina,
+                            "urlWeb": dado.url,
+                            "dataHora": dado.data_hora,
+                            "flag":flag
+                        })
+                        print(f"Acesso salvo com sucesso no MongoDB para a URL {dado.url}")
+                    # else:
+                        # print(f"URL {dado.url} já processada anteriormente. Ignorando.")
                 else:
                     print("Nenhuma URL válida encontrada na linha de log.")
 
@@ -240,13 +258,45 @@ if client:
                     pass
                 print(f"Arquivo criado: {file_path}")
 
+
+    def login_and_get_token():
+        """Logs into the API and sets the auth token as an environment variable."""
+        api_base_url = os.getenv('API_URL', 'http://localhost:4000/api')
+        login_url = f"{api_base_url}/login"
+        email = os.getenv('SYSTEM_EMAIL')
+        password = os.getenv('SYSTEM_PASSWORD')
+
+        if not email or not password:
+            print("Erro: SYSTEM_EMAIL e SYSTEM_PASSWORD devem ser definidos no ambiente.")
+            return False
+
+        try:
+            print("Tentando fazer login na API para obter o token...")
+            response = requests.post(login_url, json={"email": email, "senha": password})
+            response.raise_for_status()  # Lança exceção para status de erro (4xx/5xx)
+            
+            token = response.json().get('token')
+            if token:
+                os.environ['API_TOKEN'] = token
+                print("Login bem-sucedido. Token de autenticação obtido e configurado.")
+                return True
+            else:
+                print("Erro: Token não encontrado na resposta da API.")
+                return False
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao fazer login na API: {e}")
+            return False
+
     def main():
         check_required_files()
-        squid_log_file_path = os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
-        position_file_path = os.getenv('ARM_FILE_PATH', '/root/arm.txt')
-        print("Inicializando monitor de log...")
-        monitor = MonitorLog(squid_log_file_path, position_file_path)
-        monitor.tail_file()
+        if login_and_get_token():
+            squid_log_file_path = os.getenv('LOGS_FILE_PATH', '/root/logs.txt')
+            position_file_path = os.getenv('ARM_FILE_PATH', '/root/arm.txt')
+            print("Inicializando monitor de log...")
+            monitor = MonitorLog(squid_log_file_path, position_file_path)
+            monitor.tail_file()
+        else:
+            print("Encerrando o programa devido a falha no login da API.")
 
     if __name__ == "__main__":
         print("Iniciando o script principal...")
