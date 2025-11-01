@@ -5,14 +5,11 @@ import { s } from "./style";
 import Header from "../Header";
 import { useNavigation } from "expo-router";
 import axios from "axios";
-<<<<<<< Updated upstream
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getToken } from "@/services/auth";
-=======
 import Colors from "@/constants/Colors";
 import errorimg from '@/assets/images/error.png';
 import correctimg from '@/assets/images/correct.png';
->>>>>>> Stashed changes
 
 interface Suggestion {
     _id: string;
