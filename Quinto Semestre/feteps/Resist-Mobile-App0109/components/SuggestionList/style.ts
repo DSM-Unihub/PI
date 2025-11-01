@@ -6,7 +6,8 @@ export const s = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EBEFFB',
-        marginBlockEnd:70
+        marginBlockEnd:70,
+        marginHorizontal:-18,
     },
     header: {
         backgroundColor: '#607bff',// Azul normal
@@ -32,21 +33,20 @@ export const s = StyleSheet.create({
     table: {
         marginTop: 10,
         borderColor: '#ccc',
-        borderRadius:15,
-        backgroundColor:'#fff',
+        // backgroundColor:'#fff',
         padding:5,
         flex:1,
     },
     row: {
         flexDirection: 'row',   
-        padding: 10,
+        padding: hp('2%'),
         borderBottomWidth: 0,
         borderBottomColor: '#ccc',
     },
     
     headerRow: {
         flexDirection: 'row',
-        padding: 10,
+        padding: hp('2%'),
         borderBottomWidth: 1,
         borderBottomColor: '#e6ebffff',
         marginBottom:5
