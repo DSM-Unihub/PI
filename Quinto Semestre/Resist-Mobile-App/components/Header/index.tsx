@@ -17,8 +17,12 @@ export default function Header(){
                 <View style={s.searchContainer}>
                     
                     
-                        <Image source={require('@/assets/images/pending.png')} style={s.iconContainer} />
-                    
+                        <Image source={require('@/assets/images/pfp.png')} style={s.iconContainer} />
+                        <View style={{ marginLeft: wp('3%'), flexDirection: 'column' }}>
+                            <Text style={s.headerTitle}>Caio Bronescheki</Text>
+                            <Text style={s.headerSubTitle}>Aluno</Text>
+                        </View>
+                        <Image source={require('@/assets/images/icon.png')} style={s.iconContainer2} />
                 </View>
                 <Text style={s.headerText}>Olá, Caio!</Text>
                 <Text style={s.subHeaderText}>Bem-vindo.</Text>

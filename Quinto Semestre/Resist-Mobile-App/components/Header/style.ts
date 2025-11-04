@@ -6,14 +6,14 @@ export const s = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#EBEFFB',
-        overflow:'hidden'
+        overflow:'hidden',
     },
     header: {
         backgroundColor: '#607bff',// Azul normal
         padding: 0,
         height:270,
         margin:0,
-        overflow:'hidden'
+        overflow:'hidden',
     },
 
     imageStyle:{
@@ -37,7 +37,8 @@ export const s = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'flex-start',
         verticalAlign:'top',
-        marginBottom: hp('4%'), // Space between search bar and text
+        flex: 1,
+        marginTop: hp(''), // Space between search bar and text
         
     },
     searchInput: {
@@ -62,11 +63,23 @@ export const s = StyleSheet.create({
         fontFamily: fonts.RobotoBold700,
         color: '#fff',
         fontSize: wp('6%'), 
+        marginLeft:wp('2%'),
+    },
+    headerTitle: {
+        fontFamily: fonts.RobotoRegular400,
+        color: '#fff',
+        fontSize: wp('3.4%'), 
+    },
+    headerSubTitle: {
+        fontFamily: fonts.RobotoBold700,
+        color: '#fff',
+        fontSize: wp('3.4%'), 
     },
     subHeaderText: {
         color: '#fff',
         fontSize: wp('4.3%'), 
-        fontFamily: fonts.RobotoRegular400,
+        fontFamily: fonts.RobotoRegular400, 
+        marginLeft:wp('2%'),
     },
     iconContainer: {
          backgroundColor:'#fff',
@@ -76,5 +89,12 @@ export const s = StyleSheet.create({
          width: hp('5.6%'),
          borderRadius:13,
          marginLeft:wp('2.2%'),
+    },
+    iconContainer2: {
+         paddingVertical: hp('1.3%'),
+         paddingHorizontal: wp('2.4%'),
+         height: hp('5%'),
+         width: hp('4%'),
+         marginLeft:wp('44.2%'),
     }
 })
