@@ -16,25 +16,9 @@ export default function Header(){
             >
                 <View style={s.searchContainer}>
                     
-                    <View style={s.searchLogoAndInput}>
-                    <Image source={require('@/assets/images/icon/search.png')} alt="Search Icon" style={{height:hp('2.2%'), width:wp('4.8%')}} />
                     
-                    <TextInput 
-                        style={s.searchInput} 
-                        placeholder="Pesquisar"
-                        placeholderTextColor='#9AA7D6'
-                    >
-                        {/* <Image source={require('@/assets/images/icon/search.png')} alt="Search Icon" /> */}
+                        <Image source={require('@/assets/images/pending.png')} style={s.iconContainer} />
                     
-                    </TextInput>
-
-                    </View>
-                    <TouchableOpacity style={s.iconContainer}>
-                        <FontAwesome name="bell" size={22} color='#2B438DD9' />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={s.iconContainer}>
-                        <AntDesign name="user" size={22} color="#2B438DD9" />
-                    </TouchableOpacity>
                 </View>
                 <Text style={s.headerText}>Olá, Caio!</Text>
                 <Text style={s.subHeaderText}>Bem-vindo.</Text>

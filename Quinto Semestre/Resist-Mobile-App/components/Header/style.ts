@@ -72,6 +72,8 @@ export const s = StyleSheet.create({
          backgroundColor:'#fff',
          paddingVertical: hp('1.3%'),
          paddingHorizontal: wp('2.4%'),
+         height: hp('5.6%'),
+         width: hp('5.6%'),
          borderRadius:13,
          marginLeft:wp('2.2%'),
     }

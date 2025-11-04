@@ -5,11 +5,10 @@ import { s } from "./style";
 import Header from "../Header";
 import { useNavigation } from "expo-router";
 import axios from "axios";
+import Colors from "@/constants/Colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getToken } from "@/services/auth";
-import Colors from "@/constants/Colors";
-import errorimg from '@/assets/images/error.png';
-import correctimg from '@/assets/images/correct.png';
+import StatusIcon from "../StatusIcon";
 
 interface Suggestion {
     _id: string;
@@ -28,6 +27,12 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
     const [data, setData] = useState<Suggestion[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+
+    // p definir a cor de fundo alternadamente :P
+    const backgroundColor = (id:number) =>{
+        return id % 2 === 0 ? "#fff" : "";
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,21 +75,21 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
                     <ImageBackground source={require('@/assets/images/background.png')}>
                     </ImageBackground>
                     <Text style={s.headerCell}>Data</Text>
-                    <Text style={s.headerCell}>URL do site</Text>
-                    <Text style={s.headerCell}>Situação</Text>
+                    <Text style={s.headerCell}>URL</Text>
+                    <Text style={s.headerAlt}>Status</Text>
                 </View>
                 <FlatList
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => (
                         <TouchableOpacity
-                            style={s.row}
+                            style={[s.row, {backgroundColor: backgroundColor(index)}]}
                             onPress={() => navigation.navigate('Details', { suggestion: item })}
                         >
                             <Text style={s.cell}>{formatDate(item.dataHora)}</Text>
                             <Text style={s.cell}>{item.url}</Text>
+                            <StatusIcon status={item.situacao} />
                             {/* <Text style={s.cell}>{item.tipo ? "bloqueio" : "desbloqueio"}</Text> */}
-                            if(item.url)<Image source={require('@/assets/images/correct.png')}></Image>
                         </TouchableOpacity>
                     )}
                 />
