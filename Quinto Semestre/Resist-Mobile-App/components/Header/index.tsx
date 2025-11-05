@@ -3,9 +3,21 @@ import { s } from "./style";
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { CustomTextInput } from "../CustomTextInput";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-
+import { getUser } from "@/services/auth";
+import { useEffect, useState } from "react";
 
 export default function Header(){
+    const [user, setUser] = useState<any>(null);
+
+    useEffect(() => {
+        async function fetchUser() {
+            const userData = await getUser();
+            setUser(userData);
+        }
+        fetchUser();
+    }, []);
+
+    if (!user) return <Text>Loading...</Text>;
     return(
         <View style={s.header}>
             <ImageBackground 
@@ -19,12 +31,12 @@ export default function Header(){
                     
                         <Image source={require('@/assets/images/pfp.png')} style={s.iconContainer} />
                         <View style={{ marginLeft: wp('3%'), flexDirection: 'column' }}>
-                            <Text style={s.headerTitle}>Caio Bronescheki</Text>
-                            <Text style={s.headerSubTitle}>Aluno</Text>
+                            <Text style={s.headerTitle}>{user.nome}</Text>
+                            <Text style={s.headerSubTitle}>{user.permissoes === 0 ? 'Aluno' : user.permissoes === 1 ? "Professor" : "Administrador"}</Text>
                         </View>
                         <Image source={require('@/assets/images/icon.png')} style={s.iconContainer2} />
                 </View>
-                <Text style={s.headerText}>Olá, Caio!</Text>
+                <Text style={s.headerText}>Olá, {user.nome}!</Text>
                 <Text style={s.subHeaderText}>Bem-vindo.</Text>
             </ImageBackground>
         </View>

@@ -18,7 +18,8 @@ import SwitchTabs from '@/components/switchTabs';
 import AuthTabs from '@/components/AuthTabs';
 import axios from 'axios';
 import { fonts } from '@/constants/Fonts';
-import { saveToken } from '@/services/auth'; // nova importação
+import { saveToken }from '@/services/auth';
+import { saveUser }from '@/services/auth'; 
 
 type RootStackParamList = {
   Login: undefined;
@@ -99,9 +100,14 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       
       if (response.status==200) {
         const token = response.data?.token;
+        const user = response.data?.user;
         const userId = response.data.user.id;
         if(token){
           await saveToken(token); // Salva o token usando a função importada
+        }
+
+        if(user){
+          await saveUser(user); // Salva o usuário usando a função importada
         }
         navigation.navigate('List', { userId });
       } else {
