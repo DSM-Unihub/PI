@@ -31,7 +31,7 @@ const  createSugestao= async (req, res) => {
       const dados = JSON.parse(req.body.dados);
       const { idUser, url, motivo, tipo } = dados;
       const foto = req.files && req.files['foto'] && req.files['foto'][0] ? req.files['foto'][0].filename : undefined;
-      const situacao = "Pendente"
+      let situacao = "Pendente"
       let creatorLevel = null;
       const authHeader = req.headers.authorization;
       if (authHeader && authHeader.startsWith('Bearer ')){
@@ -45,7 +45,10 @@ const  createSugestao= async (req, res) => {
       }
 
       if(creatorLevel >= 1){
-        situacao = "Aprovado"
+        situacao = "Aceito"
+      }
+      else{
+        situacao = "Pendente"
       }
 
       const sugestao = await sugestaoService.createSugestao({

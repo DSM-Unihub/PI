@@ -18,7 +18,7 @@ class SugestaoService {
         url: data.url,
         motivo: data.motivo || "Valor não preenchido",
         tipo: data.tipo,
-        situacao: 'Pendente',
+        situacao: data.situacao || "Pendente",
         foto: data.foto || ""
     };
     const novaSuGestao = new Sugestao(sugestaoDatas)

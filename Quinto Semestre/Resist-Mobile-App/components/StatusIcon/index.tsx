@@ -8,11 +8,11 @@ export default function StatusIcon({ status }: { status: string }, Customstyle?:
     let size;
 
     switch (status) {
-        case "Aprovado":
+        case "Aceito":
             icon = require('@/assets/images/correct.png');
             size = { width: wp('4%'), height: hp('1.8%') };
             break;
-        case "Reprovado":
+        case "Recusado":
             icon = require('@/assets/images/error.png');
             size = { width: wp('3.80%'), height: hp('2.1%') };
             break;
