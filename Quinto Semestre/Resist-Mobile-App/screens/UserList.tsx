@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import CustomText from '@/components/CustomText';
 import SuggestionList from '@/components/SuggestionList';
@@ -7,6 +7,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Header from '@/components/Header';
 import {widthPercentageToDP as hp} from '@/utils/widthPercentageToDP'; 
+import { getUser } from '@/services/auth';
 
 type RootStackParamList = {
     Camera: undefined;
@@ -19,13 +20,24 @@ export default function UserList() {
     const route = useRoute();
     const navigation = useNavigation<NavigationProp>();
     const { userId } = route.params as { userId: string };
+    const [user, setUser] = useState<any>(null);
+    
+        useEffect(() => {
+            async function fetchUser() {
+                const userData = await getUser();
+                setUser(userData);
+            }
+            fetchUser();
+        }, []);
 
+    
+        if (!user) return (<CustomText>Loading...</CustomText>);
     return (
       <View style={styles.generalcontainer}>
         
           <Header />
           <View style={styles.container}>
-            <CustomText title="Minhas sugestões"/>
+            <CustomText title={user.permissoes===0 ? "Minhas sugestões" : "Meus bloqueios e desbloqueios"}/>
             <SuggestionList userId={userId} navigation={navigation} />
             <FabButton 
                 userId={userId} 

@@ -22,7 +22,76 @@ class SugestaoService {
         foto: data.foto || ""
     };
     const novaSuGestao = new Sugestao(sugestaoDatas)
-    return await novaSuGestao.save();
+    await novaSuGestao.save();
+
+    if (novaSuGestao.situacao === 'Aceito') {
+        try {
+          // Tenta encontrar uma indexação existente
+          const indexacaoExistente = await indexacaoService.getIndexacaoByUrl(novaSuGestao.url);
+          
+          // Se encontrou, atualiza a flag baseado no tipo
+          if (indexacaoExistente) {
+            await Indexacao.updateMany(
+              { urlWeb: novaSuGestao.url },
+              { $set: { flag: novaSuGestao.tipo } } // tipo é true/false
+            );
+          } else {
+            // Se não encontrou, cria uma nova indexação
+            await indexacaoService.createBlock({
+              url: novaSuGestao.url,
+              motivo: novaSuGestao.motivo,
+              tipoInsercao: "Manual",
+              flag: novaSuGestao.tipo, // tipo é true/false
+              urlWeb: novaSuGestao.url
+            });
+          }
+
+          // Atualiza o arquivo de bloqueados
+          await atualizarArquivoBloqueados(
+            novaSuGestao.url,
+            novaSuGestao.tipo // tipo é true/false
+          );
+
+          if(novaSuGestao.tipo === true){
+            await logService.createLog(
+              idAdmin,
+              novaSuGestao.url,
+              'Criacao_bloqueio_URL',
+            )
+          } else {
+            await logService.createLog(
+              idAdmin,
+              novaSuGestao.url,
+              'Criacao_desbloqueio_URL',
+            )
+          }
+
+          console.log("Sugestão aceita: Indexação e arquivo bloqueados atualizados com sucesso.");
+        } catch (error) {
+          console.error("Erro ao processar indexação:", error);
+          // Não propaga o erro para não afetar a atualização da sugestão
+        }
+      } else if (novaSuGestao.situacao === 'Recusado') {
+        console.log("Sugestão recusada: Nenhuma ação tomada na indexação nem no arquivo.");
+
+        if(novaSuGestao.tipo === true){
+          await logService.createLog(
+            idAdmin,
+            novaSuGestao.url,
+            'Recusa_bloqueio_URL',
+          )
+        } else {
+          await logService.createLog(
+            idAdmin,
+            novaSuGestao.url,
+            'Recusa_desbloqueio_URL',
+          )
+        }
+      }
+
+      return novaSuGestao;
+
+    
 
     }catch(error){
       console.log(error)

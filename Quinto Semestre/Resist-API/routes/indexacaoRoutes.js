@@ -17,10 +17,14 @@ router.get("/bloqueios", Auth, authorizeRoles(1), indexacaoController.getAllBloc
 
 router.get("/bloqueios/url/:url", Auth, authorizeRoles(1), indexacaoController.getIndexacaoByUrl);
 
+// router.get("/bloqueios/user/:id", Auth, authorizeRoles(1), indexacaoController.getIndexacoesByUser);
+
 router.post("/bloqueios", Auth, authorizeRoles(1), indexacaoController.createBlock);
 
 router.put("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.updateBlock);
 
 router.delete("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.deleteBlock);
+
+
 
 export default router;

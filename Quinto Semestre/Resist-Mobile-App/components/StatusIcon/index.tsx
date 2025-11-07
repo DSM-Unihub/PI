@@ -14,7 +14,7 @@ export default function StatusIcon({ status }: { status: string }, Customstyle?:
             break;
         case "Reprovado":
             icon = require('@/assets/images/error.png');
-            size = { width: wp('4%'), height: hp('1.8%') };
+            size = { width: wp('3.80%'), height: hp('2.1%') };
             break;
         case "Pendente":
             icon = require('@/assets/images/pending.png');

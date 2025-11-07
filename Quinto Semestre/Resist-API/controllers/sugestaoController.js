@@ -4,6 +4,7 @@ import multer from 'multer';
 import crypto from 'crypto';
 import path from 'path';
 import logService from "../services/logService.js";
+import jwt from "jsonwebtoken";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -29,8 +30,23 @@ const  createSugestao= async (req, res) => {
       console.log("REQ FILE:", req.file);
       const dados = JSON.parse(req.body.dados);
       const { idUser, url, motivo, tipo } = dados;
-
       const foto = req.files && req.files['foto'] && req.files['foto'][0] ? req.files['foto'][0].filename : undefined;
+      const situacao = "Pendente"
+      let creatorLevel = null;
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')){
+        const token = authHeader.split(' ')[1];
+        try{
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          creatorLevel = Number(decoded.permissoes ?? 0);
+        } catch(e){
+          creatorLevel = null;
+        }
+      }
+
+      if(creatorLevel >= 1){
+        situacao = "Aprovado"
+      }
 
       const sugestao = await sugestaoService.createSugestao({
         idUser,
@@ -38,6 +54,7 @@ const  createSugestao= async (req, res) => {
         motivo,
         tipo,
         foto,
+        situacao
       });
       res.status(201).json(sugestao);
     } catch (error) {

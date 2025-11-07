@@ -400,6 +400,20 @@ async getIndexacaoByUrl(url) {
   }
 }
 
+// async getIndexacoesByUser(user){
+//   try{
+//     if(!user){
+//       throw new Error("Usuário é obrigatório")
+//     }
+
+//     const indexacoes = await Indexacao.find({ idUser : user });
+//     return indexacoes
+//   } catch (error){
+//     console.error("Erro ao buscar indexações por id do usuário: ", error)
+//     throw new Error(error.message || "Erro ao buscar indexações por id do usuário")
+//   }
+// }
+
 }
 
 export default new indexacaoService();

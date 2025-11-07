@@ -162,6 +162,30 @@ const getIndexacaoByUrl = async (req, res) => {
       });
   }
 };
+// const getIndexacoesByUser = async (req, res)=>{
+//     try{
+//       const {user} = req.params;
+    
+
+//     if (!user){
+//       return res.status(400).json({error: "Usuário é obrigatório"})
+//     }
+  
+//     const indexacoes = await indexacaoService.getIndexacoesByUser(user);
+
+//     res.status(200).json({
+//       success: true,
+//       data: indexacoes
+//     });
+//   } catch (error){
+//     console.error("Erro ao buscar indexacao por usuario:", user);
+//     res.status(error.message.includes("Não encontrada") ? 404 : 500)
+//     .json({
+//       success: false,
+//       error: error.message || "Erro ao buscar indexação por usuário"
+//     })
+//   }
+// };
 
 export default {
   getEstatisticasLabs,
@@ -173,4 +197,5 @@ export default {
   updateBlock,
   deleteBlock,
   getIndexacaoByUrl,
+  // getIndexacoesByUser,
 };
