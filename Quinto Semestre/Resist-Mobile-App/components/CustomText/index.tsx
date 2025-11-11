@@ -3,12 +3,13 @@ import { s } from "./style";
 
 interface CustomTextProps extends TextProps {
     title: string;
+    style?: any;
 }
 
-export default function CustomText({title}:CustomTextProps) {
+export default function CustomText({title, style}:CustomTextProps) {
     return (
         <>
-        <Text style={s.Text}>{title}</Text>
+        <Text style={[s.Text, style]}>{title}</Text>
         </>
     );
   }

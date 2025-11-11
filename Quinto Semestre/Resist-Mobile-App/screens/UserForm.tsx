@@ -16,6 +16,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { launchImageLibrary } from 'react-native-image-picker';
 import { PermissionsAndroid, Platform } from 'react-native';
 import Colors from '@/constants/Colors';
+import { IconButton } from '@/components/IconButton';
 
   
 type RootStackParamList = {
@@ -237,11 +238,26 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
 
         <CustomText title="Possui alguma prova do ocorrido? Anexe aqui:" />
 
-        <CustomButton
+        <IconButton
           style={styles.button}
-          title="Selecionar Imageem"
+          title= {
+            foto 
+            ? (()=>{
+              const nomeArquivo = foto.slice(foto.lastIndexOf('/') + 1);
+              const maxLength = 15;
+              if (nomeArquivo.length > maxLength) {
+                const inicio = nomeArquivo.slice(0, 7);
+                const fim = nomeArquivo.slice(-7);
+                return `${inicio}...${fim}`;
+              }
+              return nomeArquivo;
+            })()
+            : 'Selecionar Imagem'}
           onPress={handleSelectImage}
         />
+
+        <CustomText style={{fontSize:wp('3.2s%'), marginTop:hp('-2.6%'), marginBottom:hp('0%')}} title="Formatos suportados: PNG, JPG, JPEG, PDF." />
+        <CustomText style={{fontSize:wp('3.2s%'), marginTop:hp('-1.8%'), marginBottom:hp('0%')}} title="Máximo de 10Mb." />
 
         {foto ? (
           <Pressable onPress={() => setIsModalVisible(true)}>
@@ -249,6 +265,7 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
           </Pressable>
         ) : null}
 
+          
         <Modal visible={isModalVisible} transparent onRequestClose={() => setIsModalVisible(false)}>
           <Pressable onPress={() => setIsModalVisible(false)} style={styles.modalBackground}>
             {foto && <Image source={{ uri: foto }} style={styles.fullImage} />}
