@@ -5,7 +5,7 @@ export const s = StyleSheet.create({
     
     container: {
         flex: 1,
-        backgroundColor: '#EBEFFB',
+        backgroundColor: '#DCE5FE',
         marginBlockEnd:70,
         marginHorizontal:-18,
     },
@@ -52,7 +52,7 @@ export const s = StyleSheet.create({
         padding: hp('2%'),
         paddingLeft: hp('2%'),
         borderBottomWidth: 1,
-        borderBottomColor: '#e6ebffff',
+        borderBottomColor: '#DCE5FE',
         marginBottom:5
     },
     headerCell: {
@@ -60,7 +60,7 @@ export const s = StyleSheet.create({
         marginRight:wp('3%'),
         fontFamily:fonts.VarelaRegular400,
         fontSize:wp('3%'),
-        color:'#5C6CA2',
+        color:'#4D63A1',
         alignSelf:'flex-start', 
         textAlign:'left',
     },
@@ -68,7 +68,7 @@ export const s = StyleSheet.create({
         flex: 1,
         fontFamily:fonts.VarelaRegular400,
         fontSize:wp('3%'),
-        color:'#5C6CA2',
+        color:'#4D63A1',
         alignSelf:'flex-start', 
         textAlign:'right',
     },
@@ -79,7 +79,7 @@ export const s = StyleSheet.create({
         marginRight:wp('-10%'),
         fontFamily:fonts.VarelaRegular400,
         fontSize:wp('3%'),
-        color:'#5C6CA2',
+        color:'#4D63A1',
         
     },
 })

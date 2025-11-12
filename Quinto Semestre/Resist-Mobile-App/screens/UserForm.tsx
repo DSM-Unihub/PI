@@ -289,10 +289,10 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
 const styles = StyleSheet.create({
   generalcontainer: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
   },
   container: {
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     paddingVertical: 10,
     paddingHorizontal: 18,
     flex: 1,

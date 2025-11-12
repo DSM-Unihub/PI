@@ -27,7 +27,7 @@ module.exports = {
         "cinza-principal": "#CCD5F0",
         "cinza-secundario": "#F1EFFC",
         "cinza-CM":"#8E9ECC",
-        "cinza-gradiente-final":"#EBEFFB",
+        "cinza-gradiente-final":"#DCE5FE",
         "cinza-gradiente-inicio": "#D7E1FF",
         "laranja-s": "#FD6A4B",
         "laranja-e": "#F34822",

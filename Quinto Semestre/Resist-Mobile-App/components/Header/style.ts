@@ -5,7 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 export const s = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#EBEFFB',
+        backgroundColor: '#DCE5FE',
         overflow:'hidden',
     },
     header: {

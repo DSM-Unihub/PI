@@ -1,12 +1,13 @@
 import { fonts } from "@/constants/Fonts";
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const s = StyleSheet.create({
     input: {
         backgroundColor: '#fff',
         paddingHorizontal: 28,
         paddingVertical: 22,
-        borderRadius: 25,
+        borderRadius: wp('2.2%'),
         marginBottom: 20,
         fontSize:23,
         fontFamily: fonts.UrbanistSemiBold600,

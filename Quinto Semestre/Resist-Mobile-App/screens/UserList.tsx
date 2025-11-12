@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
     headerCell: {
         flex: 1,
         fontWeight: 'bold',
-        color:'#5C6CA2',
+        color:'#4D63A1',
     },
     cell: {
         flex: 1,
-        color:'#5C6CA2',
+        color:'#4D63A1',
     },
 });

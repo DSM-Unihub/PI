@@ -12,14 +12,14 @@ export const s = StyleSheet.create({
       bottom:'2%',
     },
     primaryButton: {
-      backgroundColor: '#0056FF',
+      backgroundColor: '#537FFF',
       marginTop:70,
       
     },
     secondaryButton: {
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: '#0056FF',
+      borderColor: '#537FFF',
     },
     buttonText: {
       fontFamily: fonts.UrbanistExtraBold800,
@@ -29,6 +29,6 @@ export const s = StyleSheet.create({
       color: '#fff',
     },
     secondaryText: {
-      color: '#0056FF',
+      color: '#537FFF',
     },
   }); 

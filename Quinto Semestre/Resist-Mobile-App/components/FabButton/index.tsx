@@ -26,13 +26,23 @@ export default function FabButton({ userId, icon = 'plus', position = 'bottom', 
 
     const getIcon = () => {
         if (icon === 'camera') {
-            return <Image 
-                style={s.floatingButton}
-                source={require('@/assets/images/camerabutton.png')}/>;
+            return (
+            <View style={s.containerIcon}>
+                    <Image
+                        style={s.floatingButton}
+                        source={require('@/assets/images/qrCode.png')}
+                    />
+                </View>
+            );
         }
-        return <Image 
-            style={s.floatingButton}
-            source={require('@/assets/images/plusbutton.png')}/>;
+        return (
+            <View style={s.containerIcon}>
+                <Image
+                    style={s.floatingButton}
+                    source={require('@/assets/images/plus.png')}
+                />
+            </View>
+        );
     };
 
     const getPosition = () => {

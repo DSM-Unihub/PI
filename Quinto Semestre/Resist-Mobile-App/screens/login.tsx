@@ -194,7 +194,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
         {isLoading && (
           <ActivityIndicator 
             size="large" 
-            color="#0056FF" 
+            color="#537FFF" 
             style={styles.loader}
           />
         )}
@@ -208,14 +208,14 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     padding: 44,
   },
 
   
   topPart: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     justifyContent: 'center',
   },
   footerText: {
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   registerText: {
-    color: '#0056FF',
+    color: '#537FFF',
     fontWeight:'bold',
   },
   errorText: {

@@ -215,7 +215,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         {isLoading && (
           <ActivityIndicator
             size="large"
-            color="#0056FF"
+            color="#537FFF"
             style={styles.loader}
           />
         )}
@@ -227,16 +227,16 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     padding: 44,
   },
   topPart: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     justifyContent: 'center',
   },
   footerText: {
-    color: '#4A71E4',
+    color: '#3C63D2',
     textAlign: 'left',
     fontSize: 16,
     marginBottom: 30,
