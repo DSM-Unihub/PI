@@ -1,15 +1,16 @@
 import { fonts } from "@/constants/Fonts";
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const s = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: 'white', // sem fundo
-    borderRadius:22,
+    borderRadius: wp('2.6%'),
     paddingVertical: 5,
     justifyContent: 'space-around',
     marginBottom: 60,
-    marginInline:45, // espaçamento inferior, se necessário,
+    marginInline:wp('6%'), // espaçamento inferior, se necessário,
     borderTopWidth: 0,
     borderColor: '#DDD',
     position: 'absolute', // fixa na parte inferior
@@ -21,7 +22,7 @@ export const s = StyleSheet.create({
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical:hp('1.6%') ,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent', // sem fundo,
@@ -29,12 +30,12 @@ export const s = StyleSheet.create({
   },
   activeTab: {
     backgroundColor: '#537FFF',
-    borderRadius: 20,
+    borderRadius: wp('2.8%'),
   },
   tabText: {
     color: '#8E9ECC',
     fontFamily: fonts.UrbanistExtraBold800,
-    fontSize: 18,
+    fontSize: wp('3.2%'),
   },
   activeTabText: {
     color: '#fff',

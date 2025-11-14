@@ -171,7 +171,12 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           showPassword={showPassword}
           onTogglePassword={() => setShowPassword(!showPassword)}
         />
+
+        <Text style={styles.footerText}>
+          Esqueceu sua senha? Clique aqui.
+        </Text>
         {errors.senha ? <Text style={styles.errorText}>{errors.senha}</Text> : null}
+
 
         <CustomButton
           title={isLoading ? "Entrando..." : "Login"}
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#DCE5FE',
-    padding: 44,
+    padding: wp('6%'),
   },
 
   

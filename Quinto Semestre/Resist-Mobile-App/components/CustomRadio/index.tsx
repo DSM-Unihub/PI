@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, View, StyleSheet, Image } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 
-export default function CustomRadio({ label, selected, onPress }) {
+export default function CustomRadio({ label, selected, onPress  }) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={[styles.radio, selected && styles.radioSelected]}>

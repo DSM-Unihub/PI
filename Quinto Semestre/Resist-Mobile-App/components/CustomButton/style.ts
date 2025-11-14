@@ -1,20 +1,20 @@
 import { fonts } from "@/constants/Fonts";
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const s = StyleSheet.create({
     button: {
-      padding: 18,
-      borderRadius: 25,
+      padding: hp('2%'),
+      borderRadius: wp('2.5%'),
       alignItems: 'center',
-      paddingVertical:20,
-      width:'100%',
-      alignSelf:'center',
-      bottom:'2%',
+      paddingVertical: hp('2%'),
+      width: '100%',
+      alignSelf: 'center',
+      bottom: hp('0%'),
     },
     primaryButton: {
       backgroundColor: '#537FFF',
-      marginTop:70,
-      
+      marginTop: hp('7%'),
     },
     secondaryButton: {
       backgroundColor: 'transparent',

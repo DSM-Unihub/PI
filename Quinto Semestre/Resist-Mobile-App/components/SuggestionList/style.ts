@@ -7,7 +7,7 @@ export const s = StyleSheet.create({
         flex: 1,
         backgroundColor: '#DCE5FE',
         marginBlockEnd:70,
-        marginHorizontal:-18,
+        marginHorizontal:wp('-4%'),
     },
     header: {
         backgroundColor: '#607bff',// Azul normal
@@ -53,21 +53,22 @@ export const s = StyleSheet.create({
         paddingLeft: hp('2%'),
         borderBottomWidth: 1,
         borderBottomColor: '#DCE5FE',
+        backgroundColor: '#F2F5FF',
         marginBottom:5
     },
     headerCell: {
         flex: 1,
         marginRight:wp('3%'),
-        fontFamily:fonts.VarelaRegular400,
-        fontSize:wp('3%'),
+        fontFamily:fonts.urbanistMedium500,
+        fontSize:wp('3.8%'),
         color:'#4D63A1',
         alignSelf:'flex-start', 
         textAlign:'left',
     },
     headerAlt: {
         flex: 1,
-        fontFamily:fonts.VarelaRegular400,
-        fontSize:wp('3%'),
+        fontFamily:fonts.urbanistMedium500,
+        fontSize:wp('3.8%'),
         color:'#4D63A1',
         alignSelf:'flex-start', 
         textAlign:'right',
@@ -77,8 +78,8 @@ export const s = StyleSheet.create({
         alignSelf:'flex-start',
         textAlign:'left',
         marginRight:wp('-10%'),
-        fontFamily:fonts.VarelaRegular400,
-        fontSize:wp('3%'),
+        fontFamily:fonts.urbanistMedium500,
+        fontSize:wp('3.8%'),
         color:'#4D63A1',
         
     },

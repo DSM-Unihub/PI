@@ -32,7 +32,7 @@ export function CustomTextInput({
           <Icon
             name={showPassword ? 'eye' : 'eye-off'}
             size={28}
-            color="#aaa"
+            color="#9AA7D6"
           />
         </TouchableOpacity>
       </View>

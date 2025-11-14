@@ -152,7 +152,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <Title>Cadastro</Title>
+        <Title style={styles.title}>Cadastro</Title>
         <Text style={styles.footerText}>
           Insira seus dados para realizar o cadastro em nossa plataforma. Por favor, informe seus dados:
         </Text>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#DCE5FE',
-    padding: 44,
+    padding: wp('6%'),
   },
   topPart: {
     flex: 1,
@@ -238,9 +238,9 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#3C63D2',
     textAlign: 'left',
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 30,
-    fontFamily: fonts.UrbanistSemiBold600,
+    fontFamily: fonts.urbanistRegular400,
   },
   errorText: {
     color: '#ff4444',
@@ -257,5 +257,8 @@ const styles = StyleSheet.create({
   scrollContainer: {
   flexGrow: 1,
   justifyContent: 'center',
+},
+title:{
+  fontFamily: fonts.urbanistRegular400
 }
 });
