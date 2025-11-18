@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius:14
   },
   subtitleText: {
-    color: '#5C6CA2',
+    color: '#4D63A1',
     backgroundColor:'#fff',
     paddingVertical:10,
     fontSize: 16,

@@ -1,10 +1,15 @@
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const s = StyleSheet.create({
 
     container:{
-        backgroundColor: 'white',
-        padding:10
+        padding:10,
+    },
+    containerIcon:{
+        padding: wp('3.4%'),
+        borderRadius: wp('6.8%'),
+        backgroundColor: '#FFFFFF',
     },
     titleStyle:{
         fontSize:28,
@@ -18,9 +23,9 @@ export const s = StyleSheet.create({
         height:50,
         alignItems:'center',
         justifyContent:'center',
-        right:30,
+        right:20,
         bottom:80,
-        zIndex:10
+        zIndex:10,
     },
     touchableOpacityLeft:{
         position:'absolute',
@@ -28,13 +33,14 @@ export const s = StyleSheet.create({
         height:50,
         alignItems:'center',
         justifyContent:'center',
-        right:100,
+        right:110,
         bottom:60,
         zIndex:10
     },
     floatingButton:{
         resizeMode:'contain',
-        width:60,
-        height:60
+        backgroundColor:'white',
+        height:hp('3%'),
+        width:wp('6%'),
     }
 })

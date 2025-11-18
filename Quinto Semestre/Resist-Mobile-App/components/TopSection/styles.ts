@@ -8,7 +8,7 @@ export const s = StyleSheet.create({
     container: {
       width: '100%',
       height: HEIGHT,
-      backgroundColor: "#0056FF" , // fundo de segurança
+      backgroundColor: "#537FFF" , // fundo de segurança
     },
     backgroundImage: {
       flex: 1,

@@ -152,7 +152,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.container}>
-        <Title>Cadastro</Title>
+        <Title style={styles.title}>Cadastro</Title>
         <Text style={styles.footerText}>
           Insira seus dados para realizar o cadastro em nossa plataforma. Por favor, informe seus dados:
         </Text>
@@ -215,7 +215,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
         {isLoading && (
           <ActivityIndicator
             size="large"
-            color="#0056FF"
+            color="#537FFF"
             style={styles.loader}
           />
         )}
@@ -227,20 +227,20 @@ export default function RegisterScreen({ navigation }: RegisterScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
-    padding: 44,
+    backgroundColor: '#DCE5FE',
+    padding: wp('6%'),
   },
   topPart: {
     flex: 1,
-    backgroundColor: '#EBEFFB',
+    backgroundColor: '#DCE5FE',
     justifyContent: 'center',
   },
   footerText: {
-    color: '#4A71E4',
+    color: '#3C63D2',
     textAlign: 'left',
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 30,
-    fontFamily: fonts.UrbanistSemiBold600,
+    fontFamily: fonts.urbanistRegular400,
   },
   errorText: {
     color: '#ff4444',
@@ -257,5 +257,8 @@ const styles = StyleSheet.create({
   scrollContainer: {
   flexGrow: 1,
   justifyContent: 'center',
+},
+title:{
+  fontFamily: fonts.urbanistRegular400
 }
 });

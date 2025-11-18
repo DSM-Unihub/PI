@@ -1,25 +1,25 @@
 import { fonts } from "@/constants/Fonts";
 import { StyleSheet } from "react-native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 export const s = StyleSheet.create({
     button: {
-      padding: 18,
-      borderRadius: 25,
+      padding: hp('2%'),
+      borderRadius: wp('2.5%'),
       alignItems: 'center',
-      paddingVertical:20,
-      width:'100%',
-      alignSelf:'center',
-      bottom:'2%',
+      paddingVertical: hp('2%'),
+      width: '100%',
+      alignSelf: 'center',
+      bottom: hp('0%'),
     },
     primaryButton: {
-      backgroundColor: '#0056FF',
-      marginTop:70,
-      
+      backgroundColor: '#537FFF',
+      marginTop: hp('7%'),
     },
     secondaryButton: {
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: '#0056FF',
+      borderColor: '#537FFF',
     },
     buttonText: {
       fontFamily: fonts.UrbanistExtraBold800,
@@ -29,6 +29,6 @@ export const s = StyleSheet.create({
       color: '#fff',
     },
     secondaryText: {
-      color: '#0056FF',
+      color: '#537FFF',
     },
   }); 

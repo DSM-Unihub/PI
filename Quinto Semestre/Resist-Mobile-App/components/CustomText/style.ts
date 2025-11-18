@@ -4,7 +4,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 
 export const s = StyleSheet.create({
 Text:{
-    color:'#5C6CA2',
+    color:'#4D63A1',
     paddingVertical:12,
     fontSize:wp('3.6%'),
     fontFamily: fonts.VarelaRegular400,

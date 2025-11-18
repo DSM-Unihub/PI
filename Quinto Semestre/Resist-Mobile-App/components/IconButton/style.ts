@@ -23,7 +23,7 @@ export const s = StyleSheet.create({
     secondaryButton: {
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: '#0056FF',
+      borderColor: '#537FFF',
     },
     buttonText: {
       fontFamily: fonts.UrbanistSemiBold600,
@@ -33,7 +33,7 @@ export const s = StyleSheet.create({
       color: '#9AA7D6',
     },
     secondaryText: {
-      color: '#0056FF',
+      color: '#537FFF',
     },
     icon:{
       borderRadius: 50,

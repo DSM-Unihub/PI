@@ -31,7 +31,7 @@ export default function SuggestionList({ userId }: SuggestionListProps) {
 
     // p definir a cor de fundo alternadamente :P
     const backgroundColor = (id:number) =>{
-        return id % 2 === 0 ? "#fff" : "";
+        return id % 2 === 0 ? "" : "#F2F5FF";
     }
 
     useEffect(() => {

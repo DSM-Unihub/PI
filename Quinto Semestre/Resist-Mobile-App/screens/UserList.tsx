@@ -6,8 +6,9 @@ import FabButton from '@/components/FabButton';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Header from '@/components/Header';
-import {widthPercentageToDP as hp} from '@/utils/widthPercentageToDP'; 
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { getUser } from '@/services/auth';
+import { fonts } from '@/constants/Fonts';
 
 type RootStackParamList = {
     Camera: undefined;
@@ -37,7 +38,7 @@ export default function UserList() {
         
           <Header />
           <View style={styles.container}>
-            <CustomText title={user.permissoes===0 ? "Minhas sugestões" : "Meus bloqueios e desbloqueios"}/>
+            <CustomText title={user.permissoes===0 ? "Minhas sugestões" : "Meus bloqueios e desbloqueios"} style={styles.subtitle}/>
             <SuggestionList userId={userId} navigation={navigation} />
             <FabButton 
                 userId={userId} 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
     container: {
         flex: 1,
-        backgroundColor: '#EBEFFB',
+        backgroundColor: '#DCE5FE',
         paddingVertical: 10,
         paddingHorizontal: 18,
     },
@@ -75,6 +76,11 @@ const styles = StyleSheet.create({
     subHeaderText: {
         color: '#fff',
         fontSize: 16,
+    },
+    subtitle: {
+        marginTop:hp('0.8%'),
+        fontSize:hp('2.6%'),
+        fontFamily: fonts.urbanistMedium500,
     },
     table: {
         marginTop: 10,
@@ -93,10 +99,10 @@ const styles = StyleSheet.create({
     headerCell: {
         flex: 1,
         fontWeight: 'bold',
-        color:'#5C6CA2',
+        color:'#4D63A1',
     },
     cell: {
         flex: 1,
-        color:'#5C6CA2',
+        color:'#4D63A1',
     },
 });
