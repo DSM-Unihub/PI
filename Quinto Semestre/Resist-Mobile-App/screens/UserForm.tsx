@@ -56,14 +56,15 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
 
   
   const handleSendSuggestion = async () => {
-    if (!url || !motivo) {
-      Alert.alert('Erro', 'Preencha todos os campos.');
+    // if (!url || !motivo) {
+    if (!url) {
+      Alert.alert('Erro', 'Preencha a url.');
       return;
     }
-    if (!foto) {
-      Alert.alert('Erro', 'Selecione uma imagem.');
-      return;
-    }
+    // if (!foto) {
+    //   Alert.alert('Erro', 'Selecione uma imagem.');
+    //   return;
+    // }
     setIsLoading(true);
 
     try {
@@ -86,11 +87,13 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
       formData.append('dados', JSON.stringify(data));
 
       // Align with working test app: append image URI directly as an object for Axios in React Native
-      formData.append('foto', {
-        uri: foto,
-        name: imageInfo?.name || `photo_${Date.now()}.jpg`,
-        type: imageInfo?.type || 'image/jpeg',
-      } as any);
+       if (foto) {
+        formData.append('foto', {
+          uri: foto,
+          name: imageInfo?.name || `photo_${Date.now()}.jpg`,
+          type: imageInfo?.type || 'image/jpeg',
+        } as any);
+      }
 
       console.log("FORMDATA ",formData)
 
@@ -132,7 +135,7 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
 
       Alert.alert('Sucesso', 'Sugestão enviada com sucesso!');
       setUrl('');
-      setFoto('');
+      setFoto(null);
       setMotivo('');
       setStatus('bloqueado');
       navigation.navigate('List', {userId} );
