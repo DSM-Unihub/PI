@@ -32,12 +32,21 @@ type UserFormScreenProps = {
 };
 
 export default function UserForm({ navigation }: UserFormScreenProps) {
+  
+  
+  const route = useRoute();
+  
+  // Pegando o parâmetro 'scannedUrl' passado via navegação
+  const scannedUrl = (route.params as any)?.scannedUrl;
+  const fromScanner = !!scannedUrl;
   const [isLoading, setIsLoading] = useState(false);
+  
   const [status, setStatus] = useState<'bloqueado' | 'desbloqueado'>('bloqueado');
+  
+  
   const [url, setUrl] = useState('');
   const [foto, setFoto] = useState<string | null>(null);
   const [motivo, setMotivo] = useState('');
-  const route = useRoute();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageInfo, setImageInfo] = useState<{name: string, type: string} | null>(null);
 
@@ -45,12 +54,10 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
 
 
   
-  // Pegando o parâmetro 'scannedUrl' passado via navegação
-  const scannedUrl = (route.params as any)?.scannedUrl;
-
   useEffect(()=>{
     if (scannedUrl){
       setUrl(scannedUrl);
+      setStatus('desbloqueado');
     }
   }, [scannedUrl])
 
@@ -217,11 +224,14 @@ export default function UserForm({ navigation }: UserFormScreenProps) {
         <CustomText title="Eu gostaria que esse site fosse:" />
         <View style={styles.checkboxContainer}>
           <View style={styles.radioGroup}>
+            
+            {!fromScanner && (
             <CustomRadio
               label="Bloqueado"
               selected={status === 'bloqueado'}
               onPress={() => setStatus('bloqueado')}
             />
+            )}
             <CustomRadio
               label="Desbloqueado"
               selected={status === 'desbloqueado'}
