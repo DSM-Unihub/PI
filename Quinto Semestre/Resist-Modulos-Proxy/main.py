@@ -199,11 +199,11 @@ if client:
                     print(f"Dados indexados com sucesso no MongoDB para a URL {dado.url}")
                     result = bloqueio.bloquear_sites(nome_arquivo)
 
-                    print(dado.url.strip())
-                    print(idx.is_site_indexed(dado.url.strip()))
-                    print(idx.is_site_indexed("cooktest60.vercel.app"))
-                    print(idx.buscar_site_por_url(dado.url.strip()))
-                    print(idx.buscar_site_por_url("cooktest60.vercel.app"))
+                    # print(dado.url.strip())
+                    # print(idx.is_site_indexed(dado.url.strip()))
+                    # print(idx.is_site_indexed("cooktest60.vercel.app"))
+                    # print(idx.buscar_site_por_url(dado.url.strip()))
+                    # print(idx.buscar_site_por_url("cooktest60.vercel.app"))
                     if idx.is_site_indexed(dado.url.strip())==False:
                         idx.indexar_site({
                             "PathLocal": caminho_html,

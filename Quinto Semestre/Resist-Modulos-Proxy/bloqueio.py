@@ -118,7 +118,7 @@ class Bloqueio:
             'X-Timestamp': timestamp
         }
 
-        print("ola")
+        print("----")
         try:
             response = requests.post(url, json=payload, headers=headers, timeout=10)
             
@@ -160,7 +160,7 @@ class Bloqueio:
             frases = self.segmentar_texto(conteudo)
                 
             for frase in frases:
-                print("frase", frase)
+                print(f" - frase sendo analisada: '{frase}'")
                 resultados = self.enviar_para_modelo(frase)  # lista de dicts
                 if not resultados:
                     continue
@@ -216,7 +216,7 @@ class Bloqueio:
             print("é txt!")
             hash_nome = nome_arquivo[:-4]
             resultado = self.verificar_html(hash_nome)  # retorna dict
-            print("resultado ta bom: ", resultado)
+            print("-> resultado da i.a: ", resultado)
             if resultado.get("bloquear"):
                 url = self.extrair_url_do_arquivo(os.path.join(self.html_directory, nome_arquivo))
                 if url:
