@@ -1,13 +1,42 @@
 import Log from '../models/Log.js';
+import User from '../models/user.js';
 
 class LogService {
-  async createLog(autor, alvo, acao, justificativa) {
+  /**
+   * createLog(autorId, alvoId, acao, justificativa = null, autorNome = null, alvoNome = null)
+   * - autorId/alvoId: optional objectId string (keeps relation)
+   * - autorNome/alvoNome: optional denormalized display name
+   * If a name is missing and id is provided, we try to fetch the name from the users collection.
+   */
+  async createLog(autorId, alvo, acao, justificativa = null, autorNome = null,) {
     try {
-      if (!autor || !acao || !alvo) {
-        console.error('Log Service Error: autor, acao, and alvo are required to create a log.', autor, alvo, acao);
+      if (!acao) {
+        console.error('Log Service Error: acao is required to create a log.');
         return;
       }
-      await Log.create({ autor, acao, alvo, justificativa });
+
+      // resolve author name if missing
+      if (!autorNome && autorId && autorId !== 'sistema') {
+        try {
+          const u = await User.findById(autorId).select('nome').lean();
+          autorNome = u?.nome ?? null;
+        } catch (e) {
+          console.warn('LogService: failed to resolve autorNome for', autorId, e);
+        }
+      }
+
+     
+
+      const logDoc = {
+        autorId: autorId ?? null,
+        autorNome: autorNome ?? (autorId === 'sistema' ? 'sistema' : null),
+        alvo: alvo ?? null,
+        acao,
+        justificativa: justificativa ?? null,
+        dataHora: new Date(),
+      };
+
+      await Log.create(logDoc);
     } catch (error) {
       console.error('Erro ao criar log no histórico: ', error);
     }

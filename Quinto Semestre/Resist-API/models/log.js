@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const logSchema = new mongoose.Schema({
     acao: { type: String, required: true },
     dataHora: { type: Date, default: Date.now },
-    autor: { type: String, required: true }, //idUser
+    autorId: { type: String, required: true }, //idUser
+    autorNome: { type: String, required: true }, //idUser
     alvo: { type: String, required: true }, 
     justificativa: { type: String } //opcional, por padrao sera nulo e alteravel dps no sistema
 })

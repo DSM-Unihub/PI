@@ -288,16 +288,16 @@ async createBlock(data, idUser) {
    if (novoBloqueio.flag === false){
     await logService.createLog(
       idUser,
+      novoBloqueio.urlWeb,
       'update_bloqueio_desbloqueado',
-      novoBloqueio.url,
     );
     }
 
     else{
       await logService.createLog(
-        idUser,
-        'update_bloqueio_bloqueado',
-        novoBloqueio.url,
+        idUser, //autor
+        novoBloqueio.urlWeb,  //acao
+        'update_bloqueio_bloqueado', //alvo
       );
     }
 
@@ -342,16 +342,16 @@ async updateBlock(id, data, idUser) {
     if (bloqueioAtualizado.flag === false){
     await logService.createLog(
       idUser,
+      bloqueioAtualizado.urlWeb,
       'update_bloqueio_desbloqueado',
-      bloqueioAtualizado.url,
     );
     }
 
     else{
       await logService.createLog(
         idUser,
+        bloqueioAtualizado.urlWeb,
         'update_bloqueio_bloqueado',
-        bloqueioAtualizado.url,
       );
     }
 
@@ -374,8 +374,8 @@ async deleteBlock(id, idUser) {
     // Log the deletion action
     await logService.createLog(
       idUser,
+      bloqueioExcluido.urlWeb,
       'DELETAR_BLOQUEIO',
-      bloqueioExcluido.url,
     );
 
     return bloqueioExcluido;
