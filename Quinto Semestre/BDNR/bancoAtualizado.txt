@@ -1,0 +1,115 @@
+use resistBD;
+
+// --- Coleção: instituicoes ---
+db.instituicoes.insertOne({
+  "_id": ObjectId("6723e710a123456789abcdef"),
+  "nome": "Fatec Registro",
+  "cnpj": "12.345.678/0001-90",
+  "dataCadastro": ISODate("2025-10-16T18:50:10Z")
+});
+
+
+// --- Coleção: funcionarios ---
+db.funcionarios.insertMany([
+  {
+    "_id": ObjectId("6723e710b123456789abcde0"),
+    "nome": "Admin Geral",
+    "emails": { "institucional": "admin@instituicao.com" },
+    "senha": "hash_seguro_da_senha_do_admin",
+    "fotoUrl": "url_da_foto.jpg",
+    "permissoes": 0, // 0: acesso full
+    "instituicaoId": ObjectId("6723e710a123456789abcdef"),
+    "dataCriacao": ISODate("2025-10-16T18:50:10Z")
+  },
+  {
+    "_id": ObjectId("6723e710c123456789abcde1"),
+    "nome": "Maria Silva",
+    "emails": { "institucional": "maria.silva@instituicao.com", "pessoal": "maria@exemplo.com" },
+    "senha": "hash_seguro_da_senha_da_maria",
+    "telefones": [{ "tipo": "celular", "numero": "+55 11 91234-5678" }],
+    "fotoUrl": "url_da_foto.jpg",
+    "permissoes": 1, // 1: gerenciar bloqueio/desbloqueio e visualização
+    "instituicaoId": ObjectId("6723e710a123456789abcdef"),
+    "dataCriacao": ISODate("2025-10-16T18:50:10Z")
+  },
+  {
+    "_id": ObjectId("6723e710d123456789abcde2"),
+    "nome": "João Pereira",
+    "emails": { "institucional": "joao.pereira@instituicao.com" },
+    "senha": "hash_seguro_da_senha_do_joao",
+    "permissoes": 3, // 3: fazer sugestão de bloqueio/desbloqueio
+    "instituicaoId": ObjectId("6723e710a123456789abcdef"),
+    "dataCriacao": ISODate("2025-10-16T18:50:10Z")
+  }
+]);
+
+
+// --- Coleção: indexacoes ---
+db.indexacoes.insertMany([
+  {
+    "urlWeb": "https://seuFlix.com",
+    "flag": 0, // 0: bloqueado
+    "tipoInsercao": "Manual",
+    "contexto": "Site pirata de filmes e séries.",
+    "ipMaquina": "192.168.0.1",
+    "pathLocal": "/local/path",
+    "dataHoraEvento": ISODate("2025-10-16T15:10:00Z")
+  },
+  {
+    "urlWeb": "https://receita.com",
+    "flag": 0,
+    "tipoInsercao": "Auto",
+    "contexto": "Machismo e discurso de ódio detectados.",
+    "ipMaquina": "192.168.0.1",
+    "pathLocal": "/local/path",
+    "dataHoraEvento": ISODate("2025-10-15T09:30:00Z")
+  }
+]);
+
+
+// --- Coleção: logs ---
+db.logs.insertMany([
+  {
+    "acao": "Adição de usuário",
+    "dataHora": ISODate("2025-10-16T18:50:10Z"),
+    "autor": { "usuarioId": ObjectId("6723e710b123456789abcde0"), "nome": "Admin Geral" },
+    "alvo": { "tipo": "usuário", "valor": "novo Usuário adicionado", "idCriado": ObjectId("6723e710d123456789abcde2") },
+    "justificativa": null
+  },
+  {
+    "acao": "bloqueio",
+    "dataHora": ISODate("2025-10-16T18:50:10Z"),
+    "autor": { "usuarioId": ObjectId("6723e710c123456789abcde1"), "nome": "Maria Silva" },
+    "alvo": { "tipo": "url", "valor": "URL do site: https://site-de-jogos.com" },
+    "justificativa": "Site inadequado para o ambiente de laboratório."
+  }
+]);
+
+
+// --- Coleção: acessos ---
+db.acessos.insertMany([
+  {
+    "urlWeb": "https://seusite.com",
+    "ipMaquina": "192.168.0.2",
+    "dataHora": ISODate("2025-10-18T10:00:00Z")
+  },
+  {
+    "urlWeb": "https://outrosite.com",
+    "ipMaquina": "192.168.0.3",
+    "dataHora": ISODate("2025-10-18T11:30:00Z")
+  }
+]);
+
+
+// --- Coleção: sugestoes ---
+db.sugestoes.insertMany([
+  {
+    "idUser": "68210f608acf13f50ebff9f8",
+    "dataHora": ISODate("2024-05-11T14:00:00Z"),
+    "url": "https://exemplo.com/bloqueio1",
+    "motivo": "Uso indevido da rede",
+    "tipo": true, // true = bloqueio, false = desbloqueio
+    "situacao": "Aceito", // 'Pendente', 'Aceito' ou 'Recusado'
+    "foto": "bloqueio1.jpg"
+  }
+]);

@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+form-page {
+  display: none;
+}
+
+.form-page.active {
+  display: block;
+}
+
+.Background {
+  background: url("/imgs/ondas.png");
+  background-position: center;
+  background-size: cover;
+  filter: hue-rotate(24deg) brightness(0.8);
+}
+
+.header-rounded {
+  border-bottom-left-radius: 45%;
+  border-bottom-right-radius: 45%;
+}
+
+.Gradient {
+  background: linear-gradient(
+    0.25turn,
+    #1a1a1a00,
+    hsla(0, 0%, 10%, 0.164),
+    #1a1a1a00
+  );
+}
+
+@layer components {
+  .clip-curve {
+    clip-path: ();
+  }
+}
+
+@media (max-width: 767px) {
+  .clip-curve {
+    clip-path: ellipse(80% 100% at 50% 0%);
+  }
+
+  .Background {
+    background: url("/imgs/ondasRotate.png");
+    background-position: center;
+    background-size: cover;
+    filter: hue-rotate(24deg) brightness(0.8);
+  }
+
+  .header-container {
+    @apply Background clip-curve gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32;
+  }
+}
+
+.container-login {
+  @apply w-full gap-8 md:gap-0 h-screen flex flex-col md:flex-row md:items-center bg-gradient-to-b from-cinza-gradiente-inicio to-cinza-gradiente-final;
+}
+.login-image {
+  @apply w-full md:w-2/5 lg:w-full h-72 md:h-full Background clip-curve p-5;
+}
+.resist-logo {
+  @apply md:hidden flex size-7;
+}
+
+.login-form-container {
+  @apply flex h-full w-full justify-around flex-col align-middle gap-5 md:p-5 lg:h-fit;
+}
+
+.navDesk-container {
+  @apply hidden lg:flex bg-gradient-to-b from-azul-principal to-azul-nav-fim flex-col p-3 h-screen gap-10;
+}
+.navIcons-container {
+  @apply flex flex-col h-full justify-between;
+}
+.navIcon-container {
+  @apply flex w-full h-fit flex-row justify-center;
+}
+.navIcon {
+  @apply size-10 p-2 hover:scale-110 duration-300 cursor-pointer;
+}
+
+.navMob-container {
+  @apply flex lg:hidden flex-row left-1/2 -translate-x-1/2 fixed justify-center bg-white bottom-0 z-30 p-3 w-fit gap-2 rounded-t-3xl;
+
+}
+.navIcon-container {
+  @apply p-3 w-max h-fit flex flex-col items-center;
+}
+.navIcon {
+  @apply size-8 duration-300 cursor-pointer;
+}
+
+.main-container {
+  @apply flex flex-col w-full lg:overflow-hidden;
+}
+.header-container {
+  @apply gap-10 flex flex-col justify-between p-6 md:gap-2 lg:gap-32;
+}
+
+.headerBar {
+  @apply flex flex-row items-center gap-2 lg:gap-5 w-full;
+}
+
+.headerIcon {
+  @apply hidden lg:flex bg-white border rounded-full w-max h-max p-2;
+}
+
+.home-container {
+  @apply flex flex-col lg:grid lg:grid-flow-col gap-10 lg:gap-0;
+}
+
+.dashLeft-container {
+  @apply grid grid-flow-row px-0 lg:px-5 gap-10 lg:gap-1;
+}
+
+.welcomeArea {
+  @apply hidden md:flex flex-col text-wrap bg-gradient-to-r from-laranja-s to-laranja-e p-5 rounded-xl h-fit;
+}
+
+.container-principal {
+  @apply flex flex-row justify-start bg-gradient-to-tr from-cinza-secundario to-cinza-principal w-full;
+}
+
+.dashRight-container {
+  @apply flex flex-col lg:grid lg:grid-flow-row relative lg:bottom-8 lg:pe-1;
+}
+
+.component-container {
+  @apply flex flex-col items-start p-5 lg:p-0;
+}
+.title {
+  @apply text-base text-start text-azul-cinza-escuro;
+}
+.lockdownStatic-container {
+  max-width: 315px;
+  @apply flex flex-row lg:hidden gap-5 mt-4 justify-between items-center self-center bg-block-MBG w-full  justify-self-center rounded-xl;
+  .text {
+    @apply text-azul-MBT text-sm text-wrap;
+  }
+  .lockdownArrow-container {
+    @apply bg-white flex flex-col h-full justify-center items-center w-fit p-3 rounded-e-lg;
+  }
+}
+
+.react-calendar__navigation {
+  @apply flex flex-row justify-self-center gap-3 text-azul-title font-bold text-base;
+}
+
+.react-calendar {
+  @apply bg-white text-azul-title rounded-xl font-sans text-lg;
+}
+
+.react-calendar__navigation button {
+  @apply text-azul-title font-bold text-base;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  @apply bg-gray-200 scale-105 duration-200;
+}
+
+.react-calendar__navigation button[disabled] {
+  background-color: #f0f0f0;
+}
+abbr[title] {
+  text-decoration: none;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #d10000;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  @apply bg-gray-200 text-azul-principal rounded-md duration-200;
+}
+.react-calendar__tile--now {
+  @apply bg-azul-cinza-claro text-azul-principal rounded-md duration-200;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  @apply bg-azul-cinza-escuro text-white rounded-md font-bold duration-200;
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #f8f8fa;
+}
+.react-calendar__tile--active {
+  @apply bg-azul-cinza-escuro text-white rounded-md font-bold duration-200;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  @apply bg-azul-cinza-escuro text-white rounded-md font-bold duration-200;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: #f8f8fa;
+}
+.react-calendar__tile--range {
+  background: #f8f8fa;
+  color: #6f48eb;
+  border-radius: 0;
+}
+.react-calendar__tile--rangeStart {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  background: #6f48eb;
+  color: white;
+}
+.react-calendar__tile--rangeEnd {
+  @apply bg-azul-principal rounded-s-none rounded-e-md text-white;
+}

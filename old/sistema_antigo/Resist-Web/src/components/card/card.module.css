@@ -1,0 +1,26 @@
+.wrapper {
+    background: linear-gradient(to bottom, #0070f3, transparent);
+    padding: 2px; /* largura da borda */
+    border-radius: 10px;
+    max-width: 600px;
+    /* margin: 1rem auto; */
+  }
+  
+  .card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #56648F;
+  }
+
+  .card h4 {
+    /* font-size: 22px;
+    font-weight: bold; */
+    color: #56648F;
+  }

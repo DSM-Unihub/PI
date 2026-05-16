@@ -1,0 +1,172 @@
+.body{
+  background: linear-gradient(135deg, #F1EFFC 0%, #CCD5F0 100%);
+  min-height: 100vh; 
+  width: 100%;
+  margin: 0; 
+  padding: 0; 
+  display: flex;
+  align-items: flex-start;
+}
+.conteudoCentral{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.conteudo{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+  align-items: center;
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  /* padding: 20px; */
+  max-width: 2500px;
+}
+.section {
+  margin-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 35px;
+}
+
+.formulario {
+  display: flex;
+  flex-wrap: wrap;
+  /* margin: 0 auto; */
+  background-color: #ffffff;
+  padding: 35px;
+  gap: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.linha {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /* margin-bottom: 15px; */
+  justify-content: flex-start;
+  gap: 30px;
+  /* row-gap: 25px; */
+  /* justify-content: space-between; */
+}
+
+.linha label {
+  width: 140px;
+  /* margin-bottom: 6px; */
+  font-size: 13px;
+  font-weight: bold;
+  color: #56648F;
+}
+
+.linha input {
+  flex: 1;
+  min-width: 55%;
+  padding: 8px;
+  /* border: 1px solid #cccccc; */
+  background-color: #EFF2FA;
+  color: #8290BF;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.imagem {
+
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #EFF2FA;
+  padding: 10px;
+  border-radius: 13px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 50px;
+}
+
+.imagem img {
+  width: 200px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 20px;
+  /* border: 1px solid #ddd; */
+}
+
+.imagem div {
+  padding: 10px;
+}
+
+.imagem h3 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #56648F;
+}
+
+.imagem span {
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-decoration: underline;
+  font-weight: normal;
+  color: #56648F;
+}
+
+.imagem p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #56648F;
+}
+
+.input {
+  margin-top: 30px;
+  border-radius: 13px;
+  width: 100%;
+  height: 50px;
+  background-color: #537FFF;
+  color: #ffffff;
+}
+.radioCustom {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #8F9DCB;
+  border-radius: 2px;
+  background-color: white;
+  cursor: pointer;
+  margin-right: 8px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Estilo quando selecionado */
+.radioCustom:checked {
+  background-color: #8F9DCB;
+  border-color: #8F9DCB;
+}
+
+/* Ícone "ok" (✓) aparece ao selecionar */
+.radioCustom:checked::before {
+  content: "✓";
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+}
+
+ @media (max-width: 1534px) {
+    .conteudo{
+  padding: 20px;
+}
+  }
