@@ -1,0 +1,52 @@
+import express from "express";
+import indexacaoController from "../controllers/indexacaoController.js";
+import Auth, { authorizeRoles } from '../middleware/Auth.js'
+
+const router = express.Router();
+
+// Rota para obter estatísticas de bloqueios por mês e por laboratório
+router.get("/estatisticas-labs", Auth, authorizeRoles(1), indexacaoController.getEstatisticasLabs);
+
+router.get("/estatisticas-mes", Auth, authorizeRoles(1), indexacaoController.getEstatisticasBloqueios);
+
+router.get("/ultimas-atividades", Auth, authorizeRoles(1), indexacaoController.getUltimasAtividades);
+
+router.get("/bloqueios-mes", Auth, authorizeRoles(1), indexacaoController.getBloqueiosPorMes)
+
+router.get("/bloqueios", Auth, authorizeRoles(1), indexacaoController.getAllBlocks);
+
+router.get("/bloqueios/url/:url", Auth, authorizeRoles(1), indexacaoController.getIndexacaoByUrl);
+router.get("/bloqueios/lookup", Auth, authorizeRoles(0), indexacaoController.lookupIndexacaoByUrl);
+
+// router.get("/bloqueios/user/:id", Auth, authorizeRoles(1), indexacaoController.getIndexacoesByUser);
+
+// Bloqueio total (mitm / bloqueados_total.txt) — antes de /bloqueios/:id para não capturar "total"
+router.post(
+  "/bloqueios/total",
+  Auth,
+  authorizeRoles(1),
+  indexacaoController.createManualTotalBlock
+);
+router.put(
+  "/bloqueios/total/:id",
+  Auth,
+  authorizeRoles(1),
+  indexacaoController.updateManualTotalBlock
+);
+router.delete(
+  "/bloqueios/total/:id",
+  Auth,
+  authorizeRoles(1),
+  indexacaoController.deleteManualTotalBlock
+);
+
+// Body opcional: bloqueioTotal=true (ou bloqueioTotalMitm=true) → sync bloqueados_total.txt + campo no MongoDB
+router.post("/bloqueios", Auth, authorizeRoles(1), indexacaoController.createBlock);
+
+router.put("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.updateBlock);
+
+router.delete("/bloqueios/:id", Auth, authorizeRoles(1), indexacaoController.deleteBlock);
+
+
+
+export default router;
