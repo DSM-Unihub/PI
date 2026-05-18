@@ -8,7 +8,7 @@ dotenv.config();
 
 // Obtém as credenciais do banco de dados das variáveis de ambiente
 // const mongoDBURI = "mongodb://127.0.0.1:27017/PI";
-const mongoDBURI = "mongodb://localhost:27017/PI";
+const mongoDBURI = process.env.mongoDBURI;
 
 // Função assíncrona para conectar ao MongoDB
 const connect = async () => {
