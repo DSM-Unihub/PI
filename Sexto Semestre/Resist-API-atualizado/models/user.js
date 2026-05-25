@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-const instituicaoSchema = mongoose.Schema({
+const instituicaoSchema = new mongoose.Schema({
     nome:{type: String},
     cnpj:{type: String},
     conexao:{type: String}
-})
+}, { _id: false })
 
 const userSchema = new mongoose.Schema({
     nome:{type: String, required: true},
@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     senha:{type: String, required: true},
     telefone:{type: String},
     foto:{type: String},
-    instituicao: {instituicaoSchema},
+    instituicao: instituicaoSchema,
     // permissoes: [{type: String}],
     permissoes: {type: Number, default: 0} // 0: usuario aluno (sugestoes apenas), 1: moderador, 2: admin
 })

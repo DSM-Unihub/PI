@@ -76,10 +76,18 @@ const getEstatisticasBloqueios = async (req, res) => {
 
 const getAllBlocks = async (req, res) => {
   try {
-    const blocks = await indexacaoService.getAllBlocks();
+    const filtros = {
+      tipoInsercao: req.query.tipoInsercao,
+      flag: req.query.flag,
+      dia: req.query.dia,
+      mes: req.query.mes,
+      ano: req.query.ano,
+    };
+
+    const blocks = await indexacaoService.getAllBlocks(filtros);
     res.status(200).json(blocks);
   } catch (error) {
-    console.error("Erro ao buscar estatísticas de bloqueios:", error);
+    console.error("Erro ao buscar bloqueios:", error);
     res.status(500).json({ error: "Erro ao buscar bloqueios" });
   }
 };

@@ -1,5 +1,11 @@
 import authService from '../services/authService.js';
 
+const fotoUrl = (req, foto) => {
+  if (!foto) return foto;
+  if (/^https?:\/\//i.test(foto)) return foto;
+  return `${req.protocol}://${req.get("host")}${foto.startsWith("/") ? foto : `/${foto}`}`;
+};
+
 const login = async (req, res) => {
   try {
     const { email, senha } = req.body;
@@ -10,7 +16,7 @@ const login = async (req, res) => {
         id: user._id,
         nome: user.nome,
         email: user.email,
-        foto: user.foto,
+        foto: fotoUrl(req, user.foto),
         permissoes: user.permissoes,
       },
       token 

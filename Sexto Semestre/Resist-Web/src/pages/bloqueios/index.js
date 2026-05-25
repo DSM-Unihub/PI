@@ -19,6 +19,11 @@ const Bloqueios = () => {
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [tipo, setTipo] = useState("");
+  const [sitPessoa, setSitPessoa] = useState("");
+  const [dia, setDia] = useState("");
+  const [mes, setMes] = useState("");
+  const [ano, setAno] = useState("");
 
   const getAuthHeaders = () => {
     const token = localStorage.getItem("token");
@@ -184,11 +189,36 @@ const Bloqueios = () => {
 
             <HeaderBar usuario={usuario} />
 
-            <CardInfo titulo={"Bloqueios"} subtitulo={"Acesso aos dados de bloqueio manuais e automáticos."} tipo={"Desktop"} sitPessoa={"Bloqueio Automático"} dia={9} mes={"Out"} ano={2025} view={true} />
+            <CardInfo
+              titulo={"Bloqueios"}
+              subtitulo={"Acesso aos dados de bloqueio manuais e automáticos."}
+              tipo={tipo}
+              sitPessoa={sitPessoa}
+              dia={dia}
+              mes={mes}
+              ano={ano}
+              tiposList={["Manual", "Automático"]}
+              statusList={[
+                { label: "Bloqueado", value: "true" },
+                { label: "Desbloqueado", value: "false" },
+              ]}
+              onTipoChange={setTipo}
+              onSitPessoaChange={setSitPessoa}
+              onDiaChange={setDia}
+              onMesChange={setMes}
+              onAnoChange={setAno}
+              view={true}
+            />
 
             <section className={styles.section}>
               <div style={{ flex: 3, maxHeight: "100%", minWidth: "70%" }}>
-                <BlockList />
+                <BlockList
+                  tipo={tipo}
+                  sitPessoa={sitPessoa}
+                  dia={dia}
+                  mes={mes}
+                  ano={ano}
+                />
               </div>
               <div style={{ flex: 1, height: "100%", minWidth: "26.5%" }}>
                 

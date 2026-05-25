@@ -18,6 +18,11 @@ const Bloqueios = () => {
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [tipo, setTipo] = useState("");
+  const [sitPessoa, setSitPessoa] = useState("");
+  const [dia, setDia] = useState("");
+  const [mes, setMes] = useState("");
+  const [ano, setAno] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,8 +76,34 @@ const Bloqueios = () => {
           <section className={styles.conteudo}>
             <section className={styles.cem}>
             <HeaderBar usuario={usuario} />
-            <CardInfo titulo={"Sugestões"} subtitulo={"Acesso e resposta a sugestões feitas por alunos pelo aplicativo móvel."}tipo={"Pendente"} sitPessoa={"Bloqueio"} dia={9} mes={"Out"} ano={2025} view={true} />
-            < ListSujestao />
+            <CardInfo
+              titulo={"Sugestões"}
+              subtitulo={"Acesso e resposta a sugestões feitas por alunos pelo aplicativo móvel."}
+              tipo={tipo}
+              sitPessoa={sitPessoa}
+              dia={dia}
+              mes={mes}
+              ano={ano}
+              tiposList={["Bloqueio", "Desbloqueio"]}
+              statusList={[
+                { label: "Pendente", value: "Pendente" },
+                { label: "Aceito", value: "Aceito" },
+                { label: "Recusado", value: "Recusado" },
+              ]}
+              onTipoChange={setTipo}
+              onSitPessoaChange={setSitPessoa}
+              onDiaChange={setDia}
+              onMesChange={setMes}
+              onAnoChange={setAno}
+              view={true}
+            />
+            <ListSujestao
+              tipo={tipo}
+              sitPessoa={sitPessoa}
+              dia={dia}
+              mes={mes}
+              ano={ano}
+            />
             </section>
           </section>
         </section>

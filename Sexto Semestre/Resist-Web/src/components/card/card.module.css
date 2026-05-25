@@ -1,45 +1,44 @@
 .body{
-      display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 30px;
 }
+
 .cardes{
-    flex: 1 1 0%;
-    max-height: 100%;
-    min-width: 48%;
+  flex: 1 1 0%;
+  max-height: 100%;
+  min-width: 48%;
 }
 
 .wrapper {
-    background: linear-gradient(to bottom, #0070f3, transparent);
-    padding: 2px; /* largura da borda */
-    border-radius: 10px;
-    max-width: 1175px;
-    /* margin: 1rem auto; */
-  }
-  
-  .card {
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card p {
-    font-size: 22px;
-    font-weight: bold;
-    color: #56648F;
-  }
+  background: linear-gradient(to bottom, #0070f3, transparent);
+  padding: 2px;
+  border-radius: 10px;
+  max-width: 1175px;
+}
 
-  .card h4 {
-    /* font-size: 22px;
-    font-weight: bold; */
-    color: #56648F;
-  }
+.card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #56648F;
+}
+
+.card h4 {
+  color: #56648F;
+}
+
 .Filterwrapper {
   margin-top: 5px;
   display: flex;
-  flex-wrap: wrap; /* permite quebrar linha */
+  flex-wrap: wrap;
   gap: 10px;
   padding: 2px;
   border-radius: 10px;
@@ -49,34 +48,63 @@
 
 .FilterCard {
   display: flex;
-  flex: 1 1 300px; /* cresce e encolhe conforme o espaço */
+  flex: 1 1 300px;
   gap: 10px;
-  flex-wrap: wrap; /* garante que os filtros internos também possam quebrar */
+  flex-wrap: wrap;
 }
 
 .Filtercard {
   background-color: white;
-  padding: 12px 24px;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex: 1; /* distribui igualmente o espaço entre os filtros */
-  min-width: 130px; /* tamanho mínimo antes de quebrar */
+  justify-content: center;
+  flex: 1;
+  min-width: 130px;
+  min-height: 52px;
+  padding: 0 14px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
-}
-
-.Filtercard p {
-  width: 100%;
-    text-align: center;
-  margin: 0;
-  color: #56648F;
-  font-weight: 500;
-  
 }
 
 .Filtercard:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.Filtercard select {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #56648F;
+  cursor: pointer;
+}
+
+.Filtercard input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: #56648F;
+}
+
+.Filtercard input::placeholder {
+  color: #9aa3bd;
+}
+
+.Filtercard input::-webkit-outer-spin-button,
+.Filtercard input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.Filtercard input[type=number] {
+  -moz-appearance: textfield;
 }

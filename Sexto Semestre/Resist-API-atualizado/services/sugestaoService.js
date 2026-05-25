@@ -126,9 +126,47 @@ class SugestaoService {
   
   }
 
-  async getAll() {
+  async getAll(filtros = {}) {
     try{
-      const sugestoes =await Sugestao.find().sort({ dataHora: -1 });
+      const query = {};
+
+      if (filtros.tipo) {
+        if (filtros.tipo === "Bloqueio") {
+          query.tipo = true;
+        }
+
+        if (filtros.tipo === "Desbloqueio") {
+          query.tipo = false;
+        }
+      }
+
+      if (filtros.situacao) {
+        query.situacao = filtros.situacao;
+      }
+
+      if (filtros.dia || filtros.mes || filtros.ano) {
+        query.$expr = { $and: [] };
+
+        if (filtros.dia) {
+          query.$expr.$and.push({
+            $eq: [{ $dayOfMonth: "$dataHora" }, Number(filtros.dia)],
+          });
+        }
+
+        if (filtros.mes) {
+          query.$expr.$and.push({
+            $eq: [{ $month: "$dataHora" }, Number(filtros.mes)],
+          });
+        }
+
+        if (filtros.ano) {
+          query.$expr.$and.push({
+            $eq: [{ $year: "$dataHora" }, Number(filtros.ano)],
+          });
+        }
+      }
+
+      const sugestoes = await Sugestao.find(query).sort({ dataHora: -1 });
       // Map over suggestions to prepend base URL to foto field
       const sugestoesWithFullFotoUrl = sugestoes.map(sugestao => ({
         ...sugestao.toObject(), // Convert Mongoose document to plain object
@@ -136,7 +174,8 @@ class SugestaoService {
       }));
       return sugestoesWithFullFotoUrl;
     } catch(error){
-      //console.log(error)
+      console.error(error);
+      throw new Error("Erro ao buscar sugestões");
     }
   }
 

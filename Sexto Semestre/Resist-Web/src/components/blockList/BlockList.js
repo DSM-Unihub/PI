@@ -4,7 +4,13 @@ import axios from "axios";
 import Image from "next/image";
 import styles from './blockList.module.css'
 
-const BlockList = () => {
+const BlockList = ({
+  tipo,
+  sitPessoa,
+  dia,
+  mes,
+  ano,
+}) => {
   const [bloqueios, setBloqueios] = useState([]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedBloqueio, setSelectedBloqueio] = useState(null);
@@ -23,7 +29,15 @@ const BlockList = () => {
     try {
       const token = localStorage.getItem("token");
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axios.get(`${url}/bloqueios`);
+      const response = await axios.get(`${url}/bloqueios`, {
+        params: {
+          tipoInsercao: tipo,
+          flag: sitPessoa,
+          dia,
+          mes,
+          ano,
+        },
+      });
       setBloqueios(response.data);
     } catch (error) {
       console.error("Error fetching bloqueios:", error);
@@ -83,7 +97,7 @@ const BlockList = () => {
 
   useEffect(() => {
     fetchBloqueios();
-  }, []);
+  }, [tipo, sitPessoa, dia, mes, ano]);
 
   return (
     <div className={styles.tabelaContainer} >

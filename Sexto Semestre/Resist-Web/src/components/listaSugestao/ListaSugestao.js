@@ -23,7 +23,13 @@ const teste = [{
 }
 ]
 
-const ListSujestao = () => {
+const ListSujestao = ({
+  tipo,
+  sitPessoa,
+  dia,
+  mes,
+  ano,
+}) => {
   const [sugestao, setsugestao] = useState([]);
   const router = useRouter();
   // Formatar data para o formato desejado (DD/MM/YYYY)
@@ -41,14 +47,24 @@ const ListSujestao = () => {
   useEffect(() => {
     const listarSugestao = async () => {
       try {
-        const resposta = await axios.get(`${url}/sugestao`)
-        setsugestao(resposta.data)
+        const token = localStorage.getItem("token");
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        const resposta = await axios.get(`${url}/sugestao`, {
+          params: {
+            tipo,
+            situacao: sitPessoa,
+            dia,
+            mes,
+            ano,
+          },
+        });
+        setsugestao(resposta.data);
       } catch (error) {
-        //console.log(error)
+        console.error("Erro ao buscar sugestões:", error);
       }
-    }
+    };
     listarSugestao();
-  }, []);
+  }, [tipo, sitPessoa, dia, mes, ano]);
 
   const handleEdit = (sugestao) => {
     router.push({
