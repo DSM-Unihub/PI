@@ -42,9 +42,74 @@ class LogService {
     }
   }
 
-  async getAllLogs() {
+  async getAllLogs(filtros = {}) {
     try {
-      return await Log.find().sort({ dataHora: -1 });
+      const query = {};
+
+      if (filtros.acao) {
+        const mapaAcoes = {
+          Bloqueio: [
+            "criacao_bloqueio",
+            "Criacao_bloqueio_URL",
+            "update_bloqueio_bloqueado",
+            "Aprovacao_bloqueio_URL",
+          ],
+          Desbloqueio: [
+            "update_bloqueio_desbloqueado",
+            "Criacao_desbloqueio_URL",
+            "Aprovacao_desbloqueio_URL",
+            "remocao_bloqueio",
+            "DELETAR_BLOQUEIO",
+          ],
+          "Aceite Sugestao": ["aceite_sugestao", "Aprovacao_bloqueio_URL", "Aprovacao_desbloqueio_URL"],
+          "Aceite Sugestão": ["aceite_sugestao", "Aprovacao_bloqueio_URL", "Aprovacao_desbloqueio_URL"],
+          "Recusa Sugestao": ["recusa_sugestao", "Recusa_bloqueio_URL", "Recusa_desbloqueio_URL"],
+          "Recusa Sugestão": ["recusa_sugestao", "Recusa_bloqueio_URL", "Recusa_desbloqueio_URL"],
+        };
+
+        query.acao = {
+          $in: mapaAcoes[filtros.acao] || [filtros.acao],
+        };
+      }
+
+      if (filtros.justificativa) {
+        if (filtros.justificativa === "Log gerado pelo Sistema") {
+          query.$or = [
+            { justificativa: null },
+            { justificativa: "" },
+            { justificativa: { $exists: false } },
+          ];
+        } else {
+          query.justificativa = {
+            $regex: filtros.justificativa,
+            $options: "i",
+          };
+        }
+      }
+
+      if (filtros.dia || filtros.mes || filtros.ano) {
+        query.$expr = { $and: [] };
+
+        if (filtros.dia) {
+          query.$expr.$and.push({
+            $eq: [{ $dayOfMonth: "$dataHora" }, Number(filtros.dia)],
+          });
+        }
+
+        if (filtros.mes) {
+          query.$expr.$and.push({
+            $eq: [{ $month: "$dataHora" }, Number(filtros.mes)],
+          });
+        }
+
+        if (filtros.ano) {
+          query.$expr.$and.push({
+            $eq: [{ $year: "$dataHora" }, Number(filtros.ano)],
+          });
+        }
+      }
+
+      return await Log.find(query).sort({ dataHora: -1 });
     } catch (error) {
       console.error('Erro ao buscar logs:', error);
       throw new Error('Erro ao buscar logs');

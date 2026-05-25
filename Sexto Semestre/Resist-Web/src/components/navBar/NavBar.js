@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import styles from "./nav.module.css";
-import { ArchiveBoxIcon, ArrowLeftEndOnRectangleIcon, BookOpenIcon, ClipboardDocumentListIcon, ClipboardIcon, ClockIcon, Cog8ToothIcon, DocumentTextIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { ArchiveBoxIcon, ArrowLeftEndOnRectangleIcon, BookOpenIcon, ClipboardDocumentListIcon, ClipboardIcon, ClockIcon, Cog8ToothIcon, ComputerDesktopIcon, DocumentTextIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
   export default function NavBar() {
   const router = useRouter();
@@ -116,10 +116,10 @@ import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@h
             </div>
 
             <div
-              className={isActive("/usuarios") ? styles.navIconSelected : styles.navIcon}
+              className={isActive("/usuarios") || isActive("/novoUser") ? styles.navIconSelected : styles.navIcon}
             >
               <Link href="/usuarios">
-              <UserIcon className={isActive("/usuarios") ? styles.iconSelect : styles.icon}/>
+              <UserIcon className={isActive("/usuarios") || isActive("/novoUser") ? styles.iconSelect : styles.icon}/>
               {/* <IoPersonOutline size={24} color="#fff"/> */}
                 {/* <img alt="" className="navIcon " src="/icons/Usuarios.svg" /> */}
               </Link>
@@ -134,6 +134,11 @@ import { ArrowTrendingUpIcon, LightBulbIcon, LockClosedIcon, UserIcon } from '@h
                 <DocumentTextIcon className={isActive("/historico") ? styles.iconSelect : styles.icon}/>
               </Link>
           </div>
+            <div className={isActive("/rede") ? styles.navIconSelected : styles.navIcon}>
+              <Link href="/rede">
+                <ComputerDesktopIcon className={isActive("/rede") ? styles.iconSelect : styles.icon}/>
+              </Link>
+            </div>
 
           </div>
         <div className={styles.navIconMid}>

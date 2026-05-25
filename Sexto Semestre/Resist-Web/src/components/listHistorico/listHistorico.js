@@ -24,7 +24,13 @@ const teste = [{
 }
 ]
 
-const ListHistorico = () => {
+const ListHistorico = ({
+  tipo,
+  sitPessoa,
+  dia,
+  mes,
+  ano,
+}) => {
   const [historico, sethistorico] = useState([]);
   const router = useRouter();
   // Formatar data para o formato desejado (DD/MM/YYYY)
@@ -91,20 +97,27 @@ const mockData = [
   }
 ];
 
-  useEffect(() => {
-    const ListHistorico = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const resposta = await axios.get(`${url}/logs`)
-        sethistorico(resposta.data.data)
-
-      } catch (error) {
-        //console.log(error)
-      }
+useEffect(() => {
+  const fetchHistorico = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const resposta = await axios.get(`${url}/logs`, {
+        params: {
+          acao: tipo,
+          justificativa: sitPessoa,
+          dia,
+          mes,
+          ano,
+        },
+      });
+      sethistorico(resposta.data.data);
+    } catch (error) {
+      console.error("Erro ao buscar histórico:", error);
     }
-    ListHistorico();
-  }, []);
+  };
+  fetchHistorico();
+}, [tipo, sitPessoa, dia, mes, ano]);
 
 useEffect(() => {
   //console.log("Historico atualizado:", historico);

@@ -2,7 +2,15 @@ import logService from "../services/logService.js";
 
 const getAllLogs = async (req, res) => {
   try {
-    const logs = await logService.getAllLogs();
+    const filtros = {
+      acao: req.query.acao,
+      justificativa: req.query.justificativa,
+      dia: req.query.dia,
+      mes: req.query.mes,
+      ano: req.query.ano,
+    };
+
+    const logs = await logService.getAllLogs(filtros);
     res.status(200).json({ success: true, data: logs });
   } catch (error) {
     console.error("Erro ao buscar logs:", error);

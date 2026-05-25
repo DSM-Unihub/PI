@@ -19,6 +19,11 @@ const Bloqueios = () => {
   const router = useRouter();
   const [usuario, setUsuario] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [tipo, setTipo] = useState("");
+  const [sitPessoa, setSitPessoa] = useState("");
+  const [dia, setDia] = useState("");
+  const [mes, setMes] = useState("");
+  const [ano, setAno] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,8 +77,36 @@ const Bloqueios = () => {
           <section className={styles.conteudo}>
             <section className={styles.cem}>
             <HeaderBar usuario={usuario} />
-            <CardInfo titulo={"Histórico"} subtitulo={"Encontre aqui as ações de bloqueio e desbloqueio feitas pelos usuários."} tipo={"Desktop"} sitPessoa={"Caio E. Bronescheki..."} dia={9} mes={"Out"} ano={2025} view={true} />
-            < ListHistorico />
+            <CardInfo
+              titulo={"Histórico"}
+              subtitulo={"Encontre aqui as ações de bloqueio e desbloqueio feitas pelos usuários."}
+              tipo={tipo}
+              sitPessoa={sitPessoa}
+              dia={dia}
+              mes={mes}
+              ano={ano}
+              tiposList={["Bloqueio", "Desbloqueio"]}
+              statusList={[
+                "Log gerado pelo Sistema",
+                "Acesso indevido",
+                "Atividade suspeita",
+                "Solicitação aprovada",
+                "Solicitação recusada",
+              ]}
+              onTipoChange={setTipo}
+              onSitPessoaChange={setSitPessoa}
+              onDiaChange={setDia}
+              onMesChange={setMes}
+              onAnoChange={setAno}
+              view={true}
+            />
+            <ListHistorico
+              tipo={tipo}
+              sitPessoa={sitPessoa}
+              dia={dia}
+              mes={mes}
+              ano={ano}
+            />
             </section>
           </section>
         </section>

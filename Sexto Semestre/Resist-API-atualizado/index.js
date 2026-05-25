@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import sugestaoRoutes from "./routes/sugestaoRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import listaBloqueadosRoutes from "./routes/listaBloqueadosRoutes.js";
+import redeRoutes from "./routes/redeRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true })); // Re-enabled for URL-encoded b
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 app.use(
@@ -28,7 +30,8 @@ app.use(
   userRoutes,
   sugestaoRoutes,
   logRoutes,
-  listaBloqueadosRoutes
+  listaBloqueadosRoutes,
+  redeRoutes
 );
 
 app.use((err, req, res, next) => {

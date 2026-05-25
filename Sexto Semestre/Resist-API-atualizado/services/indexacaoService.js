@@ -118,14 +118,45 @@ class indexacaoService{
     }
   }
 
-  async getAllBlocks() {
+  async getAllBlocks(filtros = {}) {
     try {
-      // Retorna todas as indexações, da mais recente para a mais antiga
-      const bloqueios = await Indexacao.find().sort({ dataHora: -1 });
+      const query = {};
+
+      if (filtros.tipoInsercao) {
+        query.tipoInsercao = filtros.tipoInsercao;
+      }
+
+      if (filtros.flag !== undefined && filtros.flag !== "") {
+        query.flag = filtros.flag === true || filtros.flag === "true";
+      }
+
+      if (filtros.dia || filtros.mes || filtros.ano) {
+        query.$expr = { $and: [] };
+
+        if (filtros.dia) {
+          query.$expr.$and.push({
+            $eq: [{ $dayOfMonth: "$dataHora" }, Number(filtros.dia)],
+          });
+        }
+
+        if (filtros.mes) {
+          query.$expr.$and.push({
+            $eq: [{ $month: "$dataHora" }, Number(filtros.mes)],
+          });
+        }
+
+        if (filtros.ano) {
+          query.$expr.$and.push({
+            $eq: [{ $year: "$dataHora" }, Number(filtros.ano)],
+          });
+        }
+      }
+
+      const bloqueios = await Indexacao.find(query).sort({ dataHora: -1 });
       return bloqueios;
     } catch (error) {
-      console.error("Erro ao buscar todos os bloqueios:", error);
-      throw new Error("Erro ao buscar todos os bloqueios");
+      console.error("Erro ao buscar bloqueios:", error);
+      throw new Error("Erro ao buscar bloqueios");
     }
   }
 

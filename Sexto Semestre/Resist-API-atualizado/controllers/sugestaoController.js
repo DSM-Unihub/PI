@@ -93,9 +93,18 @@ const  createSugestao= async (req, res) => {
 
 const  getAllSugestao= async (req, res) => {
     try {
-      const sugestao = await sugestaoService.getAll();
+      const filtros = {
+        tipo: req.query.tipo,
+        situacao: req.query.situacao,
+        dia: req.query.dia,
+        mes: req.query.mes,
+        ano: req.query.ano,
+      };
+
+      const sugestao = await sugestaoService.getAll(filtros);
       res.status(200).json(sugestao);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Erro interno do servidor" });
     }
   }
