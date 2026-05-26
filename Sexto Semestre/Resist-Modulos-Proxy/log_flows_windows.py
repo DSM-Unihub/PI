@@ -358,7 +358,6 @@ def response(flow: http.HTTPFlow) -> None:
             # Tenta registrar no log principal
             try:
                 if "text/html" in content_type:
-                    #html_content = flow.response.get_text(strict=False).lower()
                     html = flow.response.get_text(strict=False)
                     # Algumas páginas (ex.: chan) entregam CSP via <meta http-equiv>.
                     # Se não remover, o browser bloqueia connect-src do EventSource.
@@ -375,7 +374,6 @@ def response(flow: http.HTTPFlow) -> None:
                         flags=re.IGNORECASE,
                     )
                     html_lower = html.lower()
-                    #if any(tag in html_content for tag in ["<html", "<title", "<body"]):
                     if any(tag in html_lower for tag in ["<html", "<title", "<body"]):
                         with open("C:/Users/bruno/Pictures/arquivos_resist/logs.txt", "a", encoding="utf-8") as f:
                             f.write(log_line)
@@ -396,13 +394,6 @@ def response(flow: http.HTTPFlow) -> None:
                                 return;
                             }
 
-                            // 🚫 NÃO roda em navegação fake (SPA / fetch)
-                            // const nav = performance.getEntriesByType("navigation")[0];
-                            // if (!nav || nav.type !== "navigate") {
-                            //     console.log("⛔ não é navegação real");
-                            //     return;
-                            // }
-
                             console.log("✅ Página principal detectada");
 
                             const __MITM_NAV_ID__ = "MITM_NAV_ID_PLACEHOLDER";
@@ -418,18 +409,21 @@ def response(flow: http.HTTPFlow) -> None:
 
                             const style = document.createElement("style");
                             style.innerHTML = `
+                            @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap');
+
                             #overlay-root {
                                 position: fixed;
                                 inset: 0;
                                 z-index: 2147483647;
                                 pointer-events: none;
+                                font-family: 'Urbanist', sans-serif;
                             }
 
                             #overlay-blur {
                                 position: absolute;
                                 inset: 0;
                                 backdrop-filter: blur(6px);
-                                background: rgba(0,0,0,0.4);
+                                background: rgba(0,0,0,0.35);
                             }
 
                             #overlay-popup {
@@ -437,18 +431,98 @@ def response(flow: http.HTTPFlow) -> None:
                                 top: 50%;
                                 left: 50%;
                                 transform: translate(-50%, -50%);
-                                
-                                background: white;
-                                padding: 24px;
-                                border-radius: 10px;
-
+                                background: #eaecf3;
+                                border-radius: 16px;
+                                padding: 36px 40px 28px 40px;
                                 z-index: 2147483647;
                                 pointer-events: auto;
+                                box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+                                width: min(680px, 92vw);
+                                font-family: 'Urbanist', sans-serif;
+                                color: #1e2a3a;
+                            }
 
-                                box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-                                max-width: 400px;
-                                text-align: center;
-                                font-family: Arial;
+                            #overlay-popup h2 {
+                                font-size: clamp(1.7rem, 3vw, 2.2rem);
+                                font-weight: 800;
+                                color: #1e3a5f;
+                                margin: 0 0 20px 0;
+                                letter-spacing: -0.5px;
+                                line-height: 1.1;
+                            }
+
+                            #overlay-popup .popup-body {
+                                display: flex;
+                                gap: 32px;
+                                align-items: flex-start;
+                                margin-bottom: 24px;
+                            }
+
+                            #overlay-popup .popup-text {
+                                flex: 1;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 12px;
+                            }
+
+                            #overlay-popup .popup-text p {
+                                margin: 0;
+                                font-size: 0.97rem;
+                                color: #3a4a60;
+                                line-height: 1.65;
+                                font-weight: 400;
+                            }
+
+                            #overlay-popup .popup-text .motivo-label {
+                                font-weight: 700;
+                                color: #1e3a5f;
+                            }
+
+                            #overlay-popup .popup-qr {
+                                flex-shrink: 0;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                            }
+
+                            #overlay-popup .popup-qr img {
+                                width: 150px;
+                                height: 150px;
+                                border-radius: 10px;
+                                display: block;
+                            }
+
+                            #overlay-popup #fechar {
+                                display: block;
+                                width: 100%;
+                                padding: 15px;
+                                background: #7b9cdf;
+                                color: white;
+                                border: none;
+                                border-radius: 10px;
+                                font-size: 1rem;
+                                font-weight: 600;
+                                font-family: 'Urbanist', sans-serif;
+                                cursor: pointer;
+                                letter-spacing: 0.3px;
+                                transition: background 0.2s;
+                                margin-bottom: 16px;
+                            }
+
+                            #overlay-popup #fechar:hover {
+                                background: #5a7fcb;
+                            }
+
+                            #overlay-popup .popup-footer {
+                                text-align: right;
+                                font-size: 0.82rem;
+                                color: #8a96a8;
+                                font-weight: 400;
+                            }
+
+                            #overlay-popup .popup-footer .footer-brand {
+                                color: #e0512a;
+                                font-weight: 700;
                             }
 
                             .redacted {
@@ -495,35 +569,167 @@ def response(flow: http.HTTPFlow) -> None:
                             
                             // VERIFY_GATE_START (remova este bloco para desativar gate)
                             function createVerifyGate() {
-                                if (document.getElementById("verify-gate-overlay")) return;
-                                if (document.body) {
-                                    document.body.style.visibility = "hidden";
-                                }
-                                const gate = document.createElement("div");
-                                gate.id = "verify-gate-overlay";
-                                gate.style.position = "fixed";
-                                gate.style.inset = "0";
-                                gate.style.background = "#0f172a";
-                                gate.style.color = "#fff";
-                                gate.style.zIndex = "2147483646";
-                                gate.style.display = "flex";
-                                gate.style.alignItems = "center";
-                                gate.style.justifyContent = "center";
-                                gate.style.fontFamily = "Arial, sans-serif";
-                                gate.innerHTML = '<div style="text-align:center;"><h3 style="margin:0 0 8px 0;">Verificando conteúdo...</h3><p style="margin:0;">Aguarde alguns instantes.</p></div>';
-                                document.documentElement.appendChild(gate);
+                                if (document.getElementById("resist-gate-host")) return;
+                                if (document.body) document.body.style.visibility = "hidden";
+
+                                const host = document.createElement("div");
+                                host.id = "resist-gate-host";
+                                host.style.cssText = "all:unset;position:fixed;inset:0;z-index:2147483647;display:block;";
+
+                                const shadow = host.attachShadow({ mode: "open" });
+
+                                shadow.innerHTML = `
+                                    <style>
+                                        @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap');
+                                        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+                                        .gate {
+                                            position: fixed;
+                                            inset: 0;
+                                            background: #eaecf3;
+                                            display: flex;
+                                            flex-direction: column;
+                                            font-family: 'Urbanist', sans-serif;
+                                            color: #1e2a3a;
+                                        }
+
+                                        .top {
+                                            flex: 1;
+                                            display: flex;
+                                            align-items: center;
+                                            padding: 0 10%;
+                                            gap: 40px;
+                                        }
+
+                                        .spinner-wrap {
+                                            flex-shrink: 0;
+                                            width: 96px;
+                                            height: 96px;
+                                            position: relative;
+                                        }
+                                        .spinner-track {
+                                            width: 96px;
+                                            height: 96px;
+                                            border-radius: 50%;
+                                            border: 8px solid #c8cdd8;
+                                        }
+                                        .spinner-arc {
+                                            position: absolute;
+                                            inset: 0;
+                                            border-radius: 50%;
+                                            border: 8px solid transparent;
+                                            border-top-color: #e0512a;
+                                            border-right-color: #e0512a;
+                                            animation: spin 1.1s linear infinite;
+                                        }
+                                        @keyframes spin { to { transform: rotate(360deg); } }
+
+                                        .text-block {
+                                            display: flex;
+                                            flex-direction: column;
+                                            gap: 10px;
+                                        }
+
+                                        .headline {
+                                            font-size: clamp(2rem, 4vw, 3rem);
+                                            font-weight: 700;
+                                            color: #1e3a5f;
+                                            letter-spacing: -0.5px;
+                                            line-height: 1.1;
+                                        }
+
+                                        .subline {
+                                            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+                                            color: #4a5a72;
+                                            font-weight: 400;
+                                        }
+
+                                        .subline .brand {
+                                            color: #e0512a;
+                                            font-weight: 700;
+                                        }
+
+                                        .divider {
+                                            height: 1px;
+                                            background: #c4c9d6;
+                                            margin: 0;
+                                        }
+
+                                        .bottom {
+                                            padding: 32px 10% 24px;
+                                            display: flex;
+                                            flex-direction: column;
+                                            gap: 14px;
+                                        }
+
+                                        .bottom-title {
+                                            font-weight: 700;
+                                            font-size: 0.95rem;
+                                            color: #1e3a5f;
+                                        }
+
+                                        .bottom-text {
+                                            font-size: 0.9rem;
+                                            color: #5a6880;
+                                            line-height: 1.65;
+                                            font-weight: 400;
+                                        }
+
+                                        .footer {
+                                            padding: 0 10% 22px;
+                                            font-size: 0.82rem;
+                                            color: #8a96a8;
+                                        }
+
+                                        .footer .footer-brand {
+                                            color: #e0512a;
+                                            font-weight: 700;
+                                        }
+                                    </style>
+
+                                    <div class="gate">
+                                        <div class="top">
+                                            <div class="spinner-wrap">
+                                                <div class="spinner-track"></div>
+                                                <div class="spinner-arc"></div>
+                                            </div>
+                                            <div class="text-block">
+                                                <div class="headline">Por favor, aguarde...</div>
+                                                <div class="subline">
+                                                    A URL requisitada está sendo verificada pelo <span class="brand">ReSist</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="divider"></div>
+
+                                        <div class="bottom">
+                                            <div class="bottom-title">Por que estou vendo isso?</div>
+                                            <div class="bottom-text">
+                                                Este site pode possuir conteúdo de discurso de ódio. Se você está nesta página,
+                                                é porque esta rede é protegida pelo ReSist de alguma forma.
+                                            </div>
+                                            <div class="bottom-text">
+                                                Para maiores informações, contacte o administrador da rede.
+                                            </div>
+                                        </div>
+
+                                        <div class="footer">Powered by <span class="footer-brand">UniHub</span></div>
+                                    </div>
+                                `;
+
+                                document.documentElement.appendChild(host);
                             }
+
                             function releaseVerifyGate() {
-                                const gate = document.getElementById("verify-gate-overlay");
-                                if (gate) gate.remove();
-                                if (document.body) {
-                                    document.body.style.visibility = "visible";
-                                }
+                                const host = document.getElementById("resist-gate-host");
+                                if (host) host.remove();
+                                if (document.body) document.body.style.visibility = "visible";
                             }
                             createVerifyGate();
                             // VERIFY_GATE_END
                             setTimeout(function () {
-                                if (document.getElementById("verify-gate-overlay")) {
+                                if (document.getElementById("resist-gate-host")) {
                                     console.warn("⏱️ VERIFY_GATE: timeout — liberando overlay por segurança");
                                     releaseVerifyGate();
                                 }
@@ -819,7 +1025,6 @@ def response(flow: http.HTTPFlow) -> None:
                             }
 
                             function aplicarBlurPopup(motivos) {
-
                                 console.log("🌀 Aplicando blur + popup");
 
                                 if (document.getElementById("overlay-root")) return;
@@ -837,32 +1042,26 @@ def response(flow: http.HTTPFlow) -> None:
                                     ? motivos.filter(Boolean)
                                     : [];
                                 const siteUrl = getSiteUrlForQr();
-                                const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(siteUrl)}`;
+                                const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(siteUrl)}`;
 
-                                const motivoHtml = motivosValidos.length
-                                    ? `<p><strong>Motivos detectados:</strong> ${motivosValidos.map(traduzirMotivo).join(", ")}</p>`
-                                    : `<p><strong>Motivo detectado:</strong> Nao informado</p>`;
+                                const motivosStr = motivosValidos.length
+                                    ? motivosValidos.map(traduzirMotivo).join(", ")
+                                    : "Não informado";
 
                                 popup.innerHTML = `
-                                    <h2>Conteudo bloqueado</h2>
-                                    <div style="display:flex; gap:16px; align-items:center; text-align:left; margin-top:12px;">
-                                        <div style="flex:0 0 170px; display:flex; flex-direction:column; align-items:center; gap:8px;">
-                                            <p style="font-size:13px; margin:0; text-align:center;">
-                                                Leia o <strong>QR Code</strong> em nosso aplicativo para sugerir desbloqueio.
-                                            </p>
-                                            <img
-                                                src="${qrCodeUrl}"
-                                                alt="QR Code do site"
-                                                style="width:160px; height:160px; border:1px solid #ddd; border-radius:8px;"
-                                            />
+                                    <h2>Conteúdo bloqueado</h2>
+                                    <div class="popup-body">
+                                        <div class="popup-text">
+                                            <p>Alguns textos da página foram ocultados automaticamente pelo nosso sistema por ser classificado como prejudicial.</p>
+                                            <p>Neste caso, o motivo detectado foi <span class="motivo-label">${motivosStr}</span>.</p>
+                                            <p>Caso você considere isso um erro do sistema, leia o QR Code ao lado para sugerir o desbloqueio da página. Assim, você ajuda a manter sua rede segura e o ReSist melhora.</p>
                                         </div>
-                                        <div style="flex:1; min-width:0;">
-                                            <p>Algumas frases foram ocultadas automaticamente.</p>
-                                            ${motivoHtml}
-                                            <p style="word-break:break-all; font-size:12px;"><strong>Site:</strong> ${siteUrl}</p>
+                                        <div class="popup-qr">
+                                            <img src="${qrCodeUrl}" alt="QR Code do site" />
                                         </div>
                                     </div>
                                     <button id="fechar">Entendi</button>
+                                    <div class="popup-footer">Powered by <span class="footer-brand">UniHub</span></div>
                                 `;
 
                                 root.appendChild(blur);
