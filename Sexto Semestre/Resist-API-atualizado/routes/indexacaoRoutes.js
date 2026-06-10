@@ -18,6 +18,12 @@ router.get("/bloqueios", Auth, authorizeRoles(1), indexacaoController.getAllBloc
 router.get("/bloqueios/url/:url", Auth, authorizeRoles(1), indexacaoController.getIndexacaoByUrl);
 router.get("/bloqueios/lookup", Auth, authorizeRoles(0), indexacaoController.lookupIndexacaoByUrl);
 
+router.get(
+  "/estatisticas-bloqueios-dashboard",
+  Auth,
+  authorizeRoles(1),
+  indexacaoController.getEstatisticasDashboard
+);
 // router.get("/bloqueios/user/:id", Auth, authorizeRoles(1), indexacaoController.getIndexacoesByUser);
 
 // Bloqueio total (mitm / bloqueados_total.txt) — antes de /bloqueios/:id para não capturar "total"

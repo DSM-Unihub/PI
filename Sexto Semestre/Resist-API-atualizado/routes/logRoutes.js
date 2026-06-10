@@ -4,6 +4,7 @@ import Auth, { authorizeRoles } from "../middleware/Auth.js";
 
 const router = express.Router();
 
+router.get("/logs/preview", Auth,authorizeRoles(1),logController.getPreviewLogs);
 // Buscar todos os logs
 router.get("/logs", Auth, authorizeRoles(1), logController.getAllLogs);
 

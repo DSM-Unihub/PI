@@ -231,7 +231,129 @@ class indexacaoService{
     }
   }
 
+async getEstatisticasDashboard() {
+  try {
+    const hoje = new Date();
 
+    const anoAtual = hoje.getFullYear();
+    const mesAtual = hoje.getMonth();
+
+    // início e fim do mês atual
+    const inicioMesAtual = new Date(
+      anoAtual,
+      mesAtual,
+      1
+    );
+
+    const fimMesAtual = new Date(
+      anoAtual,
+      mesAtual + 1,
+      1
+    );
+
+    // início e fim do mês passado
+    const inicioMesPassado = new Date(
+      anoAtual,
+      mesAtual - 1,
+      1
+    );
+
+    const fimMesPassado = new Date(
+      anoAtual,
+      mesAtual,
+      1
+    );
+
+    const obterNomeMes = (mes) => {
+      const meses = [
+        "janeiro",
+        "fevereiro",
+        "março",
+        "abril",
+        "maio",
+        "junho",
+        "julho",
+        "agosto",
+        "setembro",
+        "outubro",
+        "novembro",
+        "dezembro",
+      ];
+
+      return meses[mes];
+    };
+
+    const [
+      bloqueiosMesAtual,
+      bloqueiosMesPassado,
+      totalBloqueios,
+    ] = await Promise.all([
+      Indexacao.countDocuments({
+        flag: true,
+        dataHora: {
+          $gte: inicioMesAtual,
+          $lt: fimMesAtual,
+        },
+      }),
+
+      Indexacao.countDocuments({
+        flag: true,
+        dataHora: {
+          $gte: inicioMesPassado,
+          $lt: fimMesPassado,
+        },
+      }),
+
+      Indexacao.countDocuments({
+        flag: true,
+      }),
+    ]);
+
+    // cálculo percentual
+    let variacao = 0;
+
+    if (bloqueiosMesPassado > 0) {
+      variacao =
+        ((bloqueiosMesAtual -
+          bloqueiosMesPassado) /
+          bloqueiosMesPassado) *
+        100;
+    }
+
+    return {
+      totalBloqueios,
+
+      variacaoPercentual:
+        variacao.toFixed(1),
+
+      mesAtual: {
+        nome: obterNomeMes(
+          mesAtual
+        ),
+        total: bloqueiosMesAtual,
+      },
+
+      mesPassado: {
+        nome: obterNomeMes(
+          mesAtual - 1 < 0
+            ? 11
+            : mesAtual - 1
+        ),
+        total:
+          bloqueiosMesPassado,
+      },
+    };
+  } catch (error) {
+    console.error(
+      "Erro ao obter estatísticas dashboard:",
+      error
+    );
+
+    throw new Error(
+      "Erro ao obter estatísticas dashboard"
+    );
+  }
+}
   // Função para obter as estatísticas de bloqueios
  async getEstatisticasMensais(){
   try {

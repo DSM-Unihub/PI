@@ -73,7 +73,29 @@ const getEstatisticasBloqueios = async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar estatísticas de bloqueios" });
   }
 };
+const getEstatisticasDashboard =
+  async (req, res) => {
+    try {
+      const dados =
+        await indexacaoService.getEstatisticasDashboard();
 
+      res.status(200).json({
+        success: true,
+        data: dados,
+      });
+    } catch (error) {
+      console.error(
+        "Erro ao buscar estatísticas:",
+        error
+      );
+
+      res.status(500).json({
+        success: false,
+        error:
+          "Erro ao buscar estatísticas",
+      });
+    }
+  };
 const getAllBlocks = async (req, res) => {
   try {
     const filtros = {
@@ -380,5 +402,6 @@ export default {
   deleteBlock,
   getIndexacaoByUrl,
   lookupIndexacaoByUrl,
+  getEstatisticasDashboard,
   // getIndexacoesByUser,
 };
