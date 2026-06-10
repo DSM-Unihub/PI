@@ -34,8 +34,25 @@ const getLogById = async (req, res) => {
     res.status(500).json({ success: false, error: "Erro ao buscar log por ID" });
   }
 };
+const getPreviewLogs = async (req, res) => {
+  try {
+    const logs = await logService.getPreviewLogs();
 
+    res.status(200).json({
+      success: true,
+      data: logs,
+    });
+  } catch (error) {
+    console.error("Erro ao buscar preview dos logs:", error);
+
+    res.status(500).json({
+      success: false,
+      error: "Erro ao buscar preview dos logs",
+    });
+  }
+};
 export default {
   getAllLogs,
   getLogById,
+  getPreviewLogs,
 };

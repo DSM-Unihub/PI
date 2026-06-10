@@ -115,7 +115,17 @@ class LogService {
       throw new Error('Erro ao buscar logs');
     }
   }
-
+async getPreviewLogs() {
+  try {
+    return await Log.find()
+      .sort({ dataHora: -1 })
+      .limit(15)
+      .lean();
+  } catch (error) {
+    console.error("Erro ao buscar preview dos logs:", error);
+    throw new Error("Erro ao buscar preview dos logs");
+  }
+}
   async getLogById(id) {
     try {
       return await Log.findById(id);

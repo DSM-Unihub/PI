@@ -65,8 +65,79 @@ const deleteRede = async (req, res) => {
   }
 };
 
+const getIncidenciaRede = async (req, res) => {
+  try {
+    const filtros = {
+      dia: req.query.dia,
+      mes: req.query.mes,
+      ano: req.query.ano,
+    };
+
+    const resultado =
+      await redeService.getIncidenciaPorRede(filtros);
+
+    return res.status(200).json({
+      success: true,
+      data: resultado,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+const getEstatisticasBloqueios =async (req, res) => {
+    try {
+      const ano =
+        req.query.ano ||
+        new Date().getFullYear();
+
+      const dados =
+        await redeService.getEstatisticasBloqueios(
+          ano
+        );
+
+      return res.status(200).json({
+        success: true,
+        data: dados,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+    }
+  };
+  const getUltimosBloqueios =
+  async (req, res) => {
+    try {
+      const limite =
+        req.query.limite || 8;
+
+      const dados =
+        await redeService.getUltimosBloqueios(
+          limite
+        );
+
+      return res.status(200).json({
+        success: true,
+        data: dados,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message:
+          error.message,
+      });
+    }
+  };
 export default {
   createRede,
   getAllRede,
   deleteRede,
+  getIncidenciaRede,
+  getEstatisticasBloqueios,
+  getUltimosBloqueios
 };
