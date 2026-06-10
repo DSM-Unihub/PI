@@ -16,7 +16,13 @@
 .p{
   color:#56648F;
 }
-
+.diaSelecionado {
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  transform: scale(1.08);
+}
 .conteudo{
   color:#56648F;
   display: flex;
@@ -283,8 +289,9 @@ display: flex
 }
 
 .hoje {
-  background: #007bff;
+  background: #F9F9F9;
   color: white;
+ 
 }
 .diaForaMes {
   color: #bbb; /* cor mais clara */

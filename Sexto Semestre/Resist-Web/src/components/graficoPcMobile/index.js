@@ -1,65 +1,53 @@
 import styles from './grafico.module.css'
 import { ComputerDesktopIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import axios from "axios";
 
+import url from "../../services/url";
+import {
+  useState,
+  useEffect,
+} from "react";
 export default function GraficoPcMob() {
-    const block = [{
-        "tipoBlock": 1,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Samsung 2",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 2,
-        "nomeDispo": "Desktop 1",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 1,
-        "dataHora": 1715395200000,
-        "tipoDispo": 2,
-        "nomeDispo": "Desktop 10",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Iphone 2",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Iphone 2",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Iphone 2",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Iphone 2",
-        "laboraDisp": "Laboratório 2",
-    },
-    {
-        "tipoBlock": 2,
-        "dataHora": 1715395200000,
-        "tipoDispo": 1,
-        "nomeDispo": "Iphone 2",
-        "laboraDisp": "Laboratório 2",
-    }
+ const [
+  block,
+  setBlock,
+] = useState([]);
+useEffect(() => {
+  const fetchBloqueios =
+    async () => {
+      try {
+        const token =
+          localStorage.getItem(
+            "token"
+          );
 
-    ]
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${token}`;
+
+        const response =
+          await axios.get(
+            `${url}/rede/ultimos-bloqueios`
+          );
+
+        console.log(
+          response.data
+        );
+
+        setBlock(
+          response.data
+            .data || []
+        );
+      } catch (error) {
+        console.error(
+          "Erro ao buscar bloqueios:",
+          error
+        );
+      }
+    };
+
+  fetchBloqueios();
+}, []);
 
     const formatarData = (dataIso) => {
         const data = new Date(dataIso);
@@ -89,8 +77,17 @@ export default function GraficoPcMob() {
 
                     </div>
                     <div className={styles.for}>
-                        {block.map((bloq) => (
-                            <div className={styles.forTipo}>
+                        {block.map(
+  (
+    bloq,
+    index
+  ) => (
+    <div
+      key={index}
+      className={
+        styles.forTipo
+      }
+    >
                                 <div className={styles.divLinha}>
                                     <div
                                         className={styles.forContainerTipo}
@@ -102,21 +99,17 @@ export default function GraficoPcMob() {
 
                                     <div>
 
-                                        {bloq.tipoDispo === 1 ? (
-                                            <ComputerDesktopIcon
-                                                className={styles.icon}
-                                                style={{
-                                                    color: bloq.tipoBlock === 1 ? 'rgba(143, 171, 255, 1)' : undefined
-                                                }}
-                                            />
-                                        ) : (
-                                            <DevicePhoneMobileIcon
-                                                className={styles.icon}
-                                                style={{
-                                                    color: bloq.tipoBlock === 1 ? 'rgba(143, 171, 255, 1)' : undefined
-                                                }}
-                                            />
-                                        )}
+                                        <ComputerDesktopIcon
+  className={
+    styles.icon
+  }
+style={{
+  color:
+    bloq.tipoInsercao == "Manual"
+      ? "rgb(143, 171, 255)"
+      : "rgba(56, 102, 242, 1)",
+}}
+/>
 
 
                                     </div>
