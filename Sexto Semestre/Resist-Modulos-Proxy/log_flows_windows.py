@@ -945,7 +945,7 @@ def response(flow: http.HTTPFlow) -> None:
                                         range.deleteContents();
                                         const mark = document.createElement("span");
                                         mark.className = "redacted";
-                                        mark.textContent = "[redacted]";
+                                        mark.textContent = "[censurado]";
                                         range.insertNode(mark);
                                         if (anchorStart && anchorStart === anchorEnd) {
                                             console.log("🔗 Link removido (trecho inteiro dentro de um <a>)");
@@ -975,7 +975,7 @@ def response(flow: http.HTTPFlow) -> None:
                                             if (index < partes.length - 1) {
                                                 const span = document.createElement("span");
                                                 span.className = "redacted";
-                                                span.textContent = "[redacted]";
+                                                span.textContent = "[censurado]";
                                                 fragment.appendChild(span);
                                             }
                                         });
@@ -1002,13 +1002,26 @@ def response(flow: http.HTTPFlow) -> None:
                             }
 
                             function traduzirMotivo(motivo) {
-                                const m = String(motivo || "").toLowerCase();
-                                if (m === "gender") return "Genero";
-                                if (m === "race") return "Racial";
-                                if (m === "religion") return "Religiao";
-                                if (m === "lgbtqphobia") return "LGBTQfobia";
-                                if (m === "xenophobia") return "Xenofobia";
-                                return motivo || "Nao informado";
+                                const m = String(motivo || "")
+                                    .trim()
+                                    .toLowerCase()
+                                    .replace(/[\\s_-]+/g, " ");
+                                const traducoes = {
+                                    "gender": "Gênero",
+                                    "genero": "Gênero",
+                                    "race": "Racial",
+                                    "racial": "Racial",
+                                    "disability": "Deficiência",
+                                    "physical appearance": "Aparência física",
+                                    "religion": "Religião",
+                                    "religiao": "Religião",
+                                    "sexual orientation": "Orientação sexual",
+                                    "class": "Classe social",
+                                    "social class": "Classe social",
+                                    "lgbtqphobia": "LGBTQfobia",
+                                    "xenophobia": "Xenofobia"
+                                };
+                                return traducoes[m] || motivo || "Não informado";
                             }
                             
                             function getSiteUrlForQr() {
