@@ -1,16 +1,16 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import url from "../../services/url";
+import url from "../services/url";
 import Head from "next/head.js";
-import NavBar from "../../components/navBar/NavBar.js";
+import NavBar from "../components/navBar/NavBar.js";
 import HeaderBar from "@/components/headerBar/HeaderBar.js";
-import Incidencia from "../../components/Incidencia.js";
-import Lockdown from "../../components/Lockdown.js";
-import ActiveDevices from "../../components/ActiveDevices.js";
+import Incidencia from "../components/Incidencia.js";
+import Lockdown from "../components/Lockdown.js";
+import ActiveDevices from "../components/ActiveDevices.js";
 import Calendar from "react-calendar";
-import FooterContent from "../../components/FooterContent.js";
-import RecentActivity from "../../components/RecentActivity.js";
+import FooterContent from "../components/FooterContent.js";
+import RecentActivity from "../components/RecentActivity.js";
 import CardInfo from "@/components/card/card.js";
 import styles from './index.module.css'
 import { Height } from "@mui/icons-material";
