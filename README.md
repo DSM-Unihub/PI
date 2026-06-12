@@ -4,7 +4,7 @@ O **Resist** é uma aplicação voltada para a **detecção automática de discu
 
 A ideia central é interceptar o tráfego de navegação do usuário, extrair o conteúdo textual das páginas acessadas e enviá-lo a um classificador de PLN. Quando o conteúdo é identificado como ofensivo, o sistema registra a ocorrência e pode bloquear automaticamente a visualização ao conteúdo ofensivo, tarjando as frases na tela do usuário. Toda essa atividade é organizada e exposta através de uma API, um painel web e um aplicativo mobile, permitindo o acompanhamento de estatísticas, histórico de acessos e gerenciamento de usuários/bloqueios.
 
-O sistema é composto por 4 módulos:
+O sistema, em sua versão atual do 6º semestre, é composto por 4 módulos:
 
 - **Resist-API-atualizado** — API REST (Node/Express + MongoDB), responsável por usuários, autenticação e listas de bloqueio
 - **Resist-Web** — painel web (Next.js) para visualização de estatísticas, histórico e gerenciamento
